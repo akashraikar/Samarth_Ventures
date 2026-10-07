@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0085CB;
+  --color-primary-dark: #006195;
+  --color-primary-light: #0284C7;
+  --color-navy: #0B1120;
+  --color-slate-deep: #0F172A;
+  --color-gold: #F59E0B;
+  --color-gold-dark: #D97706;
+  --color-surface-ice: #F8FAFC;
+  --color-surface: #F8F9FF;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: #f8f9ff;
+  color: #0b1c30;
+  overflow-x: hidden;
+}
+
+/* Custom CAD Grid Background */
+.cad-grid-pattern {
+  background-image: radial-gradient(rgba(0, 133, 203, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.cad-dark-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
