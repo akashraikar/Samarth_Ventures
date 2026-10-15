@@ -1,17 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { NavPage } from '../types';
-import { BrandLogo } from './BrandLogo';
-import { 
-  ChevronDown, 
-  Menu, 
-  X, 
+import React, { useState, useRef, useEffect } from "react";
+import { NavPage } from "../types";
+import { BrandLogo } from "./BrandLogo";
+import {
+  ChevronDown,
+  Menu,
+  X,
   ArrowRight,
   Sparkles,
   BookOpen,
   Layers,
   Cpu,
-  Hammer
-} from 'lucide-react';
+  Hammer,
+} from "lucide-react";
 
 interface HeaderProps {
   currentPage: NavPage;
@@ -22,11 +22,12 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentPage,
   onNavigate,
-  onOpenEnquireModal
+  onOpenEnquireModal,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileOffersAccordionOpen, setIsMobileOffersAccordionOpen] = useState(false);
+  const [isMobileOffersAccordionOpen, setIsMobileOffersAccordionOpen] =
+    useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown on route change or outside click
@@ -47,52 +48,57 @@ export const Header: React.FC<HeaderProps> = ({
     };
   }, []);
 
-  const offerSubmenus: { id: NavPage; label: string; icon: React.ReactNode; level: string; desc: string }[] = [
+  const offerSubmenus: {
+    id: NavPage;
+    label: string;
+    icon: React.ReactNode;
+    level: string;
+    desc: string;
+  }[] = [
     {
-      id: 'course-advanced',
-      label: 'Jewellery CAD Professional in Rhinoceros - Advanced Level',
+      id: "course-advanced",
+      label: "Jewellery CAD Professional in Rhinoceros - Advanced Level",
       icon: <Sparkles className="w-4 h-4 text-[#0085CB]" />,
-      level: 'Advanced',
-      desc: 'Complex bridal suites, multi-axis pavé arrays, SubD organic forms, and production casting tolerances.'
+      level: "Advanced",
+      desc: "Build foundational to advanced jewellery CAD skills, blending technical precision with practical design expertise.",
     },
     {
-      id: 'course-intermediate',
-      label: 'Jewellery designing in Rhinoceros - Intermidiate Level',
+      id: "course-intermediate",
+      label: "Jewellery designing in Rhinoceros - Intermidiate Level",
       icon: <BookOpen className="w-4 h-4 text-[#0085CB]" />,
-      level: 'Intermediate',
-      desc: 'Commercial rings, solitaire prongs, hollow profiles, stone sizing, and wax 3D print file prep.'
+      level: "Intermediate",
+      desc: "Learn core Rhino 3D modeling and 16 professional jewellery settings.",
     },
     {
-      id: 'course-reverse-engineering',
-      label: 'Rhino level 1 & 2 Reverse Engineering & Designing Pro',
+      id: "course-reverse-engineering",
+      label: "Rhino level 1 & 2 Reverse Engineering & Designing Pro",
       icon: <Cpu className="w-4 h-4 text-[#0085CB]" />,
-      level: 'Industry Pro',
-      desc: 'Blue light laser scan point clouds to flawless mathematical NURBS surfaces with 0.02mm tolerance.'
+      level: "Industry Pro",
+      desc: "Master precision Rhino 3D modeling and production-ready reverse engineering.",
     },
     {
-      id: 'course-digital-artisan',
-      label: 'Digital Artisan - Advanced 3D Modelling for Traditional Crafts',
+      id: "course-digital-artisan",
+      label: "Digital Artisan - Advanced 3D Modelling for Traditional Crafts",
       icon: <Hammer className="w-4 h-4 text-[#0085CB]" />,
-      level: 'Masterclass',
-      desc: 'Temple jewelry, nakshi repoussé relief, algorithmic filigree wirework, and jali fretwork.'
-    }
+      level: "Masterclass",
+      desc: "Master digital design to transform traditional crafts for modern manufacturing.",
+    },
   ];
 
   const isOffersActive = [
-    'course-advanced',
-    'course-intermediate',
-    'course-reverse-engineering',
-    'course-digital-artisan'
+    "course-advanced",
+    "course-intermediate",
+    "course-reverse-engineering",
+    "course-digital-artisan",
   ].includes(currentPage);
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        
         {/* Zone 1: Corporate Brand Mark */}
         <div className="flex items-center">
           <button
-            onClick={() => onNavigate('home')}
+            onClick={() => onNavigate("home")}
             className="flex items-center gap-3 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0085CB] rounded-md p-1"
             title="Samarth Ventures Home"
           >
@@ -103,9 +109,9 @@ export const Header: React.FC<HeaderProps> = ({
               className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
               onError={(e) => {
                 const target = e.currentTarget;
-                target.style.display = 'none';
+                target.style.display = "none";
                 const fallback = target.nextElementSibling as HTMLElement;
-                if (fallback) fallback.style.display = 'block';
+                if (fallback) fallback.style.display = "block";
               }}
             />
             {/* Vector fallback */}
@@ -119,11 +125,11 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-[#565E74]">
           {/* 1. Home */}
           <button
-            onClick={() => onNavigate('home')}
+            onClick={() => onNavigate("home")}
             className={`transition-colors hover:text-[#0085CB] py-2 relative ${
-              currentPage === 'home'
-                ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                : ''
+              currentPage === "home"
+                ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                : ""
             }`}
           >
             Home
@@ -139,8 +145,8 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className={`flex items-center gap-1.5 transition-colors hover:text-[#0085CB] py-2 focus:outline-none ${
                 isOffersActive
-                  ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                  : ''
+                  ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                  : ""
               }`}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"
@@ -148,21 +154,23 @@ export const Header: React.FC<HeaderProps> = ({
               <span>What we offer</span>
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-200 ${
-                  isDropdownOpen ? 'rotate-180 text-[#0085CB]' : ''
+                  isDropdownOpen ? "rotate-180 text-[#0085CB]" : ""
                 }`}
               />
             </button>
 
             {/* Desktop Dropdown Menu */}
             {isDropdownOpen && (
-              <div 
+              <div
                 className="absolute left-0 mt-1 w-[460px] bg-white rounded-xl shadow-xl border border-[#E2E8F0] p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50"
                 onMouseEnter={handleDropdownEnter}
                 onMouseLeave={handleDropdownLeave}
               >
                 <div className="text-[11px] font-bold text-[#707882] tracking-wider uppercase px-3 py-1.5 border-b border-[#E2E8F0]/70 mb-1 flex items-center justify-between">
                   <span>Accredited CAD Programs</span>
-                  <span className="text-[#0085CB] font-medium lowercase">Rhinoceros 8</span>
+                  <span className="text-[#0085CB] font-medium lowercase">
+                    Rhinoceros 8
+                  </span>
                 </div>
                 <div className="space-y-1">
                   {offerSubmenus.map((item) => {
@@ -176,11 +184,13 @@ export const Header: React.FC<HeaderProps> = ({
                         }}
                         className={`w-full text-left p-3 rounded-lg transition-all flex items-start gap-3 group ${
                           isSelected
-                            ? 'bg-[#EFF4FF] border border-[#CDE5FF]'
-                            : 'hover:bg-[#F8FAFC]'
+                            ? "bg-[#EFF4FF] border border-[#CDE5FF]"
+                            : "hover:bg-[#F8FAFC]"
                         }`}
                       >
-                        <div className={`mt-0.5 p-2 rounded-md ${isSelected ? 'bg-white shadow-xs' : 'bg-[#EFF4FF] group-hover:bg-white group-hover:shadow-xs transition-colors'}`}>
+                        <div
+                          className={`mt-0.5 p-2 rounded-md ${isSelected ? "bg-white shadow-xs" : "bg-[#EFF4FF] group-hover:bg-white group-hover:shadow-xs transition-colors"}`}
+                        >
                           {item.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -202,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#E2E8F0] px-3 flex items-center justify-between text-xs text-[#565E74]">
                   <span>Authorized McNeel Training Partner</span>
-                  <button 
+                  <button
                     onClick={() => {
                       setIsDropdownOpen(false);
                       onOpenEnquireModal();
@@ -219,11 +229,11 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* 3. Our Story */}
           <button
-            onClick={() => onNavigate('our-story')}
+            onClick={() => onNavigate("our-story")}
             className={`transition-colors hover:text-[#0085CB] py-2 relative ${
-              currentPage === 'our-story'
-                ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                : ''
+              currentPage === "our-story"
+                ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                : ""
             }`}
           >
             Our Story
@@ -231,11 +241,11 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* 4. Why Choose Us */}
           <button
-            onClick={() => onNavigate('why-choose-us')}
+            onClick={() => onNavigate("why-choose-us")}
             className={`transition-colors hover:text-[#0085CB] py-2 relative ${
-              currentPage === 'why-choose-us'
-                ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                : ''
+              currentPage === "why-choose-us"
+                ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                : ""
             }`}
           >
             Why Choose Us
@@ -243,11 +253,11 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* 5. Electroforming */}
           <button
-            onClick={() => onNavigate('electroforming')}
+            onClick={() => onNavigate("electroforming")}
             className={`transition-colors hover:text-[#0085CB] py-2 relative flex items-center gap-1.5 ${
-              currentPage === 'electroforming'
-                ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                : ''
+              currentPage === "electroforming"
+                ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                : ""
             }`}
           >
             <span>Electroforming</span>
@@ -258,11 +268,11 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* 6. Get In Touch */}
           <button
-            onClick={() => onNavigate('get-in-touch')}
+            onClick={() => onNavigate("get-in-touch")}
             className={`transition-colors hover:text-[#0085CB] py-2 relative ${
-              currentPage === 'get-in-touch'
-                ? 'text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]'
-                : ''
+              currentPage === "get-in-touch"
+                ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
+                : ""
             }`}
           >
             Get In Touch
@@ -287,10 +297,13 @@ export const Header: React.FC<HeaderProps> = ({
             className="p-2 text-[#0B1120] hover:text-[#0085CB] focus:outline-none"
             aria-label="Toggle Navigation Menu"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
-
       </div>
 
       {/* Mobile Menu Drawer */}
@@ -298,11 +311,13 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="lg:hidden border-t border-[#E2E8F0] bg-white px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4 duration-200">
           <button
             onClick={() => {
-              onNavigate('home');
+              onNavigate("home");
               setIsMobileMenuOpen(false);
             }}
             className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
-              currentPage === 'home' ? 'bg-[#EFF4FF] text-[#0085CB]' : 'text-[#0B1120]'
+              currentPage === "home"
+                ? "bg-[#EFF4FF] text-[#0085CB]"
+                : "text-[#0B1120]"
             }`}
           >
             Home
@@ -311,7 +326,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Mobile Nesting Accordion for "What we offer" */}
           <div className="border border-[#E2E8F0] rounded-lg overflow-hidden">
             <button
-              onClick={() => setIsMobileOffersAccordionOpen(!isMobileOffersAccordionOpen)}
+              onClick={() =>
+                setIsMobileOffersAccordionOpen(!isMobileOffersAccordionOpen)
+              }
               className="w-full flex items-center justify-between py-2.5 px-3 bg-[#F8FAFC] text-sm font-medium text-[#0B1120]"
             >
               <span className="flex items-center gap-2">
@@ -322,7 +339,7 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
               <ChevronDown
                 className={`w-4 h-4 text-[#565E74] transition-transform ${
-                  isMobileOffersAccordionOpen ? 'rotate-180' : ''
+                  isMobileOffersAccordionOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
@@ -337,13 +354,19 @@ export const Header: React.FC<HeaderProps> = ({
                       setIsMobileMenuOpen(false);
                     }}
                     className={`w-full text-left p-2.5 rounded-md text-xs transition-colors flex items-start gap-2.5 ${
-                      currentPage === item.id ? 'bg-[#EFF4FF] text-[#0085CB] font-semibold' : 'text-[#0B1120] hover:bg-[#F8FAFC]'
+                      currentPage === item.id
+                        ? "bg-[#EFF4FF] text-[#0085CB] font-semibold"
+                        : "text-[#0B1120] hover:bg-[#F8FAFC]"
                     }`}
                   >
                     <span className="mt-0.5 text-[#0085CB]">{item.icon}</span>
                     <div className="flex-1">
-                      <div className="font-semibold leading-tight">{item.label}</div>
-                      <div className="text-[10px] text-[#565E74] mt-0.5">{item.level}</div>
+                      <div className="font-semibold leading-tight">
+                        {item.label}
+                      </div>
+                      <div className="text-[10px] text-[#565E74] mt-0.5">
+                        {item.level}
+                      </div>
                     </div>
                   </button>
                 ))}
@@ -353,11 +376,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => {
-              onNavigate('our-story');
+              onNavigate("our-story");
               setIsMobileMenuOpen(false);
             }}
             className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
-              currentPage === 'our-story' ? 'bg-[#EFF4FF] text-[#0085CB]' : 'text-[#0B1120]'
+              currentPage === "our-story"
+                ? "bg-[#EFF4FF] text-[#0085CB]"
+                : "text-[#0B1120]"
             }`}
           >
             Our Story
@@ -365,11 +390,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => {
-              onNavigate('why-choose-us');
+              onNavigate("why-choose-us");
               setIsMobileMenuOpen(false);
             }}
             className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
-              currentPage === 'why-choose-us' ? 'bg-[#EFF4FF] text-[#0085CB]' : 'text-[#0B1120]'
+              currentPage === "why-choose-us"
+                ? "bg-[#EFF4FF] text-[#0085CB]"
+                : "text-[#0B1120]"
             }`}
           >
             Why Choose Us
@@ -377,11 +404,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => {
-              onNavigate('electroforming');
+              onNavigate("electroforming");
               setIsMobileMenuOpen(false);
             }}
             className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium flex items-center justify-between ${
-              currentPage === 'electroforming' ? 'bg-[#EFF4FF] text-[#0085CB]' : 'text-[#0B1120]'
+              currentPage === "electroforming"
+                ? "bg-[#EFF4FF] text-[#0085CB]"
+                : "text-[#0B1120]"
             }`}
           >
             <span>Electroforming</span>
@@ -392,11 +421,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => {
-              onNavigate('get-in-touch');
+              onNavigate("get-in-touch");
               setIsMobileMenuOpen(false);
             }}
             className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
-              currentPage === 'get-in-touch' ? 'bg-[#EFF4FF] text-[#0085CB]' : 'text-[#0B1120]'
+              currentPage === "get-in-touch"
+                ? "bg-[#EFF4FF] text-[#0085CB]"
+                : "text-[#0B1120]"
             }`}
           >
             Get In Touch

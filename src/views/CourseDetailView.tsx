@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { CourseData, NavPage } from '../types';
-import { 
-  CheckCircle2, 
-  Clock, 
-  Award, 
-  BookOpen, 
-  ArrowRight, 
-  Download, 
-  ChevronDown, 
+import React, { useState } from "react";
+import { CourseData, NavPage } from "../types";
+import {
+  CheckCircle2,
+  Clock,
+  Award,
+  BookOpen,
+  ArrowRight,
+  ChevronDown,
   ChevronUp,
-  Cpu, 
-  ShieldCheck, 
+  Cpu,
+  ShieldCheck,
   Briefcase,
   Layers,
-  Sparkles
-} from 'lucide-react';
+  Sparkles,
+} from "lucide-react";
 
 interface CourseDetailViewProps {
   course: CourseData;
@@ -25,18 +24,14 @@ interface CourseDetailViewProps {
 export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
   course,
   onNavigate,
-  onOpenEnquireModal
+  onOpenEnquireModal,
 }) => {
-  const [expandedModule, setExpandedModule] = useState<string | null>(course.modules[0]?.number || null);
-  const [syllabusDownloaded, setSyllabusDownloaded] = useState(false);
+  const [expandedModule, setExpandedModule] = useState<string | null>(
+    course.modules[0]?.number || null,
+  );
 
   const toggleModule = (moduleNum: string) => {
     setExpandedModule(expandedModule === moduleNum ? null : moduleNum);
-  };
-
-  const handleDownloadSyllabus = () => {
-    setSyllabusDownloaded(true);
-    setTimeout(() => setSyllabusDownloaded(false), 4000);
   };
 
   return (
@@ -44,20 +39,23 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* 1. Header Banner */}
       <section className="bg-[#0B1120] text-white pt-12 pb-16 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           {/* Breadcrumb path */}
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-mono">
-            <button onClick={() => onNavigate('home')} className="hover:text-white transition-colors">
+            <button
+              onClick={() => onNavigate("home")}
+              className="hover:text-white transition-colors"
+            >
               Home
             </button>
             <span>/</span>
             <span>What we offer</span>
             <span>/</span>
-            <span className="text-[#38BDF8] truncate max-w-xs">{course.title}</span>
+            <span className="text-[#38BDF8] truncate max-w-xs">
+              {course.title}
+            </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
             <div className="lg:col-span-8 space-y-5">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="px-3 py-1 bg-[#0085CB] text-white text-xs font-bold rounded">
@@ -88,22 +86,7 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                   <span>Enquire &amp; Reserve Workstation</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
-
-                <button
-                  onClick={handleDownloadSyllabus}
-                  className="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs rounded-lg border border-slate-700 transition-colors flex items-center gap-2 cursor-pointer"
-                >
-                  <Download className="w-4 h-4 text-sky-400" />
-                  <span>{syllabusDownloaded ? 'Syllabus PDF Downloaded!' : 'Download Complete Syllabus'}</span>
-                </button>
               </div>
-
-              {syllabusDownloaded && (
-                <div className="p-3 bg-emerald-950/80 border border-emerald-800 text-emerald-300 rounded-lg text-xs flex items-center gap-2 animate-in fade-in">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-                  <span>Official Syllabus PDF downloaded with week-by-week module specifications and prerequisites.</span>
-                </div>
-              )}
             </div>
 
             {/* Right Course Visual */}
@@ -118,28 +101,28 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                 <div className="p-4 bg-slate-900 border-t border-slate-800 text-xs text-slate-400 space-y-2">
                   <div className="flex justify-between">
                     <span>Training Mode:</span>
-                    <span className="text-white font-medium">{course.format}</span>
+                    <span className="text-white font-medium">
+                      {course.format}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Next Batch Starts:</span>
-                    <span className="text-amber-400 font-medium">{course.batchSchedule}</span>
+                    <span className="text-amber-400 font-medium">
+                      {course.batchSchedule}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
 
       {/* 2. Core Curriculum Highlights & Prerequisites */}
       <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
           {/* Left Column: Overview and Modules */}
           <div className="lg:col-span-8 space-y-12">
-            
             {/* Overview */}
             <div className="bg-white p-8 rounded-xl border border-[#E2E8F0] shadow-sm space-y-4">
               <h2 className="text-2xl font-bold text-[#0B1120]">
@@ -226,7 +209,9 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                           <ul className="space-y-2 text-xs text-[#565E74]">
                             {mod.topics.map((topic, tidx) => (
                               <li key={tidx} className="flex items-start gap-2">
-                                <span className="text-[#0085CB] font-bold">›</span>
+                                <span className="text-[#0085CB] font-bold">
+                                  ›
+                                </span>
                                 <span>{topic}</span>
                               </li>
                             ))}
@@ -243,21 +228,24 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
             <div className="bg-[#EFF4FF] p-6 rounded-xl border border-[#CDE5FF] space-y-3">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#006195]">
                 <Layers className="w-4 h-4 text-[#0085CB]" />
-                <span>Industry Capstone Portfolio Project</span>
+                <span>Program Inclusions & Resources</span>
               </div>
-              <h3 className="text-lg font-bold text-[#0B1120]">
-                {course.capstoneProject}
-              </h3>
-              <p className="text-xs text-[#565E74] leading-relaxed">
-                Every student completes a fully validated, casting-ready capstone portfolio. Master files are 3D printed in our laboratory on high-resolution DLP resin printers to verify sprue feed, metal shrinkage allowances, and stone seat tolerances before graduation.
-              </p>
+              <h2 className="text-2xl font-bold text-[#0B1120]">
+                The Complete Training Package
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#0B1120]">
+                {course.package.map((packagePoint, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#0085CB] shrink-0 mt-0.5" />
+                    <span>{packagePoint}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-
           </div>
 
           {/* Right Column: Meta details, Software tools, and Fast Action */}
           <div className="lg:col-span-4 space-y-6">
-            
             {/* Workstation Enrollment Box */}
             <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm space-y-5 sticky top-24">
               <div className="border-b border-[#E2E8F0] pb-4">
@@ -268,28 +256,38 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                   Ready to Start?
                 </h3>
                 <p className="text-xs text-[#565E74] mt-1">
-                  Classes capped at 8 participants to ensure 1-on-1 instructor screen review.
+                  Classes capped at 8 participants to ensure 1-on-1 instructor
+                  screen review.
                 </p>
               </div>
 
               <div className="space-y-3 text-xs text-[#565E74]">
                 <div className="flex items-center justify-between py-1.5 border-b border-slate-100">
                   <span>Prerequisites:</span>
-                  <span className="font-semibold text-slate-800 text-right max-w-[180px] truncate" title={course.prerequisites}>
+                  <span
+                    className="font-semibold text-slate-800 text-right max-w-[180px] truncate"
+                    title={course.prerequisites}
+                  >
                     {course.prerequisites}
                   </span>
                 </div>
                 <div className="flex items-center justify-between py-1.5 border-b border-slate-100">
                   <span>Hardware Provided:</span>
-                  <span className="font-semibold text-slate-800">Dedicated CAD Workstation</span>
+                  <span className="font-semibold text-slate-800">
+                    Dedicated CAD Workstation
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-1.5 border-b border-slate-100">
                   <span>3D Print Testing:</span>
-                  <span className="font-semibold text-emerald-600">Included (DLP Resin Casts)</span>
+                  <span className="font-semibold text-emerald-600">
+                    Included (DLP Resin Casts)
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-1.5 border-b border-slate-100">
                   <span>Recruiter Placement:</span>
-                  <span className="font-semibold text-[#0085CB]">Lifetime Alumni Network</span>
+                  <span className="font-semibold text-[#0085CB]">
+                    Lifetime Alumni Network
+                  </span>
                 </div>
               </div>
 
@@ -298,12 +296,12 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                   onClick={() => onOpenEnquireModal(course.pageKey)}
                   className="w-full py-3 bg-[#0085CB] hover:bg-[#0284C7] active:bg-[#006195] text-white font-semibold text-xs rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Enquire for Next Cohort</span>
+                  <span>Enquire for Next Batch</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
                 <button
-                  onClick={() => onNavigate('why-choose-us')}
+                  onClick={() => onNavigate("why-choose-us")}
                   className="w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-[#0B1120] font-medium text-xs rounded-lg transition-colors border border-slate-200"
                 >
                   Compare with Generic Courses
@@ -341,11 +339,8 @@ export const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                   ))}
                 </ul>
               </div>
-
             </div>
-
           </div>
-
         </div>
       </section>
     </div>

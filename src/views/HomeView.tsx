@@ -1,29 +1,32 @@
-import React from 'react';
-import { NavPage } from '../types';
-import { COURSES } from '../data/courses';
-import { KEY_METRICS, TESTIMONIALS } from '../data/company';
-import { CADViewer } from '../components/CADViewer';
-import { 
-  ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
-  Award, 
-  ShieldCheck, 
-  Layers, 
-  Cpu, 
-  Hammer, 
-  Zap, 
+import React from "react";
+import { NavPage } from "../types";
+import { COURSES } from "../data/courses";
+import { KEY_METRICS, TESTIMONIALS } from "../data/company";
+import { CADViewer } from "../components/CADViewer";
+import {
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Award,
+  ShieldCheck,
+  Layers,
+  Cpu,
+  Hammer,
+  Zap,
   Download,
   Clock,
-  Compass
-} from 'lucide-react';
+  Compass,
+} from "lucide-react";
 
 interface HomeViewProps {
   onNavigate: (page: NavPage) => void;
   onOpenEnquireModal: (courseKey?: string) => void;
 }
 
-export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireModal }) => {
+export const HomeView: React.FC<HomeViewProps> = ({
+  onNavigate,
+  onOpenEnquireModal,
+}) => {
   return (
     <div className="min-h-screen">
       {/* 1. Hero Section */}
@@ -33,30 +36,34 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            
             {/* Left Column: Value Proposition & Copy */}
             <div className="lg:col-span-7 space-y-6">
-              
               {/* Regional & Trust Identifier */}
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#EFF4FF] border border-[#CDE5FF] rounded-md text-xs font-semibold text-[#006195]">
                 <Award className="w-3.5 h-3.5 text-[#0085CB]" />
-                <span>Authorized Rhinoceros 3D Jewelry Training Academy &amp; Electroforming Facility</span>
+                <span>
+                  Authorized Rhinoceros 3D jewellery Training Academy &amp;
+                  Electroforming Training Facility
+                </span>
               </div>
 
               {/* Display Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0B1120] leading-[1.12] text-balance">
-                Precision CAD Craftsmanship for the Global Jewelry Industry.
+                Precision CAD Craftsmanship for the Global jewellery Industry.
               </h1>
 
               {/* Sub-headline */}
               <p className="text-base sm:text-lg text-[#565E74] leading-relaxed max-w-2xl">
-                Master production-grade Rhinoceros 3D jewelry modeling, 3D laser-scan reverse engineering, and scientific hollow electroforming. Bridging centuries of master goldsmith artistry with aerospace-grade digital engineering.
+                Master production-grade Rhinoceros 3D jewellery modeling, 3D
+                reverse engineering, and high-precision hollow Electroforming
+                technologies. Bridging centuries of master goldsmith artistry
+                with aerospace-grade digital engineering.
               </p>
 
               {/* Action Buttons */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <button
-                  onClick={() => onOpenEnquireModal('course-advanced')}
+                  onClick={() => onOpenEnquireModal("course-advanced")}
                   className="px-6 py-3.5 bg-[#0085CB] hover:bg-[#0284C7] active:bg-[#006195] text-white font-semibold text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-md"
                 >
                   <span>Explore Courses &amp; Enquire</span>
@@ -64,10 +71,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                 </button>
 
                 <button
-                  onClick={() => onNavigate('why-choose-us')}
+                  onClick={() => onNavigate("why-choose-us")}
                   className="px-6 py-3.5 bg-white border border-[#CBD5E1] hover:bg-[#F8FAFC] text-[#0B1120] font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Why Choose Samarth</span>
+                  <span>Why Choose Samarth Ventures</span>
                 </button>
               </div>
 
@@ -75,7 +82,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
               <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-[#565E74] border-t border-[#E2E8F0]/80">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-[#0085CB]" />
-                  <span>Robert McNeel Standards</span>
+                  <span>McNeel Standards</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-[#0085CB]" />
@@ -93,7 +100,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
               <div className="relative rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-xl group bg-[#0F172A]">
                 <img
                   src="/src/assets/images/hero_jewellery_cad_1791375506977.jpg"
-                  alt="Rhinoceros 3D Jewelry CAD Modeling at Samarth Ventures"
+                  alt="Rhinoceros 3D jewellery CAD Modeling at Samarth Ventures"
                   className="w-full h-auto aspect-16/11 object-cover transition-transform duration-500 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
@@ -101,15 +108,17 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <div className="flex items-center justify-between text-xs font-mono text-sky-300 mb-1">
                     <span>Rhino 8 · NURBS G2 Curvature</span>
-                    <span className="text-amber-400 font-semibold">18K Castable Model</span>
+                    <span className="text-amber-400 font-semibold">
+                      18K Castable Model
+                    </span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Micro-prong diamond pavé assembly with parametric weight control.
+                    Micro-prong diamond pave assembly with parametric weight
+                    control.
                   </p>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -138,7 +147,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
       {/* 3. What We Offer: Accredited Curriculum Suite */}
       <section className="py-20 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-[#0085CB] mb-1">
@@ -149,7 +157,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
               </h2>
             </div>
             <p className="text-sm text-[#565E74] max-w-md">
-              Each curriculum is built on industry-standard casting protocols and Robert McNeel Rhinoceros specifications.
+              Each curriculum is built on industry-standard protocols and McNeel
+              Rhinoceros specifications.
             </p>
           </div>
 
@@ -206,7 +215,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                       onClick={() => onNavigate(course.pageKey)}
                       className="text-xs font-bold text-[#0085CB] hover:text-[#0284C7] flex items-center gap-1.5 group/link cursor-pointer"
                     >
-                      <span>Explore Full Syllabus ({course.modules.length} Modules)</span>
+                      <span>
+                        Explore Full Syllabus ({course.modules.length} Modules)
+                      </span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                     </button>
 
@@ -217,19 +228,16 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                       Enquire
                     </button>
                   </div>
-
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* 4. Interactive CAD Model Viewport Simulation Showcase */}
       <section className="py-20 bg-[#0B1120] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-950/80 border border-sky-800/60 rounded-md text-xs font-semibold text-sky-300">
               <Sparkles className="w-3.5 h-3.5 text-sky-400" />
@@ -239,14 +247,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
               Interactive Rhinoceros 3D Viewport
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Test drive the real-time NURBS geometry, stone pavé alignment, and alloy weight calculation taught inside our workstation classrooms.
+              Test drive the real-time NURBS geometry, stone pave alignment, and
+              alloy weight calculation taught inside our workstation classrooms.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
             <CADViewer />
           </div>
-
         </div>
       </section>
 
@@ -255,24 +263,31 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-[#0B1120] to-[#1E293B] rounded-2xl p-8 sm:p-12 text-white border border-slate-700 shadow-xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              
               <div className="lg:col-span-7 space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/20 border border-amber-500/40 rounded text-xs font-bold text-amber-300">
                   <Zap className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Proprietary Manufacturing Technology</span>
+                  <span>
+                    Precision Engineering: Next-Gen Electroforming Solutions
+                  </span>
                 </div>
 
                 <h3 className="text-3xl font-extrabold tracking-tight">
-                  Electroforming: Up to 70% Gold Weight Savings
+                  Electroforming: Up to 90% Gold Weight Savings
                 </h3>
 
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  Discover how our chemical laboratory and specialized hollow CAD workflows empower fine jewelry manufacturers to produce grand bridal statement pieces with dramatically reduced precious metal mass while preserving rigid surface hardness (120–165 HV).
+                  Master the technical execution of centrifugal, vacuum, and
+                  pressure die casting for high-fidelity mandrel manufacturing.
+                  Our specialized curriculum bridges the gap between advanced
+                  foundry metallurgy and digital geometry. Designers will learn
+                  to systematically translate complex physical casting
+                  constraints into highly precise, production-ready CAD models
+                  within Rhinoceros.
                 </p>
 
                 <div className="pt-2 flex flex-wrap gap-4">
                   <button
-                    onClick={() => onNavigate('electroforming')}
+                    onClick={() => onNavigate("electroforming")}
                     className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <span>View Scientific Process &amp; Specs</span>
@@ -280,7 +295,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                   </button>
 
                   <button
-                    onClick={() => onOpenEnquireModal('electroforming-consult')}
+                    onClick={() => onOpenEnquireModal("electroforming-consult")}
                     className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-lg transition-colors border border-slate-600 cursor-pointer"
                   >
                     <span>Book B2B Consultation</span>
@@ -298,7 +313,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
                   />
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -307,13 +321,12 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
       {/* 6. Attributable Industry Testimonials */}
       <section className="py-20 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
             <div className="text-xs font-bold uppercase tracking-wider text-[#0085CB]">
               Alumni &amp; Industry Impact
             </div>
             <h2 className="text-3xl font-extrabold text-[#0B1120]">
-              Endorsed by Master Craftsmen &amp; Fine Jewelry Manufacturers
+              Endorsed by Master Craftsmen &amp; Fine jewellery Manufacturers
             </h2>
           </div>
 
@@ -341,7 +354,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -349,20 +361,21 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onOpenEnquireMod
       <section className="py-16 bg-[#0085CB] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Ready to Master Production 3D Jewelry CAD?
+            Ready to Master Production 3D jewellery CAD?
           </h2>
           <p className="text-sm text-sky-100 max-w-xl mx-auto">
-            Join our upcoming cohort or schedule a free 1-on-1 studio tour and software demonstration at our Mumbai Center of Excellence.
+            Join our upcoming batch or schedule a free 1-on-1 studio tour and
+            software demonstration at our Bangalore Center of Excellence.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
               onClick={() => onOpenEnquireModal()}
               className="px-6 py-3.5 bg-white text-[#0085CB] hover:bg-slate-50 font-bold text-xs rounded-lg shadow transition-colors cursor-pointer"
             >
-              Enquire for Upcoming Cohort
+              Enquire for Upcoming Batch
             </button>
             <button
-              onClick={() => onNavigate('get-in-touch')}
+              onClick={() => onNavigate("get-in-touch")}
               className="px-6 py-3.5 bg-[#006195] hover:bg-[#004a74] text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer border border-sky-400/30"
             >
               Schedule Campus Visit
