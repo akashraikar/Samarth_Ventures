@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { NavPage } from '../types';
-import { COURSES } from '../data/courses';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  CheckCircle2, 
-  Send, 
-  ChevronDown, 
-  ChevronUp, 
-  Calendar, 
+import React, { useState } from "react";
+import { NavPage } from "../types";
+import { COURSES } from "../data/courses";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  CheckCircle2,
+  Send,
+  ChevronDown,
+  ChevronUp,
   ShieldCheck,
   Compass,
-  Building
-} from 'lucide-react';
+  ExternalLink,
+  Navigation,
+  AlertCircle,
+} from "lucide-react";
+import { sendContactEmail } from "../services/emailService";
 
 interface ContactViewProps {
   onNavigate: (page: NavPage) => void;
@@ -22,15 +24,16 @@ interface ContactViewProps {
 
 export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    courseKey: 'course-advanced',
-    batchPreference: 'weekday-morning',
-    message: ''
+    fullName: "",
+    email: "",
+    phone: "",
+    courseKey: "course-advanced",
+    batchPreference: "weekday-morning",
+    message: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,48 +42,72 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
 
   const faqs = [
     {
-      q: 'Do I need prior 3D software or Rhinoceros experience to join?',
-      a: 'No prior CAD experience is needed for our Intermediate course ("Jewellery designing in Rhinoceros - Intermidiate Level"). For our Advanced and Reverse Engineering diplomas, basic 3D familiarity or bench jewelry experience is recommended.'
+      q: "Do I need prior 3D software or Rhinoceros experience to join?",
+      a: 'No prior CAD experience is needed for our Intermediate course ("Jewellery designing in Rhinoceros - Intermidiate Level"). For our Advanced and Reverse Engineering diplomas, basic 3D familiarity or bench jewellery experience is recommended.',
     },
     {
-      q: 'Is hardware provided, or do I need to bring my own laptop?',
-      a: 'Every student in our physical cohort is allocated a dedicated workstation loaded with licensed Rhinoceros 8, KeyShot 11 Pro, and 4K calibrated color displays. Students can also bring their own laptops to install educational trial licenses.'
+      q: "Is hardware provided, or do I need to bring my own laptop?",
+      a: "Every student in our physical batch is allocated a dedicated workstation loaded with licensed Rhinoceros 8, KeyShot 11 Pro, and 4K calibrated color displays. Students can also bring their own laptops to install educational trial licenses.",
     },
     {
-      q: 'Do students get to test their CAD files on actual 3D printers and casting?',
-      a: 'Yes! We house industrial DLP resin 3D printers. Every module includes physical wax/resin slicing and printing so you can hold your designs, verify stone prongs, and inspect sprue architectures before casting.'
+      q: "Do students get to test their CAD files on actual 3D printers and casting?",
+      a: "Yes! We house industrial DLP resin 3D printers. Every module includes physical wax/resin slicing and printing so you can hold your designs, verify stone prongs, and inspect sprue architectures before casting.",
     },
     {
-      q: 'What certificate will I receive upon graduation?',
-      a: 'Graduates receive the Authorized Rhinoceros 3D Jewelry Specialist Diploma from Samarth Ventures, recognized by leading jewelry export processing zones and domestic retail fine jewelry brands.'
+      q: "What certificate will I receive upon graduation?",
+      a: "Graduates receive the Authorized Rhinoceros 3D jewellery Specialist Diploma from Samarth Ventures, recognized by leading jewellery export processing zones and domestic retail fine jewellery brands.",
     },
     {
-      q: 'How does the 98.4% job placement network work?',
-      a: 'We host regular portfolio demo days where recruitment directors from Mumbai, Surat, Jaipur, and export companies review student capstones. We also provide resume mentoring and technical interview simulations.'
-    }
+      q: "How does the 98.4% job placement network work?",
+      a: "We host regular portfolio demo days where recruitment directors from Mumbai, Surat, Jaipur, and export companies review student capstones. We also provide resume mentoring and technical interview simulations.",
+    },
   ];
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!formData.fullName.trim()) errs.fullName = 'Full name is required';
+    if (!formData.fullName.trim()) errs.fullName = "Full name is required";
     if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
-      errs.email = 'Valid corporate or personal email required';
+      errs.email = "Valid corporate or personal email required";
     }
     if (!formData.phone.trim() || formData.phone.length < 8) {
-      errs.phone = 'Valid phone number is required';
+      errs.phone = "Valid phone number is required";
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError(null);
+
+    const selectedCourseTitle =
+      COURSES[formData.courseKey]?.title || formData.courseKey;
+
+    try {
+      const result = await sendContactEmail({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        courseTitle: selectedCourseTitle,
+        batchPreference: formData.batchPreference,
+        message: formData.message,
+      });
+
+      if (result.success) {
+        setIsSubmitted(true);
+      } else {
+        setSubmitError(
+          result.message || "Failed to dispatch email. Please try again.",
+        );
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Error sending inquiry";
+      setSubmitError(msg);
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 500);
+    }
   };
 
   return (
@@ -97,7 +124,9 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
               Get In Touch with Samarth Ventures
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Schedule a workstation trial session, speak with an academic advisor, or arrange a corporate training consultation for your jewelry design team.
+              Schedule a workstation trial session, speak with an academic
+              advisor, or arrange a corporate training consultation for your
+              jewellery design team.
             </p>
           </div>
         </div>
@@ -106,10 +135,8 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
       {/* 2. Main Contact Grid (Contact info + Interactive Form) */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
           {/* Left Column: Contact Cards & Campus Location */}
           <div className="lg:col-span-5 space-y-6">
-            
             <div className="bg-white p-7 rounded-2xl border border-[#E2E8F0] shadow-xs space-y-6">
               <h2 className="text-xl font-bold text-[#0B1120] border-b border-[#E2E8F0] pb-3">
                 Academy Headquarters &amp; Laboratory
@@ -121,10 +148,27 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[#0B1120] text-sm">Center of Excellence</div>
-                    <p className="mt-1 leading-relaxed">
-                      Samarth Ventures Precision Academy, Plot 42-B, Industrial Fine Jewelry Hub, Andheri East / SEEPZ Corridor, Mumbai 400096, Maharashtra, India.
+                    <div className="font-bold text-[#0B1120] text-sm">
+                      Center of Excellence
+                    </div>
+                    <p className="mt-1 leading-relaxed text-slate-700 font-medium">
+                      SHIVA NILAYA, 10 A, 1st Main Rd, Vinayaka Layout 3rd
+                      Stage, Govindaraja Nagar Ward, Madava Upanagara,
+                      Vijayanagar, Bengaluru, Karnataka - 560040
                     </p>
+                    <div className="mt-1.5 flex items-center gap-2 text-[11px] font-mono text-[#006195]">
+                      <span>12.9655° N, 77.5306° E</span>
+                      <span>·</span>
+                      <a
+                        href="https://www.google.com/maps/dir/?api=1&destination=12.965283558538754,77.5305110903164"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0085CB] hover:underline inline-flex items-center gap-1 font-semibold"
+                      >
+                        <span>Directions</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -133,10 +177,13 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[#0B1120] text-sm">Telephone &amp; WhatsApp</div>
+                    <div className="font-bold text-[#0B1120] text-sm">
+                      Telephone &amp; WhatsApp
+                    </div>
                     <p className="mt-1 leading-relaxed">
-                      Admissions: +91 (022) 2854-9100<br />
-                      Direct WhatsApp: +91 98200-12345
+                      Admissions: +91 77604 82735
+                      <br />
+                      Direct WhatsApp: +91 97316 95599
                     </p>
                   </div>
                 </div>
@@ -146,10 +193,13 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[#0B1120] text-sm">Official Email Inquiries</div>
+                    <div className="font-bold text-[#0B1120] text-sm">
+                      Official Email Inquiries
+                    </div>
                     <p className="mt-1 leading-relaxed">
-                      Admissions: admissions@samarthventures.in<br />
-                      Corporate / B2B: partnerships@samarthventures.in
+                      Admissions: samarthventures@outlook.com
+                      <br />
+                      Corporate / B2B: samarthventures@outlook.com
                     </p>
                   </div>
                 </div>
@@ -159,53 +209,62 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[#0B1120] text-sm">Studio &amp; Lab Timings</div>
+                    <div className="font-bold text-[#0B1120] text-sm">
+                      Studio &amp; Lab Timings
+                    </div>
                     <p className="mt-1 leading-relaxed">
-                      Monday to Saturday: 9:00 AM – 7:30 PM IST<br />
-                      Sunday: Reserved for Special Masterclasses &amp; Metrology Testing
+                      Monday to Saturday: 9:30 AM – 6:30 PM IST
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Simulated Map Visual Layout */}
-            <div className="bg-[#0B1120] text-white rounded-2xl border border-slate-800 p-6 shadow-md space-y-4">
+            {/* Interactive Google Maps Embed Plugin */}
+            <div className="bg-[#0B1120] text-white rounded-2xl border border-slate-800 p-5 shadow-lg space-y-3.5 overflow-hidden">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-mono text-sky-400">Transit &amp; Accessibility</span>
-                <span className="text-slate-400">Mumbai Metro Line 3 &amp; 7</span>
-              </div>
-
-              {/* Stylized Map Viewport Canvas */}
-              <div className="relative aspect-16/9 bg-[#0F172A] rounded-xl overflow-hidden border border-slate-700 p-4 flex items-center justify-center">
-                <div className="absolute inset-0 cad-dark-grid opacity-70" />
-                
-                {/* Visual landmark nodes */}
-                <div className="relative z-10 text-center space-y-2">
-                  <div className="w-10 h-10 bg-[#0085CB] rounded-full mx-auto flex items-center justify-center text-white shadow-lg ring-4 ring-sky-500/30 animate-pulse">
-                    <Building className="w-5 h-5" />
-                  </div>
-                  <div className="text-xs font-bold text-white">
-                    Samarth Ventures Campus
-                  </div>
-                  <div className="text-[11px] text-slate-400 font-mono">
-                    5 Mins from SEEPZ Special Economic Zone
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Navigation className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <span className="font-semibold text-slate-200">
+                    Interactive Location Map
+                  </span>
                 </div>
-
-                {/* Road lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
-                  <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#38BDF8" strokeWidth="2" strokeDasharray="4 4" />
-                  <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#0284C7" strokeWidth="2" strokeDasharray="4 4" />
-                </svg>
+                <span className="text-[11px] font-mono text-[#38BDF8] bg-sky-950/70 px-2 py-0.5 rounded border border-sky-800/40">
+                  Vijayanagar, Bengaluru
+                </span>
               </div>
 
-              <div className="text-xs text-slate-400 flex items-center justify-between">
-                <span>Free Visitor Parking Available</span>
-                <span className="text-emerald-400 font-medium">Campus Open Today</span>
+              {/* Google Maps Iframe Container */}
+              <div className="relative w-full h-[320px] sm:h-[350px] rounded-xl overflow-hidden border border-slate-700 bg-slate-900 shadow-inner">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1027940156555!2d77.5279362748413!3d12.965273687349512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3dc1623d6293%3A0x4f5a3946ef965e4e!2sSamarth%20Ventures!5e0!3m2!1sen!2sin!4v1791546043785!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  title="Samarth Ventures Official Location Map"
+                  className="w-full h-full"
+                />
+              </div>
+
+              <div className="text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-800/80">
+                <span className="flex items-center gap-1.5 text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Campus Open for Studio Visits</span>
+                </span>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=12.965283558538754,77.5305110903164"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#38BDF8] hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] font-medium"
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
-
           </div>
 
           {/* Right Column: Interactive Form with Live Validation */}
@@ -216,10 +275,11 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                   Direct Enrollment &amp; Inquiry
                 </span>
                 <h2 className="text-2xl font-bold text-[#0B1120] mt-1">
-                  Connect with Our Academic Dean
+                  Connect with Our Academic Counsellor
                 </h2>
                 <p className="text-xs text-[#565E74] mt-1">
-                  Fill in your details below for personalized course recommendations, fee structures, and batch availability.
+                  Fill in your details below for personalized course
+                  recommendations, fee structures, and batch availability.
                 </p>
               </div>
 
@@ -232,11 +292,19 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                     Inquiry Successfully Registered
                   </h3>
                   <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-                    Thank you, <strong>{formData.fullName}</strong>. A course coordinator will connect with you at <strong>{formData.phone}</strong> or <strong>{formData.email}</strong> to confirm your requested demo workstation.
+                    Thank you, <strong>{formData.fullName}</strong>. Your
+                    consultation request has been dispatched to admissions. A
+                    course coordinator will connect with you at{" "}
+                    <strong>{formData.phone}</strong> or{" "}
+                    <strong>{formData.email}</strong> to confirm your requested
+                    demo workstation.
                   </p>
                   <div className="pt-4">
                     <button
-                      onClick={() => setIsSubmitted(false)}
+                      onClick={() => {
+                        setIsSubmitted(false);
+                        setSubmitError(null);
+                      }}
                       className="px-6 py-2.5 bg-[#0085CB] text-white text-xs font-semibold rounded-lg hover:bg-[#0284C7] transition-colors"
                     >
                       Submit Another Query
@@ -244,155 +312,220 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Full Name */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Full Legal Name <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.fullName}
-                      onChange={(e) => {
-                        setFormData({ ...formData, fullName: e.target.value });
-                        if (errors.fullName) setErrors({ ...errors, fullName: '' });
-                      }}
-                      placeholder="e.g. Vikramaditya Rathore"
-                      className={`w-full px-3.5 py-2.5 text-xs rounded-lg border ${
-                        errors.fullName ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
-                      } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
-                    />
-                    {errors.fullName && <p className="text-[11px] text-rose-500 mt-1">{errors.fullName}</p>}
-                  </div>
-
-                  {/* Email & Phone */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <>
+                  {submitError !== null && (
+                    <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold">
+                          Unable to dispatch inquiry:{" "}
+                        </span>
+                        <span>{submitError}</span>
+                      </div>
+                    </div>
+                  )}
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Full Name */}
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 mb-1">
-                        Email Address <span className="text-rose-500">*</span>
+                        Full Legal Name <span className="text-rose-500">*</span>
                       </label>
                       <input
-                        type="email"
-                        value={formData.email}
+                        type="text"
+                        value={formData.fullName}
                         onChange={(e) => {
-                          setFormData({ ...formData, email: e.target.value });
-                          if (errors.email) setErrors({ ...errors, email: '' });
+                          setFormData({
+                            ...formData,
+                            fullName: e.target.value,
+                          });
+                          if (errors.fullName)
+                            setErrors({ ...errors, fullName: "" });
                         }}
-                        placeholder="vikram@jewellerybrand.com"
+                        placeholder="e.g. Vikramaditya Rathore"
                         className={`w-full px-3.5 py-2.5 text-xs rounded-lg border ${
-                          errors.email ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
+                          errors.fullName
+                            ? "border-rose-500 ring-1 ring-rose-500"
+                            : "border-slate-300"
                         } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
                       />
-                      {errors.email && <p className="text-[11px] text-rose-500 mt-1">{errors.email}</p>}
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">
-                        Phone / WhatsApp <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => {
-                          setFormData({ ...formData, phone: e.target.value });
-                          if (errors.phone) setErrors({ ...errors, phone: '' });
-                        }}
-                        placeholder="+91 98200-XXXXX"
-                        className={`w-full px-3.5 py-2.5 text-xs rounded-lg border ${
-                          errors.phone ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
-                        } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
-                      />
-                      {errors.phone && <p className="text-[11px] text-rose-500 mt-1">{errors.phone}</p>}
-                    </div>
-                  </div>
-
-                  {/* Selected Course */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Program or Service Required
-                    </label>
-                    <select
-                      value={formData.courseKey}
-                      onChange={(e) => setFormData({ ...formData, courseKey: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] bg-white text-slate-800"
-                    >
-                      {Object.values(COURSES).map((c) => (
-                        <option key={c.pageKey} value={c.pageKey}>
-                          {c.title} ({c.level})
-                        </option>
-                      ))}
-                      <option value="electroforming">Electroforming Hollow Gold R&amp;D Plant Setup</option>
-                      <option value="corporate-training">Corporate In-House Design Team Training</option>
-                    </select>
-                  </div>
-
-                  {/* Batch Preference */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Preferred Batch Schedule
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {[
-                        { id: 'weekday-morning', label: 'Weekday Morning (9am–1pm)' },
-                        { id: 'weekday-evening', label: 'Weekday Evening (5pm–8pm)' },
-                        { id: 'weekend-intensive', label: 'Weekend Intensive (Sat/Sun)' }
-                      ].map((slot) => (
-                        <button
-                          type="button"
-                          key={slot.id}
-                          onClick={() => setFormData({ ...formData, batchPreference: slot.id })}
-                          className={`p-2.5 rounded-lg border text-left text-xs transition-colors cursor-pointer ${
-                            formData.batchPreference === slot.id
-                              ? 'bg-[#EFF4FF] border-[#0085CB] text-[#006195] font-semibold'
-                              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                          }`}
-                        >
-                          {slot.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Specific Requirements */}
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Your Background or Questions (Optional)
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell us about your background (e.g. Traditional Karigar, 2D Illustrator, Bench Jeweler, Brand Owner)..."
-                      className="w-full px-3.5 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] text-slate-800"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3.5 bg-[#0085CB] hover:bg-[#0284C7] active:bg-[#006195] text-white font-semibold text-xs rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      {isSubmitting ? (
-                        <span>Sending Request...</span>
-                      ) : (
-                        <>
-                          <Send className="w-3.5 h-3.5" />
-                          <span>Submit Enrollment Request</span>
-                        </>
+                      {errors.fullName && (
+                        <p className="text-[11px] text-rose-500 mt-1">
+                          {errors.fullName}
+                        </p>
                       )}
-                    </button>
-                  </div>
+                    </div>
 
-                  <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Your inquiry goes directly to our Senior Academic Dean. No call center delays.</span>
-                  </div>
-                </form>
+                    {/* Email & Phone */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1">
+                          Email Address <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value });
+                            if (errors.email)
+                              setErrors({ ...errors, email: "" });
+                          }}
+                          placeholder="vikram@jewellerybrand.com"
+                          className={`w-full px-3.5 py-2.5 text-xs rounded-lg border ${
+                            errors.email
+                              ? "border-rose-500 ring-1 ring-rose-500"
+                              : "border-slate-300"
+                          } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
+                        />
+                        {errors.email && (
+                          <p className="text-[11px] text-rose-500 mt-1">
+                            {errors.email}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1">
+                          Phone / WhatsApp{" "}
+                          <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => {
+                            setFormData({ ...formData, phone: e.target.value });
+                            if (errors.phone)
+                              setErrors({ ...errors, phone: "" });
+                          }}
+                          placeholder="+91 98200-XXXXX"
+                          className={`w-full px-3.5 py-2.5 text-xs rounded-lg border ${
+                            errors.phone
+                              ? "border-rose-500 ring-1 ring-rose-500"
+                              : "border-slate-300"
+                          } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
+                        />
+                        {errors.phone && (
+                          <p className="text-[11px] text-rose-500 mt-1">
+                            {errors.phone}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Selected Course */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Program or Service Required
+                      </label>
+                      <select
+                        value={formData.courseKey}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            courseKey: e.target.value,
+                          })
+                        }
+                        className="w-full px-3.5 py-2.5 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] bg-white text-slate-800"
+                      >
+                        {Object.values(COURSES).map((c) => (
+                          <option key={c.pageKey} value={c.pageKey}>
+                            {c.title} ({c.level})
+                          </option>
+                        ))}
+                        <option value="electroforming">
+                          Electroforming Hollow Gold R&amp;D Plant Setup
+                        </option>
+                        <option value="corporate-training">
+                          Corporate In-House Design Team Training
+                        </option>
+                      </select>
+                    </div>
+
+                    {/* Batch Preference */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Preferred Batch Schedule
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        {[
+                          {
+                            id: "weekday-morning",
+                            label: "Weekday Morning (10am–1pm)",
+                          },
+                          {
+                            id: "weekday-evening",
+                            label: "Weekday Evening (2pm–5pm)",
+                          },
+                          {
+                            id: "weekend-intensive",
+                            label: "Weekend Intensive (Sat/Sun)",
+                          },
+                        ].map((slot) => (
+                          <button
+                            type="button"
+                            key={slot.id}
+                            onClick={() =>
+                              setFormData({
+                                ...formData,
+                                batchPreference: slot.id,
+                              })
+                            }
+                            className={`p-2.5 rounded-lg border text-left text-xs transition-colors cursor-pointer ${
+                              formData.batchPreference === slot.id
+                                ? "bg-[#EFF4FF] border-[#0085CB] text-[#006195] font-semibold"
+                                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
+                            }`}
+                          >
+                            {slot.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Specific Requirements */}
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Your Background or Questions (Optional)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={formData.message}
+                        onChange={(e) =>
+                          setFormData({ ...formData, message: e.target.value })
+                        }
+                        placeholder="Tell us about your background (e.g. Traditional Karigar, 2D Illustrator, Bench jeweller, Brand Owner)..."
+                        className="w-full px-3.5 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] text-slate-800"
+                      />
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-3.5 bg-[#0085CB] hover:bg-[#0284C7] active:bg-[#006195] text-white font-semibold text-xs rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        {isSubmitting ? (
+                          <span>Sending Request...</span>
+                        ) : (
+                          <>
+                            <Send className="w-3.5 h-3.5" />
+                            <span>Submit Enrollment Request</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>
+                        Your inquiry goes directly to our Senior Academic
+                        Counsellor. No call center delays.
+                      </span>
+                    </div>
+                  </form>
+                </>
               )}
             </div>
           </div>
-
         </div>
       </section>
 

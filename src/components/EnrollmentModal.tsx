@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, ArrowRight, ShieldCheck, Phone, Mail } from 'lucide-react';
-import { COURSES } from '../data/courses';
+import React, { useState, useEffect } from "react";
+import {
+  X,
+  CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
+  Phone,
+  Mail,
+  AlertCircle,
+} from "lucide-react";
+import { COURSES } from "../data/courses";
+import { sendEnrollmentEmail } from "../services/emailService";
 
 interface EnrollmentModalProps {
   isOpen: boolean;
@@ -11,19 +20,20 @@ interface EnrollmentModalProps {
 export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
   isOpen,
   onClose,
-  defaultCourseKey = 'course-advanced'
+  defaultCourseKey = "course-advanced",
 }) => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
+    fullName: "",
+    email: "",
+    phone: "",
     courseKey: defaultCourseKey,
-    mode: 'classroom',
-    experience: 'intermediate',
-    message: ''
+    mode: "classroom",
+    experience: "intermediate",
+    message: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -37,35 +47,65 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!formData.fullName.trim()) errs.fullName = 'Please enter your full name';
+    if (!formData.fullName.trim())
+      errs.fullName = "Please enter your full name";
     if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
-      errs.email = 'Valid corporate or personal email required';
+      errs.email = "Valid corporate or personal email required";
     }
     if (!formData.phone.trim() || formData.phone.length < 8) {
-      errs.phone = 'Please provide a valid contact number';
+      errs.phone = "Please provide a valid contact number";
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError(null);
+
+    const selectedCourseTitle =
+      formData.courseKey === "electroforming-consult"
+        ? "Hollow Electroforming R&D Consultation"
+        : COURSES[formData.courseKey]?.title || formData.courseKey;
+
+    try {
+      const result = await sendEnrollmentEmail({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        courseKey: formData.courseKey,
+        courseTitle: selectedCourseTitle,
+        mode: formData.mode,
+        experience: formData.experience,
+        message: formData.message,
+      });
+
+      if (result.success) {
+        setIsSubmitted(true);
+      } else {
+        setSubmitError(
+          result.message || "Failed to dispatch email. Please try again.",
+        );
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Error sending inquiry";
+      setSubmitError(msg);
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleReset = () => {
     setIsSubmitted(false);
+    setSubmitError(null);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div 
+      <div
         className="relative bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
@@ -88,7 +128,10 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               Inquiry Successfully Received
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed max-w-sm mx-auto">
-              Thank you, <strong>{formData.fullName}</strong>. Our Senior Academic Counselor will contact you at <strong>{formData.phone}</strong> within 4 business hours with detailed syllabus PDFs and batch timing options.
+              Thank you, <strong>{formData.fullName}</strong>. Your inquiry has
+              been sent to our admissions team. Our Senior Academic Counselor
+              will contact you at <strong>{formData.phone}</strong> soon with
+              detailed curriculum specifications and batch timing options.
             </p>
             <div className="pt-4">
               <button
@@ -109,9 +152,22 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 Enquire or Reserve Your Workstation
               </h3>
               <p className="text-xs text-slate-500 mt-1">
-                Small cohort sizes capped at 8 students per batch for direct instructor mentorship.
+                Small batch sizes capped at 8 students per batch for direct
+                instructor mentorship.
               </p>
             </div>
+
+            {submitError && (
+              <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold">
+                    Unable to send notification:{" "}
+                  </span>
+                  <span>{submitError}</span>
+                </div>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Full Name */}
@@ -122,13 +178,21 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 <input
                   type="text"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, fullName: e.target.value })
+                  }
                   placeholder="e.g. Rahul Sharma"
                   className={`w-full px-3 py-2 text-xs rounded-lg border ${
-                    errors.fullName ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
+                    errors.fullName
+                      ? "border-rose-500 ring-1 ring-rose-500"
+                      : "border-slate-300"
                   } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
                 />
-                {errors.fullName && <p className="text-[11px] text-rose-500 mt-0.5">{errors.fullName}</p>}
+                {errors.fullName && (
+                  <p className="text-[11px] text-rose-500 mt-0.5">
+                    {errors.fullName}
+                  </p>
+                )}
               </div>
 
               {/* Email & Phone */}
@@ -140,13 +204,21 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     placeholder="name@jewellery.com"
                     className={`w-full px-3 py-2 text-xs rounded-lg border ${
-                      errors.email ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
+                      errors.email
+                        ? "border-rose-500 ring-1 ring-rose-500"
+                        : "border-slate-300"
                     } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
                   />
-                  {errors.email && <p className="text-[11px] text-rose-500 mt-0.5">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-[11px] text-rose-500 mt-0.5">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -156,13 +228,21 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   <input
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                     placeholder="+91 98200-XXXXX"
                     className={`w-full px-3 py-2 text-xs rounded-lg border ${
-                      errors.phone ? 'border-rose-500 ring-1 ring-rose-500' : 'border-slate-300'
+                      errors.phone
+                        ? "border-rose-500 ring-1 ring-rose-500"
+                        : "border-slate-300"
                     } focus:outline-none focus:border-[#0085CB] focus:ring-1 focus:ring-[#0085CB]`}
                   />
-                  {errors.phone && <p className="text-[11px] text-rose-500 mt-0.5">{errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-[11px] text-rose-500 mt-0.5">
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -173,7 +253,9 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 </label>
                 <select
                   value={formData.courseKey}
-                  onChange={(e) => setFormData({ ...formData, courseKey: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, courseKey: e.target.value })
+                  }
                   className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] bg-white text-slate-800"
                 >
                   {Object.values(COURSES).map((course) => (
@@ -181,7 +263,9 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                       {course.title} ({course.level})
                     </option>
                   ))}
-                  <option value="electroforming-consult">Hollow Electroforming R&amp;D Consultation</option>
+                  <option value="electroforming-consult">
+                    Hollow Electroforming R&amp;D Consultation
+                  </option>
                 </select>
               </div>
 
@@ -193,10 +277,14 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   </label>
                   <select
                     value={formData.mode}
-                    onChange={(e) => setFormData({ ...formData, mode: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, mode: e.target.value })
+                    }
                     className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] bg-white text-slate-800"
                   >
-                    <option value="classroom">Studio Workstation (Mumbai)</option>
+                    <option value="classroom">
+                      Studio Workstation (Bangalore)
+                    </option>
                     <option value="hybrid">Live Hybrid Interactive</option>
                     <option value="corporate">Corporate Team Batch</option>
                   </select>
@@ -208,13 +296,19 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   </label>
                   <select
                     value={formData.experience}
-                    onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, experience: e.target.value })
+                    }
                     className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] bg-white text-slate-800"
                   >
-                    <option value="beginner">Beginner (No CAD background)</option>
-                    <option value="intermediate">Bench Jeweler / 2D Artist</option>
+                    <option value="beginner">
+                      Beginner (No CAD background)
+                    </option>
+                    <option value="intermediate">
+                      Bench jeweller / 2D Artist
+                    </option>
                     <option value="professional">Practicing CAD Modeler</option>
-                    <option value="manufacturer">Jewelry Manufacturer</option>
+                    <option value="manufacturer">jewellery Manufacturer</option>
                   </select>
                 </div>
               </div>
@@ -227,7 +321,9 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 <textarea
                   rows={2}
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   placeholder="e.g. Interested in bridal pave setting, hollow bangle casting, or weekend batches..."
                   className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-[#0085CB] text-slate-800"
                 />
@@ -244,7 +340,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                     <span>Processing Reservation...</span>
                   ) : (
                     <>
-                      <span>Submit Inquiry &amp; Receive Syllabus PDF</span>
+                      <span>Submit Course Inquiry</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </>
                   )}
