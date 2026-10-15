@@ -13,7 +13,7 @@
 
 export const EMAIL_CONFIG = {
   // Resend API Key provided for your account
-  apiKey: "re_adQwgVs6_CyCa5LH817Xao6HXo2DHBTU4",
+  apiKey: import.meta.env.VITE_RESEND_API_KEY,
 
   // Sender Email (From address displayed to recipient)
   // NOTE: If sending to Gmail before verifying a custom domain,

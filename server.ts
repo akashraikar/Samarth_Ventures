@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Fallback configuration if not passed in request
-const DEFAULT_RESEND_API_KEY = "re_adQwgVs6_CyCa5LH817Xao6HXo2DHBTU4";
+const DEFAULT_RESEND_API_KEY = process.env.RESEND_API_KEY;
 const DEFAULT_RESEND_DEV_SENDER = "onboarding@resend.dev";
 
 async function startServer() {
