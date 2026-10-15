@@ -1,13 +1,13 @@
 export type NavPage =
-  | 'home'
-  | 'course-advanced'
-  | 'course-intermediate'
-  | 'course-reverse-engineering'
-  | 'course-digital-artisan'
-  | 'our-story'
-  | 'why-choose-us'
-  | 'electroforming'
-  | 'get-in-touch';
+  | "home"
+  | "course-advanced"
+  | "course-intermediate"
+  | "course-reverse-engineering"
+  | "course-digital-artisan"
+  | "our-story"
+  | "why-choose-us"
+  | "electroforming"
+  | "get-in-touch";
 
 export interface CourseModule {
   number: string;
@@ -22,7 +22,11 @@ export interface CourseData {
   pageKey: NavPage;
   title: string;
   subtitle: string;
-  level: 'Advanced' | 'Intermediate' | 'Professional & Industry Pro' | 'Masterclass';
+  level:
+    | "Advanced"
+    | "Intermediate"
+    | "Professional & Industry Pro"
+    | "Masterclass";
   duration: string;
   format: string;
   software: string[];
@@ -33,7 +37,7 @@ export interface CourseData {
   coreHighlights: string[];
   modules: CourseModule[];
   careerOutcomes: string[];
-  capstoneProject: string;
+  package: string[];
   batchSchedule: string;
 }
 
@@ -42,7 +46,11 @@ export interface InquiryFormData {
   email: string;
   phone: string;
   selectedCourse: string;
-  experienceLevel: 'beginner' | 'intermediate' | 'professional' | 'business-owner';
-  preferredMode: 'classroom' | 'hybrid' | 'corporate-training';
+  experienceLevel:
+    | "beginner"
+    | "intermediate"
+    | "professional"
+    | "business-owner";
+  preferredMode: "classroom" | "hybrid" | "corporate-training";
   message: string;
 }

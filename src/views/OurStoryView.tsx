@@ -1,14 +1,24 @@
-import React from 'react';
-import { NavPage } from '../types';
-import { COMPANY_STORY, TIMELINE } from '../data/company';
-import { Award, CheckCircle2, ArrowRight, ShieldCheck, HeartHandshake, Compass } from 'lucide-react';
+import React from "react";
+import { NavPage } from "../types";
+import { COMPANY_STORY, TIMELINE } from "../data/company";
+import {
+  Award,
+  CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
+  HeartHandshake,
+  Compass,
+} from "lucide-react";
 
 interface OurStoryViewProps {
   onNavigate: (page: NavPage) => void;
   onOpenEnquireModal: () => void;
 }
 
-export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEnquireModal }) => {
+export const OurStoryView: React.FC<OurStoryViewProps> = ({
+  onNavigate,
+  onOpenEnquireModal,
+}) => {
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       {/* 1. Hero Header */}
@@ -17,10 +27,13 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0085CB]/20 border border-[#0085CB]/40 rounded text-xs font-bold text-[#38BDF8]">
               <Compass className="w-3.5 h-3.5" />
-              <span>Founded {COMPANY_STORY.foundingYear} · Mumbai &amp; Surat Manufacturing Corridor</span>
+              <span>
+                Founded {COMPANY_STORY.foundingYear} · Bangalore Multi-Service
+                Corridor
+              </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
-              Our Story: Elevating Indian Jewelry into the Digital Age.
+              Our Story: Elevating Indian jewellery into the Digital Age.
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               {COMPANY_STORY.tagline}
@@ -32,7 +45,6 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
       {/* 2. Narrative & Philosophy */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
           <div className="lg:col-span-7 space-y-6">
             <div className="text-xs font-bold uppercase tracking-wider text-[#0085CB]">
               The Genesis &amp; Vision
@@ -40,7 +52,7 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
             <h2 className="text-3xl font-extrabold text-[#0B1120] leading-snug">
               Why Samarth Ventures Was Built
             </h2>
-            
+
             {COMPANY_STORY.narrative.map((p, idx) => (
               <p key={idx} className="text-sm text-[#565E74] leading-relaxed">
                 {p}
@@ -49,14 +61,18 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] space-y-1.5 shadow-xs">
-                <div className="text-xs font-bold text-[#0B1120]">Our Mission</div>
+                <div className="text-xs font-bold text-[#0B1120]">
+                  Our Mission
+                </div>
                 <p className="text-xs text-[#565E74] leading-relaxed">
                   {COMPANY_STORY.mission}
                 </p>
               </div>
 
               <div className="p-4 bg-white rounded-lg border border-[#E2E8F0] space-y-1.5 shadow-xs">
-                <div className="text-xs font-bold text-[#0B1120]">Our Vision</div>
+                <div className="text-xs font-bold text-[#0B1120]">
+                  Our Vision
+                </div>
                 <p className="text-xs text-[#565E74] leading-relaxed">
                   {COMPANY_STORY.vision}
                 </p>
@@ -73,7 +89,8 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
                 referrerPolicy="no-referrer"
               />
               <div className="p-4 bg-white text-xs text-[#565E74] border-t border-[#E2E8F0]">
-                Traditional master karigars modeling alongside state-of-the-art DLP resin 3D printers and Rhinoceros 8 workstations.
+                Traditional master karigars modeling alongside state-of-the-art
+                DLP resin 3D printers and Rhinoceros 8 workstations.
               </div>
             </div>
 
@@ -83,18 +100,18 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
                 <span>Authorized Training Standards</span>
               </div>
               <p className="text-xs text-[#565E74] leading-relaxed">
-                Every course is taught by Robert McNeel certified CAD professionals with active consulting contracts in the fine jewelry export export processing zones.
+                Every course is taught by McNeel certified CAD professionals
+                with active consulting contracts in the fine jewellery export
+                processing zones.
               </p>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* 3. Core Values */}
       <section className="py-16 bg-white border-y border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
             <div className="text-xs font-bold uppercase tracking-wider text-[#0085CB]">
               Guiding Principles
@@ -122,7 +139,6 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -133,7 +149,7 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
             Chronology of Growth
           </div>
           <h2 className="text-3xl font-extrabold text-[#0B1120]">
-            Our Milestone Timeline (2011 – Present)
+            Our Milestone Timeline (2023 – Present)
           </h2>
         </div>
 
@@ -169,11 +185,12 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({ onNavigate, onOpenEn
             Experience Our Academy Firsthand
           </h2>
           <p className="text-sm text-slate-400 max-w-lg mx-auto">
-            Schedule an in-person tour of our CAD labs, 3D printing bay, and electroforming research tanks in Mumbai.
+            Schedule an in-person tour of our high-performance workstations
+            equipped training center, CAD labs and 3D printing bay in Bangalore.
           </p>
           <div className="flex items-center justify-center gap-4 pt-2">
             <button
-              onClick={() => onNavigate('get-in-touch')}
+              onClick={() => onNavigate("get-in-touch")}
               className="px-6 py-3 bg-[#0085CB] hover:bg-[#0284C7] text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer"
             >
               Book a Studio Visit
