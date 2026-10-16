@@ -99,12 +99,12 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center">
           <button
             onClick={() => onNavigate("home")}
-            className="flex items-center gap-3 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0085CB] rounded-md p-1"
+            className="flex items-center gap-3 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0085CB] rounded-md p-1 cursor-pointer"
             title="Samarth Ventures Home"
           >
             {/* Exact corporate logo matching user's attached image */}
             <img
-              src="/samarth ventures logo - horizontal.png"
+              src="/samarth_ventures_logo.png"
               alt="Samarth Ventures"
               className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
               onError={(e) => {
@@ -126,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 1. Home */}
           <button
             onClick={() => onNavigate("home")}
-            className={`transition-colors hover:text-[#0085CB] py-2 relative ${
+            className={`transition-colors hover:text-[#0085CB] py-2 relative cursor-pointer ${
               currentPage === "home"
                 ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                 : ""
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className={`flex items-center gap-1.5 transition-colors hover:text-[#0085CB] py-2 focus:outline-none ${
+              className={`flex items-center gap-1.5 transition-colors hover:text-[#0085CB] py-2 focus:outline-none cursor-pointer ${
                 isOffersActive
                   ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                   : ""
@@ -182,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                           onNavigate(item.id);
                           setIsDropdownOpen(false);
                         }}
-                        className={`w-full text-left p-3 rounded-lg transition-all flex items-start gap-3 group ${
+                        className={`w-full text-left p-3 rounded-lg transition-all flex items-start gap-3 group cursor-pointer ${
                           isSelected
                             ? "bg-[#EFF4FF] border border-[#CDE5FF]"
                             : "hover:bg-[#F8FAFC]"
@@ -217,7 +217,7 @@ export const Header: React.FC<HeaderProps> = ({
                       setIsDropdownOpen(false);
                       onOpenEnquireModal();
                     }}
-                    className="text-[#0085CB] font-semibold hover:underline flex items-center gap-1"
+                    className="text-[#0085CB] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <span>Compare Courses</span>
                     <ArrowRight className="w-3 h-3" />
@@ -230,7 +230,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 3. Our Story */}
           <button
             onClick={() => onNavigate("our-story")}
-            className={`transition-colors hover:text-[#0085CB] py-2 relative ${
+            className={`transition-colors hover:text-[#0085CB] py-2 relative cursor-pointer ${
               currentPage === "our-story"
                 ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                 : ""
@@ -242,7 +242,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 4. Why Choose Us */}
           <button
             onClick={() => onNavigate("why-choose-us")}
-            className={`transition-colors hover:text-[#0085CB] py-2 relative ${
+            className={`transition-colors hover:text-[#0085CB] py-2 relative cursor-pointer ${
               currentPage === "why-choose-us"
                 ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                 : ""
@@ -254,7 +254,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 5. Electroforming */}
           <button
             onClick={() => onNavigate("electroforming")}
-            className={`transition-colors hover:text-[#0085CB] py-2 relative flex items-center gap-1.5 ${
+            className={`transition-colors hover:text-[#0085CB] py-2 relative flex items-center gap-1.5 cursor-pointer ${
               currentPage === "electroforming"
                 ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                 : ""
@@ -269,7 +269,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 6. Get In Touch */}
           <button
             onClick={() => onNavigate("get-in-touch")}
-            className={`transition-colors hover:text-[#0085CB] py-2 relative ${
+            className={`transition-colors hover:text-[#0085CB] py-2 relative cursor-pointer ${
               currentPage === "get-in-touch"
                 ? "text-[#0085CB] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#0085CB]"
                 : ""
@@ -294,7 +294,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-[#0B1120] hover:text-[#0085CB] focus:outline-none"
+            className="p-2 text-[#0B1120] hover:text-[#0085CB] focus:outline-none cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
             {isMobileMenuOpen ? (
@@ -314,7 +314,7 @@ export const Header: React.FC<HeaderProps> = ({
               onNavigate("home");
               setIsMobileMenuOpen(false);
             }}
-            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
+            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium cursor-pointer ${
               currentPage === "home"
                 ? "bg-[#EFF4FF] text-[#0085CB]"
                 : "text-[#0B1120]"
@@ -329,7 +329,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() =>
                 setIsMobileOffersAccordionOpen(!isMobileOffersAccordionOpen)
               }
-              className="w-full flex items-center justify-between py-2.5 px-3 bg-[#F8FAFC] text-sm font-medium text-[#0B1120]"
+              className="w-full flex items-center justify-between py-2.5 px-3 bg-[#F8FAFC] text-sm font-medium text-[#0B1120] cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 <span>What we offer</span>
@@ -353,7 +353,7 @@ export const Header: React.FC<HeaderProps> = ({
                       onNavigate(item.id);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`w-full text-left p-2.5 rounded-md text-xs transition-colors flex items-start gap-2.5 ${
+                    className={`w-full text-left p-2.5 rounded-md text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
                       currentPage === item.id
                         ? "bg-[#EFF4FF] text-[#0085CB] font-semibold"
                         : "text-[#0B1120] hover:bg-[#F8FAFC]"
@@ -379,7 +379,7 @@ export const Header: React.FC<HeaderProps> = ({
               onNavigate("our-story");
               setIsMobileMenuOpen(false);
             }}
-            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
+            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium cursor-pointer ${
               currentPage === "our-story"
                 ? "bg-[#EFF4FF] text-[#0085CB]"
                 : "text-[#0B1120]"
@@ -393,7 +393,7 @@ export const Header: React.FC<HeaderProps> = ({
               onNavigate("why-choose-us");
               setIsMobileMenuOpen(false);
             }}
-            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
+            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium cursor-pointer ${
               currentPage === "why-choose-us"
                 ? "bg-[#EFF4FF] text-[#0085CB]"
                 : "text-[#0B1120]"
@@ -407,7 +407,7 @@ export const Header: React.FC<HeaderProps> = ({
               onNavigate("electroforming");
               setIsMobileMenuOpen(false);
             }}
-            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium flex items-center justify-between ${
+            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium flex items-center justify-between cursor-pointer ${
               currentPage === "electroforming"
                 ? "bg-[#EFF4FF] text-[#0085CB]"
                 : "text-[#0B1120]"
@@ -424,7 +424,7 @@ export const Header: React.FC<HeaderProps> = ({
               onNavigate("get-in-touch");
               setIsMobileMenuOpen(false);
             }}
-            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium ${
+            className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-medium cursor-pointer ${
               currentPage === "get-in-touch"
                 ? "bg-[#EFF4FF] text-[#0085CB]"
                 : "text-[#0B1120]"
@@ -439,7 +439,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setIsMobileMenuOpen(false);
                 onOpenEnquireModal();
               }}
-              className="w-full py-3 text-center text-xs font-semibold text-white bg-[#0085CB] rounded-lg shadow-sm"
+              className="w-full py-3 text-center text-xs font-semibold text-white bg-[#0085CB] rounded-lg shadow-sm cursor-pointer"
             >
               Enquire Now / Book Demo Session
             </button>

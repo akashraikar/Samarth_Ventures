@@ -225,7 +225,7 @@ export const ElectroformingFlowModel: React.FC<
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="https://images.unsplash.com/photo-1535683577427-740aaac4ecfa?auto=format&fit=crop&w=800&q=80"
+                  src="/src/assets/images/mandrel_manufacturing.jpg"
                   alt="Precision jewelry mandrel casting and silicone mold fabrication workshop"
                   className="w-full h-40 object-cover"
                   loading="lazy"
@@ -934,7 +934,7 @@ export const ElectroformingFlowModel: React.FC<
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80"
+                  src="/src/assets/images/mandrel_preparation.jpg"
                   alt="Precision jewelry mandrel manual polishing and surface preparation"
                   className="w-full h-40 object-cover"
                   loading="lazy"
@@ -1290,7 +1290,7 @@ export const ElectroformingFlowModel: React.FC<
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
+                  src="/src/assets/images/mandrel_elemination.jpg"
                   alt="Chemical stripping laboratory apparatus and core evacuation process"
                   className="w-full h-40 object-cover"
                   loading="lazy"
@@ -1554,7 +1554,7 @@ export const ElectroformingFlowModel: React.FC<
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80"
+                  src="/src/assets/images/finishing.jpg"
                   alt="Finishing, polishing, and inspection of electroformed hollow gold jewelry"
                   className="w-full h-40 object-cover"
                   loading="lazy"
