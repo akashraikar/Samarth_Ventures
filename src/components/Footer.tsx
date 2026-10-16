@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
               {/* Corporate logo image file uploaded by user */}
               <div className="p-2.5 bg-white rounded-xl inline-block shadow-sm">
                 <img
-                  src="/samarth ventures logo - horizontal.png"
+                  src="/samarth_ventures_logo.png"
                   alt="Samarth Ventures"
                   className="h-10 w-auto object-contain"
                 />
@@ -105,7 +105,7 @@ export const Footer: React.FC<FooterProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={item.ariaLabel}
-                      className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#0085CB] hover:border-[#0085CB] transition-all"
+                      className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#0085CB] hover:border-[#0085CB] transition-all cursor-pointer"
                     >
                       <Icon className="w-4 h-4" />
                     </a>
@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("course-advanced")}
-                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group"
+                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group cursor-pointer"
                 >
                   <span className="text-[#0085CB] group-hover:translate-x-0.5 transition-transform">
                     ›
@@ -135,7 +135,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("course-intermediate")}
-                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group"
+                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group cursor-pointer"
                 >
                   <span className="text-[#0085CB] group-hover:translate-x-0.5 transition-transform">
                     ›
@@ -146,7 +146,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("course-reverse-engineering")}
-                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group"
+                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group cursor-pointer"
                 >
                   <span className="text-[#0085CB] group-hover:translate-x-0.5 transition-transform">
                     ›
@@ -157,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("course-digital-artisan")}
-                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group"
+                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group cursor-pointer"
                 >
                   <span className="text-[#0085CB] group-hover:translate-x-0.5 transition-transform">
                     ›
@@ -168,7 +168,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li className="pt-2">
                 <button
                   onClick={() => onNavigate("electroforming")}
-                  className="text-amber-400 hover:text-amber-300 transition-colors text-left leading-relaxed flex items-center gap-1.5 font-medium"
+                  className="text-amber-400 hover:text-amber-300 transition-colors text-left leading-relaxed flex items-center gap-1.5 font-medium cursor-pointer"
                 >
                   <span className="text-amber-400">›</span>
                   <span>Electroforming Technology &amp; R&amp;D</span>
@@ -186,7 +186,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("home")}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Home Overview
                 </button>
@@ -194,7 +194,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("our-story")}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Our Story &amp; History
                 </button>
@@ -202,7 +202,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("why-choose-us")}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Why Choose Us
                 </button>
@@ -210,7 +210,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("electroforming")}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Electroforming Facility
                 </button>
@@ -218,7 +218,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={() => onNavigate("get-in-touch")}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Contact &amp; Campus Location
                 </button>
@@ -226,7 +226,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li className="pt-2">
                 <button
                   onClick={() => onOpenEnquireModal()}
-                  className="inline-flex items-center gap-1 text-[#38BDF8] hover:underline font-semibold"
+                  className="inline-flex items-center gap-1 text-[#38BDF8] hover:underline font-semibold cursor-pointer"
                 >
                   <span>Book Free Studio Demo</span>
                   <ArrowRight className="w-3 h-3" />
@@ -254,7 +254,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <Phone className="w-4 h-4 text-[#0085CB] shrink-0" />
                 <a
                   href="tel:+919820012345"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   +91 77604 82735
                   <br />
@@ -265,7 +265,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <Mail className="w-4 h-4 text-[#0085CB] shrink-0" />
                 <a
                   href="mailto:admissions@samarthventures.in"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   samarthventures@outlook.com
                 </a>
