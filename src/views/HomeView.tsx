@@ -99,7 +99,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="lg:col-span-5">
               <div className="relative rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-xl group bg-[#0F172A]">
                 <img
-                  src="/src/assets/images/hero_jewellery_cad_1791375506977.jpg"
+                  src="assets/images/hero_jewellery_cad_1791375506977.jpg"
                   alt="Rhinoceros 3D jewellery CAD Modeling at Samarth Ventures"
                   className="w-full h-auto aspect-16/11 object-cover transition-transform duration-500 group-hover:scale-105"
                   referrerPolicy="no-referrer"
@@ -162,8 +162,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </p>
           </div>
 
-          {/* 4 Course Bento-Grid Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Accredited Course Bento-Grid Showcase Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Object.values(COURSES).map((course) => (
               <div
                 key={course.id}
@@ -306,7 +306,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div className="lg:col-span-5">
                 <div className="rounded-xl overflow-hidden border border-slate-700 shadow-lg">
                   <img
-                    src="/src/assets/images/electroforming_lab_1791375539313.jpg"
+                    src="assets/images/electroforming_lab_1791375539313.jpg"
                     alt="Electroforming laboratory at Samarth Ventures"
                     className="w-full h-auto aspect-16/10 object-cover"
                     referrerPolicy="no-referrer"

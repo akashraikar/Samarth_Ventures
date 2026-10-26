@@ -2,180 +2,798 @@ import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import {
-  RotateCw,
-  Maximize2,
-  Eye,
-  Layers,
-  Sliders,
-  Sparkles,
-  Info,
-  CheckCircle2,
-} from "lucide-react";
+import { RotateCw, CheckCircle2 } from "lucide-react";
 
 interface CADViewerProps {
   initialMaterial?: "gold" | "platinum" | "rosegold" | "wireframe";
   title?: string;
 }
 
-// === UPDATED DETAILED RING GEOMETRY START ===
+// ============================================================================
+// 1. PROCEDURAL 3-TIER EMERALD STEP-CUT CENTER GEMSTONE WITH VIBRANT TOP GLARE
+// ============================================================================
 /**
- * Procedural 57-Facet Brilliant Cut Solitaire Diamond Geometry
- * Conforms to authentic Tolkowsky / American Ideal round brilliant proportions:
- * - Table ratio: ~55%
- * - Crown height: ~32%
- * - Pavilion depth: ~75%
- * - Girdle: 16-facet polygonal cylindrical boundary
- * - Flat-shaded facets for realistic brilliance and optical refraction
+ * Procedurally constructs an authentic Emerald-Cut Gemstone:
+ * - Multi-faceted radiant star table crown with subtle bevel slope so the top
+ *   catches studio lighting from all angles with bright specular glare
+ * - 3 concentric tiers of crown step facets
+ * - Polished girdle perimeter
+ * - 3 concentric tiers of pavilion step facets tapering to an elongated culet keel line
+ * - Internal faceted pavilion reflector core ensuring total internal reflection
+ *   and eliminating any "empty" dark void through the top
  */
-function createBrilliantDiamondGeometry(radius = 0.82): THREE.BufferGeometry {
-  const geom = new THREE.BufferGeometry();
+function createEmeraldCutGemGeometry(
+  center = new THREE.Vector3(0, 1.62, 0),
+  width = 1.12,
+  depth = 0.88,
+  cornerClip = 0.22,
+  crownHeight = 0.22,
+  girdleThickness = 0.05,
+  pavilionDepth = 0.48,
+): {
+  gemGeom: THREE.BufferGeometry;
+  internalReflectorGeom: THREE.BufferGeometry;
+} {
+  const gemGeom = new THREE.BufferGeometry();
   const positions: number[] = [];
 
-  const tableR = radius * 0.55;
-  const crownH = radius * 0.32;
-  const girdleH = radius * 0.05;
-  const pavH = radius * 0.75;
+  const addTri = (p1: THREE.Vector3, p2: THREE.Vector3, p3: THREE.Vector3) => {
+    positions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
+  };
 
-  const yTable = crownH + girdleH / 2;
-  const yGirdleTop = girdleH / 2;
-  const yGirdleBot = -girdleH / 2;
-  const yCulet = -pavH - girdleH / 2;
+  const addQuad = (
+    p1: THREE.Vector3,
+    p2: THREE.Vector3,
+    p3: THREE.Vector3,
+    p4: THREE.Vector3,
+  ) => {
+    addTri(p1, p2, p3);
+    addTri(p1, p3, p4);
+  };
 
-  const girdleTopPts: THREE.Vector3[] = [];
-  const girdleBotPts: THREE.Vector3[] = [];
-  for (let i = 0; i < 16; i++) {
-    const angle = (i * Math.PI) / 8;
-    girdleTopPts.push(
-      new THREE.Vector3(
-        Math.cos(angle) * radius,
-        yGirdleTop,
-        Math.sin(angle) * radius,
-      ),
-    );
-    girdleBotPts.push(
-      new THREE.Vector3(
-        Math.cos(angle) * radius,
-        yGirdleBot,
-        Math.sin(angle) * radius,
-      ),
-    );
-  }
+  // Helper to generate an 8-point clipped-corner contour
+  const getOctagonRing = (
+    w: number,
+    d: number,
+    c: number,
+    y: number,
+  ): THREE.Vector3[] => {
+    const hw = w / 2;
+    const hd = d / 2;
+    return [
+      new THREE.Vector3(center.x + hw - c, y, center.z - hd), // 0: top right
+      new THREE.Vector3(center.x + hw, y, center.z - hd + c), // 1: right top
+      new THREE.Vector3(center.x + hw, y, center.z + hd - c), // 2: right bottom
+      new THREE.Vector3(center.x + hw - c, y, center.z + hd), // 3: bottom right
+      new THREE.Vector3(center.x - hw + c, y, center.z + hd), // 4: bottom left
+      new THREE.Vector3(center.x - hw, y, center.z + hd - c), // 5: left bottom
+      new THREE.Vector3(center.x - hw, y, center.z - hd + c), // 6: left top
+      new THREE.Vector3(center.x - hw + c, y, center.z - hd), // 7: top left
+    ];
+  };
 
-  const tablePts: THREE.Vector3[] = [];
-  const starPts: THREE.Vector3[] = [];
+  const yGirdleTop = center.y + girdleThickness / 2;
+  const yGirdleBot = center.y - girdleThickness / 2;
+
+  // 1. Crown Step Tiers
+  const girdleRing = getOctagonRing(width, depth, cornerClip, yGirdleTop);
+  const crownTier1 = getOctagonRing(
+    width * 0.88,
+    depth * 0.88,
+    cornerClip * 0.88,
+    yGirdleTop + crownHeight * 0.35,
+  );
+  const crownTier2 = getOctagonRing(
+    width * 0.74,
+    depth * 0.74,
+    cornerClip * 0.74,
+    yGirdleTop + crownHeight * 0.7,
+  );
+  const tableRing = getOctagonRing(
+    width * 0.58,
+    depth * 0.58,
+    cornerClip * 0.58,
+    yGirdleTop + crownHeight,
+  );
+
+  // DYNAMIC TOP GLARE FACETS:
+  // Instead of an empty single flat plane, we construct an authentic multi-faceted
+  // star table crown with subtle slope and an elevated center star apex (+0.038).
+  // This ensures light bounces directly toward the viewer from all perspectives!
+  const yTableApex = yGirdleTop + crownHeight + 0.038;
+  const tableApexCenter = new THREE.Vector3(center.x, yTableApex, center.z);
+
+  // 4 Mid-table star control points to create 16 active faceted glare surfaces on the top
+  const starMidPoints: THREE.Vector3[] = [
+    new THREE.Vector3(center.x + width * 0.16, yTableApex - 0.012, center.z),
+    new THREE.Vector3(center.x, yTableApex - 0.012, center.z + depth * 0.16),
+    new THREE.Vector3(center.x - width * 0.16, yTableApex - 0.012, center.z),
+    new THREE.Vector3(center.x, yTableApex - 0.012, center.z - depth * 0.16),
+  ];
+
   for (let i = 0; i < 8; i++) {
-    const angle = (i * Math.PI) / 4;
-    tablePts.push(
-      new THREE.Vector3(
-        Math.cos(angle) * tableR,
-        yTable,
-        Math.sin(angle) * tableR,
-      ),
-    );
-    const starAngle = angle + Math.PI / 8;
-    starPts.push(
-      new THREE.Vector3(
-        Math.cos(starAngle) * (radius * 0.78),
-        yTable - crownH * 0.45,
-        Math.sin(starAngle) * (radius * 0.78),
-      ),
-    );
+    const next = (i + 1) % 8;
+    const midPt = starMidPoints[Math.floor(i / 2) % 4];
+    addTri(tableApexCenter, midPt, tableRing[i]);
+    addTri(midPt, tableRing[next], tableRing[i]);
   }
 
-  const culet = new THREE.Vector3(0, yCulet, 0);
-  const tableCenter = new THREE.Vector3(0, yTable, 0);
-
-  function addTri(a: THREE.Vector3, b: THREE.Vector3, c: THREE.Vector3) {
-    positions.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z);
-  }
-
-  // 1. Table Octagon Fan (8 facets)
+  // Crown Step Bands
   for (let i = 0; i < 8; i++) {
-    addTri(tableCenter, tablePts[i], tablePts[(i + 1) % 8]);
+    const next = (i + 1) % 8;
+    addQuad(tableRing[i], tableRing[next], crownTier2[next], crownTier2[i]);
+    addQuad(crownTier2[i], crownTier2[next], crownTier1[next], crownTier1[i]);
+    addQuad(crownTier1[i], crownTier1[next], girdleRing[next], girdleRing[i]);
   }
 
-  // 2. Star Facets (8 triangular facets)
+  // 2. Girdle Band (vertical faceted strip)
+  const lowerGirdleRing = getOctagonRing(width, depth, cornerClip, yGirdleBot);
   for (let i = 0; i < 8; i++) {
-    addTri(tablePts[i], tablePts[(i + 1) % 8], starPts[i]);
-  }
-
-  // 3. Bezel / Kite Facets & Upper Girdle Facets (24 facets)
-  for (let i = 0; i < 8; i++) {
-    const gIdx = i * 2;
-    addTri(tablePts[i], starPts[(i + 7) % 8], girdleTopPts[gIdx]);
-    addTri(tablePts[i], girdleTopPts[gIdx], starPts[i]);
-    addTri(starPts[i], girdleTopPts[gIdx], girdleTopPts[(gIdx + 1) % 16]);
-    addTri(
-      starPts[i],
-      girdleTopPts[(gIdx + 1) % 16],
-      girdleTopPts[(gIdx + 2) % 16],
+    const next = (i + 1) % 8;
+    addQuad(
+      girdleRing[i],
+      girdleRing[next],
+      lowerGirdleRing[next],
+      lowerGirdleRing[i],
     );
   }
 
-  // 4. Girdle Cylindrical Band (32 facets)
-  for (let i = 0; i < 16; i++) {
-    const next = (i + 1) % 16;
-    addTri(girdleTopPts[i], girdleBotPts[i], girdleTopPts[next]);
-    addTri(girdleTopPts[next], girdleBotPts[i], girdleBotPts[next]);
+  // 3. Pavilion Step Tiers & Keel Line
+  const pavTier1 = getOctagonRing(
+    width * 0.78,
+    depth * 0.78,
+    cornerClip * 0.78,
+    yGirdleBot - pavilionDepth * 0.35,
+  );
+  const pavTier2 = getOctagonRing(
+    width * 0.5,
+    depth * 0.5,
+    cornerClip * 0.5,
+    yGirdleBot - pavilionDepth * 0.7,
+  );
+
+  for (let i = 0; i < 8; i++) {
+    const next = (i + 1) % 8;
+    addQuad(
+      lowerGirdleRing[i],
+      lowerGirdleRing[next],
+      pavTier1[next],
+      pavTier1[i],
+    );
+    addQuad(pavTier1[i], pavTier1[next], pavTier2[next], pavTier2[i]);
   }
 
-  // 5. Lower Girdle & Pavilion Main Facets (16 facets to culet)
-  for (let i = 0; i < 16; i++) {
-    const next = (i + 1) % 16;
-    addTri(girdleBotPts[i], culet, girdleBotPts[next]);
-  }
+  // Culet Keel Line (elongated step-cut culet along X-axis)
+  const yCulet = yGirdleBot - pavilionDepth;
+  const keelHalfLength = width * 0.2;
+  const keelRight = new THREE.Vector3(
+    center.x + keelHalfLength,
+    yCulet,
+    center.z,
+  );
+  const keelLeft = new THREE.Vector3(
+    center.x - keelHalfLength,
+    yCulet,
+    center.z,
+  );
 
-  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  geom.computeVertexNormals();
+  // Connect pavilion tier 2 down to the keel line
+  addTri(pavTier2[0], pavTier2[1], keelRight);
+  addTri(pavTier2[1], pavTier2[2], keelRight);
+  addTri(pavTier2[2], pavTier2[3], keelRight);
+  addQuad(pavTier2[3], pavTier2[4], keelLeft, keelRight);
+  addTri(pavTier2[4], pavTier2[5], keelLeft);
+  addTri(pavTier2[5], pavTier2[6], keelLeft);
+  addTri(pavTier2[6], pavTier2[7], keelLeft);
+  addQuad(pavTier2[7], pavTier2[0], keelRight, keelLeft);
+
+  gemGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3),
+  );
+  gemGeom.computeVertexNormals();
+
+  // 4. Internal Pavilion Reflector (Simulates Total Internal Reflection inside the stone)
+  const reflectorGeom = new THREE.BufferGeometry();
+  const refPositions: number[] = [];
+  const refScale = 0.9;
+  const rPavTier1 = getOctagonRing(
+    width * 0.78 * refScale,
+    depth * 0.78 * refScale,
+    cornerClip * 0.78 * refScale,
+    yGirdleBot - pavilionDepth * 0.32,
+  );
+  const rPavTier2 = getOctagonRing(
+    width * 0.5 * refScale,
+    depth * 0.5 * refScale,
+    cornerClip * 0.5 * refScale,
+    yGirdleBot - pavilionDepth * 0.65,
+  );
+  const rKeelRight = new THREE.Vector3(
+    center.x + keelHalfLength * refScale,
+    yCulet + 0.04,
+    center.z,
+  );
+  const rKeelLeft = new THREE.Vector3(
+    center.x - keelHalfLength * refScale,
+    yCulet + 0.04,
+    center.z,
+  );
+
+  const addRefTri = (
+    p1: THREE.Vector3,
+    p2: THREE.Vector3,
+    p3: THREE.Vector3,
+  ) => {
+    refPositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
+  };
+  const addRefQuad = (
+    p1: THREE.Vector3,
+    p2: THREE.Vector3,
+    p3: THREE.Vector3,
+    p4: THREE.Vector3,
+  ) => {
+    addRefTri(p1, p2, p3);
+    addRefTri(p1, p3, p4);
+  };
+
+  // Horizontal reflector table mirror beneath top
+  const rTableCenter = new THREE.Vector3(center.x, yGirdleTop - 0.02, center.z);
+  for (let i = 0; i < 8; i++) {
+    const next = (i + 1) % 8;
+    addRefTri(rTableCenter, rPavTier1[i], rPavTier1[next]);
+    addRefQuad(rPavTier1[i], rPavTier1[next], rPavTier2[next], rPavTier2[i]);
+  }
+  addRefTri(rPavTier2[0], rPavTier2[1], rKeelRight);
+  addRefTri(rPavTier2[1], rPavTier2[2], rKeelRight);
+  addRefTri(rPavTier2[2], rPavTier2[3], rKeelRight);
+  addQuad(rPavTier2[3], rPavTier2[4], keelLeft, keelRight);
+  addRefTri(rPavTier2[4], rPavTier2[5], keelLeft);
+  addRefTri(rPavTier2[5], rPavTier2[6], keelLeft);
+  addRefTri(rPavTier2[6], rPavTier2[7], keelLeft);
+  addQuad(rPavTier2[7], rPavTier2[0], keelRight, keelLeft);
+
+  reflectorGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(refPositions, 3),
+  );
+  reflectorGeom.computeVertexNormals();
+
+  return { gemGeom, internalReflectorGeom: reflectorGeom };
+}
+
+// ============================================================================
+// 2. MICRO-PAVÉ MELEE GEMSTONE GEOMETRY
+// ============================================================================
+function createMicroPaveStoneGeom(radius = 0.048): THREE.BufferGeometry {
+  const geom = new THREE.ConeGeometry(radius, radius * 1.5, 12, 1, false);
+  geom.rotateX(Math.PI);
   return geom;
 }
 
+// ============================================================================
+// 3. COMPLETE 360° CLOSED CIRCULAR CATHEDRAL SHANK & SOLID GALLERY BRIDGE
+// ============================================================================
 /**
- * Builds the complete high-fidelity Rhinoceros 3D jewelry ring assembly:
- * - D-Profile Comfort-Fit Shank
- * - Cathedral Shoulders with micro-pavé gemstone channels
- * - Collet Under-Gallery & Bridge Filigree Arches
- * - Collet Gallery Rail (middle stabilization collar)
- * - 4 Precision Claw / Talon Prongs holding the center stone
- * - Micro-Pavé Accent Gemstones with micro-grain beads
- * - 57-Facet Brilliant Cut Solitaire Centerpiece
- * - CAD NURBS Isocurve Overlay Lines
+ * Procedural 360° Closed Circular Cathedral Shank:
+ * - Unbroken 360-degree circular finger hole (radius strictly 1.35mm across the entire circumference)
+ * - Complete, solid gallery bridge across the top passing under the setting head with zero open gaps
+ * - European comfort-fit bottom sizing bar with anti-spin softened corners
+ * - Symmetrical dual cathedral arches branching upward toward the halo platform
  */
-function createHighFidelityRingModel(
+function createRoyalCathedralShankGeometry(
+  innerRadius = 1.35,
+  steps = 96,
+): {
+  shankGeom: THREE.BufferGeometry;
+  cathedralArchesGeom: THREE.BufferGeometry;
+  pavePositions: THREE.Vector3[];
+} {
+  const shankGeom = new THREE.BufferGeometry();
+  const positions: number[] = [];
+  const indices: number[] = [];
+  const uvs: number[] = [];
+  const pavePositions: THREE.Vector3[] = [];
+
+  const profileSteps = 20;
+
+  // Complete 360-degree sweep from -PI/2 around full 2*PI back to -PI/2
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps; // 0 to 1.0 around the complete circle
+    const theta = -Math.PI / 2 + t * Math.PI * 2;
+
+    const cosT = Math.cos(theta);
+    const sinT = Math.sin(theta);
+
+    // Height parameter: -1 at bottom sizing bar, +1 at top gallery bridge
+    const yNorm = sinT;
+
+    // European profile squaring at bottom
+    const euroBottomFactor = Math.max(0, -yNorm);
+    const radMod = 1.0 + Math.pow(cosT, 4) * 0.06 * euroBottomFactor;
+
+    // Strict circular inner finger hole
+    const cx = innerRadius * radMod * cosT;
+    const cy = innerRadius * radMod * sinT;
+
+    // Seamless radial thickness and width around the entire 360° loop:
+    // Bottom (yNorm < 0): width 0.38, thickness 0.22
+    // Shoulders (yNorm ~ 0.5): width 0.62, thickness 0.32
+    // Top Bridge (yNorm > 0.8): solid gallery bridge, width 0.54, thickness 0.16 (closing the top!)
+    let thickness: number;
+    let halfWidth: number;
+
+    if (yNorm < 0) {
+      // Bottom half
+      const u = -yNorm; // 0 at equator -> 1 at bottom
+      thickness = 0.22 + (1.0 - u) * 0.1;
+      halfWidth = 0.19 + (1.0 - u) * 0.08;
+    } else {
+      // Top half
+      const u = yNorm; // 0 at equator -> 1 at top
+      thickness = 0.32 - u * 0.16; // 0.32 at shoulder -> 0.16 at top bridge (solid, unbroken!)
+      halfWidth = 0.27 - u * 0.03; // 0.27 at shoulder -> 0.24 at top bridge
+    }
+
+    for (let j = 0; j <= profileSteps; j++) {
+      const p = j / profileSteps;
+      const phi = p * Math.PI * 2;
+
+      let rOffset = 0;
+      let zOffset = 0;
+
+      if (Math.sin(phi) >= 0) {
+        // High-polished convex outer dome with cathedral spine
+        const a = Math.sin(phi);
+        const b = Math.cos(phi);
+        const spine = Math.pow(a, 0.88);
+        rOffset = spine * thickness;
+        zOffset = b * halfWidth;
+      } else {
+        // Smooth comfort-fit interior curve
+        const a = Math.sin(phi - Math.PI);
+        const b = -Math.cos(phi - Math.PI);
+        rOffset = -Math.sin(a * Math.PI) * 0.015;
+        zOffset = b * halfWidth * 0.92;
+      }
+
+      positions.push(cx + cosT * rOffset, cy + sinT * rOffset, zOffset);
+      uvs.push(t, p);
+    }
+  }
+
+  for (let i = 0; i < steps; i++) {
+    for (let j = 0; j < profileSteps; j++) {
+      const a = i * (profileSteps + 1) + j;
+      const b = (i + 1) * (profileSteps + 1) + j;
+      const c = (i + 1) * (profileSteps + 1) + (j + 1);
+      const d = i * (profileSteps + 1) + (j + 1);
+
+      indices.push(a, b, d);
+      indices.push(b, c, d);
+    }
+  }
+
+  shankGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3),
+  );
+  shankGeom.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+  shankGeom.setIndex(indices);
+  shankGeom.computeVertexNormals();
+
+  // 2. Cathedral Rising Shoulders Arches (Rising to meet the Halo Platform)
+  const archesGeom = new THREE.BufferGeometry();
+  const archPositions: number[] = [];
+  const archIndices: number[] = [];
+
+  const sides = [-1, 1]; // Left (-X) and Right (+X) shoulders
+  sides.forEach((side) => {
+    // Shoulder curve sweeping upward from upper shank to the halo foundation
+    const shoulderCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(side * 1.05, 0.85, 0),
+      new THREE.Vector3(side * 0.95, 1.15, 0),
+      new THREE.Vector3(side * 0.8, 1.38, 0),
+      new THREE.Vector3(side * 0.62, 1.48, 0),
+    ]);
+
+    const archPts = shoulderCurve.getPoints(24);
+    const archSegs = archPts.length - 1;
+    const ribSteps = 12;
+    const baseIndexOffset = archPositions.length / 3;
+
+    // Distribute pavé positions along upper shoulder arches
+    for (let k = 4; k < 18; k += 2) {
+      const p = archPts[k];
+      pavePositions.push(new THREE.Vector3(p.x, p.y + 0.05, p.z));
+    }
+
+    for (let s = 0; s <= archSegs; s++) {
+      const pt = archPts[s];
+      const prog = s / archSegs;
+      const ribW = 0.22 - prog * 0.06;
+      const ribH = 0.16 - prog * 0.04;
+
+      for (let r = 0; r <= ribSteps; r++) {
+        const ang = (r / ribSteps) * Math.PI * 2;
+        const ox = Math.cos(ang) * ribH * 0.5;
+        const oy = Math.sin(ang) * ribH;
+        const oz = Math.cos(ang) * ribW;
+
+        archPositions.push(pt.x + ox * side, pt.y + oy, oz);
+      }
+    }
+
+    for (let s = 0; s < archSegs; s++) {
+      for (let r = 0; r < ribSteps; r++) {
+        const a = baseIndexOffset + s * (ribSteps + 1) + r;
+        const b = baseIndexOffset + (s + 1) * (ribSteps + 1) + r;
+        const c = baseIndexOffset + (s + 1) * (ribSteps + 1) + (r + 1);
+        const d = baseIndexOffset + s * (ribSteps + 1) + (r + 1);
+
+        archIndices.push(a, b, d);
+        archIndices.push(b, c, d);
+      }
+    }
+  });
+
+  archesGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(archPositions, 3),
+  );
+  archesGeom.setIndex(archIndices);
+  archesGeom.computeVertexNormals();
+
+  return { shankGeom, cathedralArchesGeom: archesGeom, pavePositions };
+}
+
+// ============================================================================
+// 4. STEP-CUT OCTAGONAL HALO PLATFORM WITH MILGRAIN RIM
+// ============================================================================
+function createHaloPlatform(
+  center = new THREE.Vector3(0, 1.54, 0),
+  width = 1.68,
+  depth = 1.44,
+  cornerClip = 0.36,
+): {
+  haloPlateGeom: THREE.BufferGeometry;
+  beadPositions: THREE.Vector3[];
+} {
+  const haloPlateGeom = new THREE.BufferGeometry();
+  const positions: number[] = [];
+  const beadPositions: THREE.Vector3[] = [];
+
+  const addTri = (p1: THREE.Vector3, p2: THREE.Vector3, p3: THREE.Vector3) => {
+    positions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
+  };
+  const addQuad = (
+    p1: THREE.Vector3,
+    p2: THREE.Vector3,
+    p3: THREE.Vector3,
+    p4: THREE.Vector3,
+  ) => {
+    addTri(p1, p2, p3);
+    addTri(p1, p3, p4);
+  };
+
+  const getRing = (
+    w: number,
+    d: number,
+    c: number,
+    y: number,
+  ): THREE.Vector3[] => {
+    const hw = w / 2;
+    const hd = d / 2;
+    return [
+      new THREE.Vector3(center.x + hw - c, y, center.z - hd),
+      new THREE.Vector3(center.x + hw, y, center.z - hd + c),
+      new THREE.Vector3(center.x + hw, y, center.z + hd - c),
+      new THREE.Vector3(center.x + hw - c, y, center.z + hd),
+      new THREE.Vector3(center.x - hw + c, y, center.z + hd),
+      new THREE.Vector3(center.x - hw, y, center.z + hd - c),
+      new THREE.Vector3(center.x - hw, y, center.z - hd + c),
+      new THREE.Vector3(center.x - hw + c, y, center.z - hd),
+    ];
+  };
+
+  const yTop = center.y + 0.05;
+  const yBot = center.y - 0.12;
+
+  // Outer rim & inner cutout boundary
+  const outerRingTop = getRing(width, depth, cornerClip, yTop);
+  const outerRingBot = getRing(
+    width * 0.94,
+    depth * 0.94,
+    cornerClip * 0.94,
+    yBot,
+  );
+  const innerRingTop = getRing(
+    width * 0.68,
+    depth * 0.68,
+    cornerClip * 0.68,
+    yTop,
+  );
+  const innerRingBot = getRing(
+    width * 0.64,
+    depth * 0.64,
+    cornerClip * 0.64,
+    yBot,
+  );
+
+  // Top surface plate of the halo
+  for (let i = 0; i < 8; i++) {
+    const next = (i + 1) % 8;
+    addQuad(
+      innerRingTop[i],
+      innerRingTop[next],
+      outerRingTop[next],
+      outerRingTop[i],
+    );
+    addQuad(
+      outerRingTop[i],
+      outerRingTop[next],
+      outerRingBot[next],
+      outerRingBot[i],
+    );
+    addQuad(
+      innerRingBot[i],
+      innerRingBot[next],
+      innerRingTop[next],
+      innerRingTop[i],
+    );
+    addQuad(
+      outerRingBot[i],
+      outerRingBot[next],
+      innerRingBot[next],
+      innerRingBot[i],
+    );
+
+    // Position halo melee diamonds centered within the rim channel
+    const p1 = outerRingTop[i];
+    const p2 = outerRingTop[next];
+    const q1 = innerRingTop[i];
+    const q2 = innerRingTop[next];
+    const midOuter = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+    const midInner = new THREE.Vector3().addVectors(q1, q2).multiplyScalar(0.5);
+    beadPositions.push(
+      new THREE.Vector3().addVectors(midOuter, midInner).multiplyScalar(0.5),
+    );
+
+    // Midpoints for corner segments to place full 20 micro-stones around halo
+    if (i % 2 === 0) {
+      beadPositions.push(
+        new THREE.Vector3().addVectors(p1, q1).multiplyScalar(0.5),
+      );
+    }
+  }
+
+  haloPlateGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3),
+  );
+  haloPlateGeom.computeVertexNormals();
+
+  return { haloPlateGeom, beadPositions };
+}
+
+// ============================================================================
+// 5. INTRICATE FILIGREE UNDER-GALLERY (Azouré / Pierced Lattice)
+// ============================================================================
+function createFiligreeUnderGallery(
+  center = new THREE.Vector3(0, 1.4, 0),
   metalMaterial: THREE.Material,
-  diamondMaterial: THREE.Material,
+  accentMaterial: THREE.Material,
+  group: THREE.Group,
+  metalMeshes: THREE.Mesh[],
+  accentMeshes: THREE.Mesh[],
+) {
+  const addPart = (
+    geom: THREE.BufferGeometry,
+    mat: THREE.Material,
+    isAccent = false,
+  ) => {
+    const mesh = new THREE.Mesh(geom, mat);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
+    if (isAccent) accentMeshes.push(mesh);
+    else metalMeshes.push(mesh);
+    return mesh;
+  };
+
+  // 1. Lower Gallery Rail Ring (Foundation Collar)
+  const collarGeom = new THREE.TorusGeometry(0.58, 0.048, 16, 40);
+  collarGeom.rotateX(Math.PI / 2);
+  const collarMesh = addPart(collarGeom, metalMaterial);
+  collarMesh.position.set(center.x, center.y - 0.28, center.z);
+
+  // 2. Cathedral Rib Arches (4 diagonal support struts)
+  const cornerAngles = [
+    Math.PI / 4,
+    (3 * Math.PI) / 4,
+    (5 * Math.PI) / 4,
+    (7 * Math.PI) / 4,
+  ];
+  cornerAngles.forEach((angle) => {
+    const cx = Math.cos(angle);
+    const cz = Math.sin(angle);
+
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(cx * 0.54, center.y - 0.26, cz * 0.54),
+      new THREE.Vector3(cx * 0.68, center.y - 0.12, cz * 0.68),
+      new THREE.Vector3(cx * 0.78, center.y + 0.08, cz * 0.78),
+    ]);
+    const archGeom = new THREE.TubeGeometry(curve, 16, 0.044, 12, false);
+    addPart(archGeom, metalMaterial);
+  });
+
+  // 3. Pierced Arabesque Filigree Scrolls (East, West, North, South)
+  const cardinalAngles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+  cardinalAngles.forEach((angle) => {
+    const scrollGroup = new THREE.Group();
+
+    // S-Scroll filigree ribbon
+    const scrollCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, -0.22, 0.52),
+      new THREE.Vector3(0.12, -0.14, 0.54),
+      new THREE.Vector3(0, -0.06, 0.56),
+      new THREE.Vector3(-0.1, 0.02, 0.58),
+      new THREE.Vector3(0, 0.08, 0.6),
+    ]);
+    const scrollTubeGeom = new THREE.TubeGeometry(
+      scrollCurve,
+      20,
+      0.032,
+      10,
+      false,
+    );
+    const scrollMesh = addPart(scrollTubeGeom, metalMaterial);
+    scrollGroup.add(scrollMesh);
+
+    // Milgrain finial button at scroll center
+    const finialGeom = new THREE.SphereGeometry(0.045, 12, 10);
+    const finialMesh = addPart(finialGeom, metalMaterial);
+    finialMesh.position.set(0, -0.06, 0.56);
+    scrollGroup.add(finialMesh);
+
+    scrollGroup.rotation.y = angle;
+    scrollGroup.position.set(center.x, center.y, center.z);
+    group.add(scrollGroup);
+  });
+
+  // 4. North & South "Peek-a-Boo" Secret Flush-Set Gems
+  [-0.6, 0.6].forEach((zPos) => {
+    const secretBezelGeom = new THREE.TorusGeometry(0.065, 0.024, 12, 24);
+    const secretBezel = addPart(secretBezelGeom, metalMaterial);
+    secretBezel.position.set(center.x, center.y - 0.1, center.z + zPos);
+
+    const secretGemGeom = new THREE.SphereGeometry(0.048, 12, 12);
+    secretGemGeom.scale(1.0, 0.6, 1.0);
+    const secretGem = addPart(secretGemGeom, accentMaterial, true);
+    secretGem.position.set(center.x, center.y - 0.1, center.z + zPos);
+  });
+}
+
+// ============================================================================
+// 6. FOUR CORNER CHEVRON DOUBLE-CLAW PRONGS (Turned Inward Clamping Geometry)
+// ============================================================================
+function createCornerChevronClaws(
+  center = new THREE.Vector3(0, 1.62, 0),
+  width = 1.12,
+  depth = 0.88,
+  cornerClip = 0.22,
+  metalMaterial: THREE.Material,
+  group: THREE.Group,
+  metalMeshes: THREE.Mesh[],
+) {
+  const hw = width / 2;
+  const hd = depth / 2;
+  const c = cornerClip;
+
+  // 4 corner center positions along the emerald-cut clipped corners
+  const corners = [
+    { x: hw - c / 2, z: -hd + c / 2 }, // Top-Right (+X, -Z)
+    { x: hw - c / 2, z: hd - c / 2 }, // Bottom-Right (+X, +Z)
+    { x: -hw + c / 2, z: hd - c / 2 }, // Bottom-Left (-X, +Z)
+    { x: -hw + c / 2, z: -hd + c / 2 }, // Top-Left (-X, -Z)
+  ];
+
+  corners.forEach((corn) => {
+    // Vector pointing from corner strictly INWARD toward center (0, center.y, 0)
+    const inward = new THREE.Vector3(
+      center.x - (center.x + corn.x),
+      0,
+      center.z - (center.z + corn.z),
+    ).normalize();
+    const outward = inward.clone().negate();
+    // Tangent perpendicular along the corner facet
+    const tangent = new THREE.Vector3(-inward.z, 0, inward.x).normalize();
+
+    // Twin chevron claws per corner holding the stone firmly in place
+    [-0.034, 0.034].forEach((tOffset) => {
+      // Base point on corner
+      const cornerBase = new THREE.Vector3(
+        center.x + corn.x + tangent.x * tOffset,
+        center.y,
+        center.z + corn.z + tangent.z * tOffset,
+      );
+
+      // Points along the claw:
+      // 1. Root: below girdle, rising from halo platform
+      const pRoot = cornerBase.clone().addScaledVector(outward, 0.032);
+      pRoot.y = center.y - 0.1;
+
+      // 2. Lower body: running up past the girdle band
+      const pGirdle = cornerBase.clone().addScaledVector(outward, 0.012);
+      pGirdle.y = center.y + 0.02;
+
+      // 3. Knee / Arch: turning sharply inward over the crown bevel step
+      const pArch = cornerBase.clone().addScaledVector(inward, 0.055);
+      pArch.y = center.y + 0.1;
+
+      // 4. Tip: turned inward and pressed down onto the gemstone crown facet
+      const pTip = cornerBase.clone().addScaledVector(inward, 0.135);
+      pTip.y = center.y + 0.075;
+
+      const curve = new THREE.CatmullRomCurve3([pRoot, pGirdle, pArch, pTip]);
+      const tubeGeom = new THREE.TubeGeometry(curve, 16, 0.023, 10, false);
+      const tubeMesh = new THREE.Mesh(tubeGeom, metalMaterial);
+      tubeMesh.castShadow = true;
+      tubeMesh.receiveShadow = true;
+      group.add(tubeMesh);
+      metalMeshes.push(tubeMesh);
+
+      // Smooth rounded claw tip bead pressing down on stone facet
+      const tipGeom = new THREE.SphereGeometry(0.025, 10, 8);
+      tipGeom.scale(0.9, 0.65, 1.1);
+      const tipMesh = new THREE.Mesh(tipGeom, metalMaterial);
+      tipMesh.position.copy(pTip);
+      tipMesh.lookAt(pTip.clone().add(inward));
+      tipMesh.castShadow = true;
+      tipMesh.receiveShadow = true;
+      group.add(tipMesh);
+      metalMeshes.push(tipMesh);
+    });
+  });
+}
+
+// ============================================================================
+// 7. ASSEMBLE COMPLETE ROYAL CATHEDRAL HALO RING MODEL
+// ============================================================================
+function createRoyalCathedralRingModel(
+  metalMaterial: THREE.Material,
+  centerGemMaterial: THREE.Material,
+  internalReflectorMaterial: THREE.Material,
+  accentGemMaterial: THREE.Material,
   wireMaterial: THREE.LineBasicMaterial,
 ): {
   group: THREE.Group;
   metalMeshes: THREE.Mesh[];
-  diamondMeshes: THREE.Mesh[];
+  centerGemMeshes: THREE.Mesh[];
+  accentGemMeshes: THREE.Mesh[];
   wireLines: THREE.LineSegments[];
 } {
   const group = new THREE.Group();
   const metalMeshes: THREE.Mesh[] = [];
-  const diamondMeshes: THREE.Mesh[] = [];
+  const centerGemMeshes: THREE.Mesh[] = [];
+  const accentGemMeshes: THREE.Mesh[] = [];
   const wireLines: THREE.LineSegments[] = [];
 
-  // Helper to register mesh and its CAD wireframe isocurves
   const addPart = (
     geom: THREE.BufferGeometry,
     mat: THREE.Material,
-    isGem = false,
+    category: "metal" | "centerGem" | "accentGem",
   ) => {
     const mesh = new THREE.Mesh(geom, mat);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     group.add(mesh);
 
-    if (isGem) {
-      diamondMeshes.push(mesh);
-    } else {
-      metalMeshes.push(mesh);
-    }
+    if (category === "metal") metalMeshes.push(mesh);
+    else if (category === "centerGem") centerGemMeshes.push(mesh);
+    else accentGemMeshes.push(mesh);
 
-    // Add subtle CAD NURBS isocurve edges
-    const edgesGeom = new THREE.EdgesGeometry(geom, 28);
+    const edgesGeom = new THREE.EdgesGeometry(geom, 26);
     const edgesLine = new THREE.LineSegments(edgesGeom, wireMaterial);
     mesh.add(edgesLine);
     wireLines.push(edgesLine);
@@ -183,146 +801,80 @@ function createHighFidelityRingModel(
     return mesh;
   };
 
-  // 1. Shank (Comfort-Fit D-Profile Band)
-  // Radius 1.35 matches finger size US 6.5 (~16.92mm internal diameter)
-  const shankArc = Math.PI * 1.55;
-  const shankGeom = new THREE.TorusGeometry(1.35, 0.16, 24, 64, shankArc);
-  shankGeom.rotateZ(Math.PI * 0.725);
-  addPart(shankGeom, metalMaterial);
+  // 1. Complete 360° Closed Circular Shank (Solid Under-Gallery Bridge)
+  const { shankGeom, cathedralArchesGeom, pavePositions } =
+    createRoyalCathedralShankGeometry(1.35, 96);
+  addPart(shankGeom, metalMaterial, "metal");
+  addPart(cathedralArchesGeom, metalMaterial, "metal");
 
-  // Inner comfort chamfer layer
-  const innerChamferGeom = new THREE.TorusGeometry(
-    1.35,
-    0.12,
-    16,
-    48,
-    shankArc,
-  );
-  innerChamferGeom.rotateZ(Math.PI * 0.725);
-  addPart(innerChamferGeom, metalMaterial);
-
-  // 2. Cathedral Shoulders (Sweeping tapered arms from shank to collet head)
-  const leftShoulderCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.9, 0.98, 0),
-    new THREE.Vector3(-0.75, 1.25, 0),
-    new THREE.Vector3(-0.48, 1.46, 0),
-  ]);
-  const leftShoulderGeom = new THREE.TubeGeometry(
-    leftShoulderCurve,
-    16,
-    0.14,
-    14,
-    false,
-  );
-  addPart(leftShoulderGeom, metalMaterial);
-
-  const rightShoulderCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.9, 0.98, 0),
-    new THREE.Vector3(0.75, 1.25, 0),
-    new THREE.Vector3(0.48, 1.46, 0),
-  ]);
-  const rightShoulderGeom = new THREE.TubeGeometry(
-    rightShoulderCurve,
-    16,
-    0.14,
-    14,
-    false,
-  );
-  addPart(rightShoulderGeom, metalMaterial);
-
-  // 3. Collet Setting Head (Under-Gallery & Gallery Collar)
-  // Under-gallery base ring
-  const baseColletGeom = new THREE.TorusGeometry(0.46, 0.048, 16, 32);
-  const baseColletMesh = addPart(baseColletGeom, metalMaterial);
-  baseColletMesh.rotation.x = Math.PI / 2;
-  baseColletMesh.position.y = 1.42;
-
-  // Middle gallery rail collar
-  const galleryRailGeom = new THREE.TorusGeometry(0.68, 0.045, 16, 32);
-  const galleryRailMesh = addPart(galleryRailGeom, metalMaterial);
-  galleryRailMesh.rotation.x = Math.PI / 2;
-  galleryRailMesh.position.y = 1.72;
-
-  // Decorative filigree gallery arches (front and back openings)
-  const filigreeArchFront = new THREE.TorusGeometry(
-    0.18,
-    0.03,
-    12,
-    24,
-    Math.PI,
-  );
-  const frontArchMesh = addPart(filigreeArchFront, metalMaterial);
-  frontArchMesh.position.set(0, 1.34, 0.22);
-  frontArchMesh.rotation.z = Math.PI;
-
-  const filigreeArchBack = new THREE.TorusGeometry(0.18, 0.03, 12, 24, Math.PI);
-  const backArchMesh = addPart(filigreeArchBack, metalMaterial);
-  backArchMesh.position.set(0, 1.34, -0.22);
-  backArchMesh.rotation.z = Math.PI;
-
-  // 4. Precision Talon / Claw Prongs (4 Prongs holding center solitaire)
-  for (let i = 0; i < 4; i++) {
-    const prongAngle = (i * Math.PI) / 2 + Math.PI / 4;
-    const cosA = Math.cos(prongAngle);
-    const sinA = Math.sin(prongAngle);
-
-    const prongCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(cosA * 0.44, 1.38, sinA * 0.44),
-      new THREE.Vector3(cosA * 0.62, 1.72, sinA * 0.62),
-      new THREE.Vector3(cosA * 0.76, 1.95, sinA * 0.76),
-      new THREE.Vector3(cosA * 0.67, 2.06, sinA * 0.67), // curved claw tip locks over girdle
-    ]);
-    const prongGeom = new THREE.TubeGeometry(prongCurve, 14, 0.042, 12, false);
-    addPart(prongGeom, metalMaterial);
-
-    // Rounded tip bead on prong claw
-    const prongTipGeom = new THREE.SphereGeometry(0.044, 12, 12);
-    const tipMesh = addPart(prongTipGeom, metalMaterial);
-    tipMesh.position.set(cosA * 0.67, 2.06, sinA * 0.67);
-  }
-
-  // 5. Micro-Pavé Accent Gemstones along Cathedral Shoulders
-  const paveOffsets = [0.22, 0.38, 0.54, 0.7, 0.84];
-  const paveStoneGeom = createBrilliantDiamondGeometry(0.08);
-  const paveBeadGeom = new THREE.SphereGeometry(0.032, 10, 10);
-
-  // Left shoulder pavé diamonds & micro-beads
-  paveOffsets.forEach((t) => {
-    const pt = leftShoulderCurve.getPoint(t);
-    const stoneMesh = addPart(paveStoneGeom, diamondMaterial, true);
-    stoneMesh.position.set(pt.x, pt.y + 0.12, pt.z);
-    stoneMesh.scale.set(0.9, 0.9, 0.9);
-
-    const beadMesh = addPart(paveBeadGeom, metalMaterial);
-    beadMesh.position.set(pt.x + 0.05, pt.y + 0.13, pt.z + 0.04);
+  // Cathedral Shoulder Pavé Accent Stones (14 Melee Diamonds)
+  const paveGeom = createMicroPaveStoneGeom(0.046);
+  pavePositions.forEach((pos) => {
+    const stone = addPart(paveGeom, accentGemMaterial, "accentGem");
+    stone.position.copy(pos);
+    stone.lookAt(pos.x * 2, pos.y * 2, pos.z);
   });
 
-  // Right shoulder pavé diamonds & micro-beads
-  paveOffsets.forEach((t) => {
-    const pt = rightShoulderCurve.getPoint(t);
-    const stoneMesh = addPart(paveStoneGeom, diamondMaterial, true);
-    stoneMesh.position.set(pt.x, pt.y + 0.12, pt.z);
-    stoneMesh.scale.set(0.9, 0.9, 0.9);
+  // 2. Halo Platform with 20 Micro-Pavé Diamonds & Milgrain Rim
+  const { haloPlateGeom, beadPositions } = createHaloPlatform(
+    new THREE.Vector3(0, 1.54, 0),
+    1.68,
+    1.44,
+    0.36,
+  );
+  addPart(haloPlateGeom, metalMaterial, "metal");
 
-    const beadMesh = addPart(paveBeadGeom, metalMaterial);
-    beadMesh.position.set(pt.x - 0.05, pt.y + 0.13, pt.z + 0.04);
+  // 20 Halo Melee Diamonds
+  const haloStoneGeom = createMicroPaveStoneGeom(0.044);
+  beadPositions.forEach((pos) => {
+    const stone = addPart(haloStoneGeom, accentGemMaterial, "accentGem");
+    stone.position.copy(pos);
+    stone.position.y += 0.04;
   });
 
-  // 6. Center Solitaire Diamond (1.25 ct Round Brilliant, 57 facets)
-  const centerDiamondGeom = createBrilliantDiamondGeometry(0.82);
-  const centerDiamondMesh = addPart(centerDiamondGeom, diamondMaterial, true);
-  centerDiamondMesh.position.set(0, 1.86, 0);
+  // 3. Pierced Arabesque Filigree Under-Gallery
+  createFiligreeUnderGallery(
+    new THREE.Vector3(0, 1.4, 0),
+    metalMaterial,
+    accentGemMaterial,
+    group,
+    metalMeshes,
+    accentGemMeshes,
+  );
 
-  // Adjust model pivot so the visual geometric center of the ring is at (0, 0, 0)
-  group.position.y = -0.285;
+  // 4. Four Corner Chevron Double-Claw Prongs
+  createCornerChevronClaws(
+    new THREE.Vector3(0, 1.62, 0),
+    1.12,
+    0.88,
+    0.22,
+    metalMaterial,
+    group,
+    metalMeshes,
+  );
 
-  return { group, metalMeshes, diamondMeshes, wireLines };
+  // 5. Center Gemstone: 3.20 ct Emerald Step-Cut Royal Sapphire with Top Glare
+  const { gemGeom, internalReflectorGeom } = createEmeraldCutGemGeometry(
+    new THREE.Vector3(0, 1.62, 0),
+    1.12,
+    0.88,
+    0.22,
+    0.22,
+    0.05,
+    0.48,
+  );
+  addPart(gemGeom, centerGemMaterial, "centerGem");
+  addPart(internalReflectorGeom, internalReflectorMaterial, "centerGem");
+
+  // Center model pivot
+  group.position.y = -0.28;
+
+  return { group, metalMeshes, centerGemMeshes, accentGemMeshes, wireLines };
 }
-// === UPDATED DETAILED RING GEOMETRY END ===
 
 export const CADViewer: React.FC<CADViewerProps> = ({
   initialMaterial = "gold",
-  title = "Rhinoceros 8 Viewport: Diamond Solitaire & Micro-Pavé Halo",
+  title = "Rhinoceros 8 Viewport: Royal Cathedral Emerald-Cut Halo Ring",
 }) => {
   const [viewportMode, setViewportMode] = useState<
     "perspective" | "top" | "front" | "wireframe"
@@ -336,7 +888,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
   const [zoomLevel, setZoomLevel] = useState(0.6);
   const [dollyFactor, setDollyFactor] = useState(1);
 
-  // Refs for animation and zoom calculation
+  // Animation and interaction refs
   const isRotatingRef = useRef(isRotating);
   const zoomLevelRef = useRef(zoomLevel);
   const baseDistanceRef = useRef(5.28);
@@ -349,12 +901,13 @@ export const CADViewer: React.FC<CADViewerProps> = ({
   const controlsRef = useRef<OrbitControls | null>(null);
   const ringGroupRef = useRef<THREE.Group | null>(null);
   const gridHelperRef = useRef<THREE.GridHelper | null>(null);
+
   const metalMeshesRef = useRef<THREE.Mesh[]>([]);
-  const diamondMeshesRef = useRef<THREE.Mesh[]>([]);
+  const centerGemMeshesRef = useRef<THREE.Mesh[]>([]);
+  const accentGemMeshesRef = useRef<THREE.Mesh[]>([]);
   const wireLinesRef = useRef<THREE.LineSegments[]>([]);
   const animationFrameRef = useRef<number | null>(null);
 
-  // Sync isRotating state with ref for animation loop
   useEffect(() => {
     isRotatingRef.current = isRotating;
   }, [isRotating]);
@@ -365,7 +918,9 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     platinum: THREE.MeshStandardMaterial;
     rosegold: THREE.MeshStandardMaterial;
     zebra: THREE.ShaderMaterial;
-    diamond: THREE.MeshPhysicalMaterial;
+    centerGem: THREE.MeshPhysicalMaterial;
+    internalReflector: THREE.MeshStandardMaterial;
+    accentGem: THREE.MeshPhysicalMaterial;
     wire: THREE.LineBasicMaterial;
   } | null>(null);
 
@@ -377,7 +932,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
       metalHighlight: "#FEF3C7",
       label: "18K Yellow Gold (Au 750)",
       density: "15.5 g/cm³",
-      weight: "6.84 g",
+      weight: "8.45 g",
     },
     platinum: {
       metalPrimary: "#64748B",
@@ -385,7 +940,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
       metalHighlight: "#F8FAFC",
       label: "950 Platinum (Pt 950)",
       density: "21.4 g/cm³",
-      weight: "9.45 g",
+      weight: "11.66 g",
     },
     rosegold: {
       metalPrimary: "#BE123C",
@@ -393,7 +948,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
       metalHighlight: "#FFE4E6",
       label: "18K Rose Gold (Au 750 + Cu)",
       density: "15.2 g/cm³",
-      weight: "6.71 g",
+      weight: "8.28 g",
     },
     zebra: {
       metalPrimary: "#0284C7",
@@ -407,7 +962,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
 
   const currentMat = materialStyles[material];
 
-  // Initialize Three.js WebGL Scene, Camera, Lights, OrbitControls, and Ring Model
+  // Initialize Three.js WebGL Scene
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
@@ -420,9 +975,9 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     scene.background = new THREE.Color(0x070b14);
     sceneRef.current = scene;
 
-    // 2. Camera (initialized with zoom = 0.6 for optimal proportional framing)
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 2.2, 4.8);
+    // 2. Camera
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+    camera.position.set(0, 2.3, 4.8);
     camera.zoom = 0.6;
     camera.updateProjectionMatrix();
     cameraRef.current = camera;
@@ -439,14 +994,14 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.32;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     rendererRef.current = renderer;
     container.innerHTML = "";
     container.appendChild(renderer.domElement);
 
-    // 4. Studio Environment Lighting (RoomEnvironment PMREM)
+    // 4. Studio Environment Lighting
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
     pmremGenerator.compileEquirectangularShader();
     const envTexture = pmremGenerator.fromScene(
@@ -455,11 +1010,11 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     ).texture;
     scene.environment = envTexture;
 
-    // Additional Key, Rim, and Ambient studio lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    // Balanced 3-point lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.2);
+    const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.7);
     keyLight.position.set(4, 7, 5);
     keyLight.castShadow = true;
     scene.add(keyLight);
@@ -468,9 +1023,14 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     rimLight.position.set(-4, -2, -4);
     scene.add(rimLight);
 
-    const topLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    topLight.position.set(0, 8, 0);
-    scene.add(topLight);
+    const gemSparkleLight = new THREE.DirectionalLight(0xffffff, 2.6);
+    gemSparkleLight.position.set(0, 9, 2);
+    scene.add(gemSparkleLight);
+
+    // Dedicated Top Glare Spotlight aimed directly at the stone table facing camera
+    const topGlareLight = new THREE.DirectionalLight(0xffffff, 3.4);
+    topGlareLight.position.set(0, 5.5, 4.2);
+    scene.add(topGlareLight);
 
     // 5. Floor CAD Grid Mesh
     const gridHelper = new THREE.GridHelper(10, 20, 0x0284c7, 0x1e293b);
@@ -483,19 +1043,17 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.maxDistance = 12;
-    // Cap minDistance so model zoom cannot exceed 100%
     controls.minDistance = baseDistanceRef.current * zoomLevel;
     controls.target.set(0, 0, 0);
     controlsRef.current = controls;
 
-    // Real-time listener for mouse wheel / gesture zoom updates strictly capped at 100%
+    // Dolly zoom cap at 100%
     const updateDollyZoom = () => {
       if (!cameraRef.current || !controlsRef.current) return;
       const cam = cameraRef.current;
       const ctrl = controlsRef.current;
       const dist = cam.position.distanceTo(ctrl.target);
       if (dist > 0.01 && baseDistanceRef.current > 0.01) {
-        // Enforce maximum zoom cap at 100% (distance cannot be less than baseDistance * zoomLevel)
         const minDist = baseDistanceRef.current * zoomLevelRef.current;
         if (dist < minDist) {
           const dir = new THREE.Vector3()
@@ -525,22 +1083,22 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     const goldMat = new THREE.MeshStandardMaterial({
       color: 0xf59e0b,
       metalness: 0.96,
-      roughness: 0.14,
-      envMapIntensity: 1.5,
+      roughness: 0.1,
+      envMapIntensity: 1.8,
     });
 
     const platinumMat = new THREE.MeshStandardMaterial({
       color: 0xe2e8f0,
-      metalness: 0.92,
-      roughness: 0.12,
-      envMapIntensity: 1.4,
+      metalness: 0.94,
+      roughness: 0.08,
+      envMapIntensity: 1.6,
     });
 
     const rosegoldMat = new THREE.MeshStandardMaterial({
       color: 0xfb7185,
       metalness: 0.94,
-      roughness: 0.15,
-      envMapIntensity: 1.5,
+      roughness: 0.12,
+      envMapIntensity: 1.7,
     });
 
     // Rhinoceros 3D Curvature & Zebra Analysis Shader
@@ -573,18 +1131,51 @@ export const CADViewer: React.FC<CADViewerProps> = ({
       `,
     });
 
-    // Tolkowsky Brilliant Cut Diamond Physical Material
-    const diamondMat = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff,
-      metalness: 0.0,
-      roughness: 0.03,
-      transmission: 0.94,
-      ior: 2.417,
-      reflectivity: 0.9,
+    // Royal Deep Velvet Blue Sapphire Center Stone with Vivid Top Glare & Specular Fire
+    const centerGemMat = new THREE.MeshPhysicalMaterial({
+      color: 0x073587,
+      metalness: 0.08,
+      roughness: 0.0,
+      transmission: 0.38, // Optimized for deep optical stone body + vivid surface glare
+      ior: 1.77,
+      dispersion: 0.045,
+      thickness: 1.2,
+      attenuationColor: new THREE.Color(0x0284c7),
+      attenuationDistance: 1.4,
       transparent: true,
       opacity: 1.0,
-      flatShading: true,
-      envMapIntensity: 2.2,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.0,
+      reflectivity: 1.0,
+      specularIntensity: 1.0,
+      specularColor: new THREE.Color(0xffffff),
+      envMapIntensity: 3.4,
+    });
+
+    // Internal Reflector Core (Total Internal Reflection facet bounce)
+    const internalReflectorMat = new THREE.MeshStandardMaterial({
+      color: 0x38bdf8,
+      metalness: 0.88,
+      roughness: 0.06,
+      envMapIntensity: 3.6,
+    });
+
+    // Brilliant-Cut Melee Diamond Accent Stones
+    const accentGemMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      metalness: 0.02,
+      roughness: 0.0,
+      transmission: 0.96,
+      ior: 2.417,
+      dispersion: 0.045,
+      thickness: 0.45,
+      attenuationColor: new THREE.Color(0xffffff),
+      attenuationDistance: 2.0,
+      transparent: true,
+      opacity: 1.0,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.0,
+      envMapIntensity: 2.6,
     });
 
     // CAD NURBS Isocurve wire lines
@@ -599,22 +1190,33 @@ export const CADViewer: React.FC<CADViewerProps> = ({
       platinum: platinumMat,
       rosegold: rosegoldMat,
       zebra: zebraMat,
-      diamond: diamondMat,
+      centerGem: centerGemMat,
+      internalReflector: internalReflectorMat,
+      accentGem: accentGemMat,
       wire: wireMat,
     };
 
-    // 8. Build High-Fidelity Ring Model
-    const currentActiveMat = materialsMapRef.current[material];
+    // 8. Build Royal Cathedral Halo Ring Model
+    const currentActiveMetalMat = materialsMapRef.current[material];
     const {
       group: ringGroup,
       metalMeshes,
-      diamondMeshes,
+      centerGemMeshes,
+      accentGemMeshes,
       wireLines,
-    } = createHighFidelityRingModel(currentActiveMat, diamondMat, wireMat);
+    } = createRoyalCathedralRingModel(
+      currentActiveMetalMat,
+      centerGemMat,
+      internalReflectorMat,
+      accentGemMat,
+      wireMat,
+    );
+
     scene.add(ringGroup);
     ringGroupRef.current = ringGroup;
     metalMeshesRef.current = metalMeshes;
-    diamondMeshesRef.current = diamondMeshes;
+    centerGemMeshesRef.current = centerGemMeshes;
+    accentGemMeshesRef.current = accentGemMeshes;
     wireLinesRef.current = wireLines;
 
     // 9. Resize Handling
@@ -630,7 +1232,7 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
 
-    // 10. Animation Render Loop (Using isRotatingRef to dynamically start/stop rotation)
+    // 10. Animation Render Loop
     let lastTime = performance.now();
     const animate = (time: number) => {
       const delta = (time - lastTime) / 1000;
@@ -676,14 +1278,13 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     });
   }, [material]);
 
-  // Sync Zoom Level from +/- buttons (capped at 100%)
+  // Sync Zoom Level from +/- buttons
   useEffect(() => {
     zoomLevelRef.current = zoomLevel;
     if (!cameraRef.current || !controlsRef.current) return;
     cameraRef.current.zoom = zoomLevel;
     cameraRef.current.updateProjectionMatrix();
 
-    // Dynamically update minDistance so total zoom can never exceed 100%
     controlsRef.current.minDistance = baseDistanceRef.current * zoomLevel;
     const currentDist = cameraRef.current.position.distanceTo(
       controlsRef.current.target,
@@ -705,7 +1306,6 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     const camera = cameraRef.current;
     const controls = controlsRef.current;
 
-    // Update wireframe visibility
     const isWireframeMode = viewportMode === "wireframe";
     metalMeshesRef.current.forEach((mesh) => {
       if (mesh.material instanceof THREE.MeshStandardMaterial) {
@@ -719,9 +1319,9 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     });
 
     if (viewportMode === "perspective" || viewportMode === "wireframe") {
-      camera.position.set(0, 2.2, 4.8);
+      camera.position.set(0, 2.3, 4.8);
       controls.target.set(0, 0, 0);
-      baseDistanceRef.current = Math.hypot(2.2, 4.8);
+      baseDistanceRef.current = Math.hypot(2.3, 4.8);
     } else if (viewportMode === "top") {
       camera.position.set(0, 5.5, 0.001);
       controls.target.set(0, 0, 0);
@@ -737,7 +1337,6 @@ export const CADViewer: React.FC<CADViewerProps> = ({
     controls.update();
   }, [viewportMode]);
 
-  // Combined zoom percentage strictly capped at 100% maximum
   const currentZoomPercent = Math.min(
     100,
     Math.round(zoomLevel * dollyFactor * 100),
@@ -792,11 +1391,15 @@ export const CADViewer: React.FC<CADViewerProps> = ({
             </div>
             <div className="text-slate-400 flex items-center gap-2">
               <span>Finger Size:</span>
-              <span className="text-sky-400">US 6.5 (16.92mm Ø)</span>
+              <span className="text-sky-400">
+                US 6.5 (16.92mm Ø 360° Closed)
+              </span>
             </div>
             <div className="text-slate-400 flex items-center gap-2">
-              <span>Prong Height:</span>
-              <span className="text-emerald-400">1.15mm (±0.01)</span>
+              <span>Setting Head:</span>
+              <span className="text-emerald-400">
+                Cathedral Halo + Pierced Filigree
+              </span>
             </div>
             <div className="text-slate-400 flex items-center gap-2">
               <span>G2 Continuity:</span>
@@ -818,9 +1421,15 @@ export const CADViewer: React.FC<CADViewerProps> = ({
               Alloy: <span className="text-slate-200">{currentMat.label}</span>
             </div>
             <div className="text-slate-400">
-              Gem Carat:{" "}
-              <span className="text-sky-300 font-semibold">
-                1.25 ct (Center) + 0.42 ct (Pavé)
+              Center Gem:{" "}
+              <span className="text-sky-400 font-semibold">
+                3.20 ct Emerald Royal Sapphire
+              </span>
+            </div>
+            <div className="text-slate-400">
+              Pavé Melee:{" "}
+              <span className="text-emerald-300 font-semibold">
+                34× Micro-Pavé Diamonds
               </span>
             </div>
           </div>

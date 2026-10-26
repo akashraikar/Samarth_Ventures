@@ -84,7 +84,7 @@ export const WhyChooseUsView: React.FC<WhyChooseUsViewProps> = ({
               Why Choose Samarth Ventures
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Precision Engineering for Fine Jewelry: Moving beyond standard
+              Precision Engineering for Fine jewellery: Moving beyond standard
               digital rendering, our curriculum ensures every millimeter modeled
               is perfectly calibrated for precious metals and international
               manufacturing compliance.

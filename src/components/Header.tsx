@@ -83,6 +83,13 @@ export const Header: React.FC<HeaderProps> = ({
       level: "Masterclass",
       desc: "Master digital design to transform traditional crafts for modern manufacturing.",
     },
+    {
+      id: "course-electroforming-cad",
+      label: "Electroforming Hollow Jewellery Cad Development Programme",
+      icon: <Layers className="w-4 h-4 text-[#0085CB]" />,
+      level: "Industry Pro",
+      desc: "Hollow product CAD, Grasshopper stone-setting, Sub-D surfacing, AI workflows, and electroforming mold validation.",
+    },
   ];
 
   const isOffersActive = [
@@ -90,6 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
     "course-intermediate",
     "course-reverse-engineering",
     "course-digital-artisan",
+    "course-electroforming-cad",
   ].includes(currentPage);
 
   return (
@@ -104,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             {/* Exact corporate logo matching user's attached image */}
             <img
-              src="/samarth_ventures_logo.png"
+              src="samarth_ventures_logo.png"
               alt="Samarth Ventures"
               className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]"
               onError={(e) => {
@@ -162,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Desktop Dropdown Menu */}
             {isDropdownOpen && (
               <div
-                className="absolute left-0 mt-1 w-[460px] bg-white rounded-xl shadow-xl border border-[#E2E8F0] p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50"
+                className="absolute left-0 mt-1 w-[460px] max-h-[85vh] overflow-y-auto bg-white rounded-xl shadow-xl border border-[#E2E8F0] p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50"
                 onMouseEnter={handleDropdownEnter}
                 onMouseLeave={handleDropdownLeave}
               >
@@ -219,7 +227,7 @@ export const Header: React.FC<HeaderProps> = ({
                     }}
                     className="text-[#0085CB] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                   >
-                    <span>Compare Courses</span>
+                    <span>Enroll Now</span>
                     <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -334,7 +342,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="flex items-center gap-2">
                 <span>What we offer</span>
                 <span className="text-[10px] bg-[#E5EEFF] text-[#006195] font-semibold px-1.5 py-0.5 rounded">
-                  4 Courses
+                  5 Courses
                 </span>
               </span>
               <ChevronDown

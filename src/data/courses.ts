@@ -14,7 +14,7 @@ export const COURSES: Record<string, CourseData> = {
     prerequisites: "Basic computer literacy",
     certification:
       "Authorized Rhinoceros 3D Advanced jewellery Specialist Diploma",
-    heroImage: "/src/assets/images/cad_advanced_ring_1791375517380.jpg",
+    heroImage: "assets/images/cad_advanced_ring_1791375517380.jpg",
     overview:
       "The Jewellery CAD Professional in Rhinoceros course is a comprehensive, industry-oriented program that transforms learners from beginners into advanced 3D modeling experts. Levels 1 and 2 build a rock-solid technical foundation, moving from basic Rhino interface navigation and solid geometry to complex NURBS topology, curve continuity, and history-based surface modeling. The Intermediate Level focuses on precision-based, industry-standard stone-setting techniques, including bar, prong, pave, bezel, and trellis settings. Finally, the Advanced Level empowers students to create complete, production-ready masterworks like cocktail rings, necklaces, and antique pendants optimized for casting and rapid prototyping.",
     coreHighlights: [
@@ -128,6 +128,7 @@ export const COURSES: Record<string, CourseData> = {
       "Remote Technical Support: Live troubleshooting assistance via secure TeamViewer",
       "Rhino Software Provisioning: Complete technical setup of the latest version",
       "Verified Completion Certificate: Industry-recognized credential validating advanced CAD expertise",
+      "Software Licensing: Provision of fully activated educational licenses for all training tools, valid exclusively through the duration of your course timeline.",
     ],
     batchSchedule:
       "Weekend & Weekday Batches Available • Next Batch: 1st & 3rd Monday of every month",
@@ -145,9 +146,9 @@ export const COURSES: Record<string, CourseData> = {
     software: ["Rhinoceros 8", "Grasshopper Gold"],
     prerequisites: "Basic computer literacy",
     certification: "Certified jewellery CAD Modeler",
-    heroImage: "/src/assets/images/hero_jewellery_cad_1791375506977.jpg",
+    heroImage: "assets/images/hero_jewellery_cad_1791375506977.jpg",
     overview:
-      "This comprehensive beginner-to-intermediate course builds strong technical skills and design precision using Rhinoceros 3D. Level 1 establishes a solid foundation in interface navigation, geometric creation, control point editing, and production-ready rendering or exporting. The Intermediate Level applies these fundamentals directly to jewellery design through intensive curve practice and the creation of 16 industry-standard stone settings (including prong, bezel, pavé, and trellis). By the end, learners are fully equipped to generate detailed, production-ready 3D models tailored for modern jewellery manufacturing workflows.",
+      "This comprehensive beginner-to-intermediate course builds strong technical skills and design precision using Rhinoceros 3D. Level 1 establishes a solid foundation in interface navigation, geometric creation, control point editing, and production-ready rendering or exporting. The Intermediate Level applies these fundamentals directly to jewellery design through intensive curve practice and the creation of 16 industry-standard stone settings (including prong, bezel, Pave, and trellis). By the end, learners are fully equipped to generate detailed, production-ready 3D models tailored for modern jewellery manufacturing workflows.",
     coreHighlights: [
       "Master the Rhino 3D user interface along with core engineering-grade modeling principles",
       "Translate creative product concepts into highly accurate, production-ready 3D CAD models",
@@ -196,7 +197,7 @@ export const COURSES: Record<string, CourseData> = {
           "Partial rims enclose half bezel settings",
           "Amplify stone size using illusion techniques",
           "Cradle focal gemstones using classic prongs",
-          "Encrust jewellery surfaces with pavé beads",
+          "Encrust jewellery surfaces with Pave beads",
           "Sculpt gorgeous scalloped edges for stones",
           "Suspend floating diamonds using metal pressure",
           "Interlace secure claws in trellis settings",
@@ -219,6 +220,7 @@ export const COURSES: Record<string, CourseData> = {
       "Remote Technical Support: Live troubleshooting assistance via secure TeamViewer",
       "Rhino Software Provisioning: Complete technical setup of the latest version",
       "Verified Completion Certificate: Industry-recognized credential validating foundational CAD expertise",
+      "Software Licensing: Provision of fully activated educational licenses for all training tools, valid exclusively through the duration of your course timeline.",
     ],
     batchSchedule: "Morning, Afternoon & Evening Batches • Flexible Schedules",
   },
@@ -240,7 +242,7 @@ export const COURSES: Record<string, CourseData> = {
     ],
     prerequisites: "Basic CAD modeling background",
     certification: "Certified Professional in Digital Reverse Engineering",
-    heroImage: "/src/assets/images/cad_reverse_engineering_1791375527282.jpg",
+    heroImage: "assets/images/cad_reverse_engineering_1791375527282.jpg",
     overview:
       "Master precision Rhino 3D modeling, advanced NURBS topology, and complex surface creation. Learn UI customization, coordinate input, object snaps, rendering, and layout design. Advance to sculpting meshes, managing surface continuity, and transforming raw scan data into clean, production-ready NURBS geometry for rapid prototyping and modern manufacturing.",
     coreHighlights: [
@@ -371,6 +373,7 @@ export const COURSES: Record<string, CourseData> = {
       "Remote Support: Remote desktop assistance via TeamViewer for seamless real-time student troubleshooting",
       "Software Provision: Installation support for the latest version of Rhinoceros software during the training tenure",
       "Credentialing: Award of an official Certificate of Completion upon successful fulfillment of course requirements",
+      "Software Licensing: Provision of fully activated educational licenses for all training tools, valid exclusively through the duration of your course timeline.",
     ],
     batchSchedule:
       "Weekdays dedicated Batch • Limited to 8 Candidates per Batch",
@@ -395,7 +398,7 @@ export const COURSES: Record<string, CourseData> = {
     prerequisites:
       "Open to traditional jewellery karigars, bench jewellers, and CAD designers",
     certification: "Master Digital Artisan Fellowship Certified",
-    heroImage: "/src/assets/images/digital_artisan_craft_1791375553414.jpg",
+    heroImage: "assets/images/digital_artisan_craft_1791375553414.jpg",
     overview:
       "Bridge heritage craftsmanship with digital design using Rhino, Blender, DAZ 3D, and Mira 3D. Master foundational-to-intermediate workflows, including precision curve creation, organic sculpting, anatomy modeling, and rapid character prototyping. Learn advanced mesh repair, thickness analysis, and path optimization to transform sketches and scans into clean, production-ready 3D models for modern manufacturing.",
     coreHighlights: [
@@ -539,8 +542,205 @@ export const COURSES: Record<string, CourseData> = {
       "Remote Technical Support: Live troubleshooting assistance via secure TeamViewer integration",
       "Multi-Software Suite Provisioning: Complete installation and setup of the latest Rhinoceros, Blender, Mira 3D, and DAZ 3D software applications",
       "Verified Completion Certificate: Industry-recognized credential validating advanced technical expertise",
+      "Software Licensing: Provision of fully activated educational licenses for all training tools, valid exclusively through the duration of your course timeline.",
     ],
     batchSchedule:
       "Flexible Timings for Working Craftsmen • Master Artisan Mentor Sessions",
+  },
+
+  "course-electroforming-cad": {
+    id: "course-electroforming-cad",
+    pageKey: "course-electroforming-cad",
+    title: "Electroforming Hollow Jewellery Cad Development Programme",
+    subtitle:
+      "Master advanced Rhinoceros 3D modeling, lightweight hollow product engineering, algorithmic stone-setting, AI design tools, and mold-flow validation for electroforming",
+    level: "Professional & Industry Pro",
+    duration: "5 Months (250 Hours Comprehensive)",
+    format:
+      "Daily Technical Sessions + Dedicated CAD Workstation + DLP 3D Resin Casting",
+    software: ["Rhinoceros 8", "Grasshopper Gold", "Mira 3D / Magics"],
+    prerequisites: "Basic CAD modeling background",
+    certification:
+      "Certified Electroforming & Advanced jewellery CAD Specialist Diploma",
+    heroImage: "assets/images/electroforming_hollow_cad_1792152104898.jpg",
+    overview:
+      "The Advanced Jewellery CAD Designer Training Program is an industry-focused course that transforms professionals into highly skilled design and manufacturing specialists. It bridges the gap between advanced Rhinoceros 3D modeling and real-world production, covering complex surfacing, precise stone-setting, and modern AI-assisted design workflows. Participants master critical engineering concepts like model validation, collision detection, and electroforming to deliver production-ready assets. The program concludes with a hands-on capstone project, equipping designers to independently create, document, and validate professional jewellery designs.",
+    coreHighlights: [
+      "Create professional jewellery CAD models using Rhinoceros",
+      "Master advanced command-line techniques for faster workflows",
+      "Develop complex surfaces and organic jewellery forms",
+      "Create and repair manufacturing-ready mesh models",
+      "Design diamond-studded jewellery using industry-standard settings",
+      "Build advanced assemblies including hinges and locks",
+      "Optimize jewellery designs using AI-assisted workflows",
+      "Prepare watertight and production-ready CAD files",
+      "Engineer specialized products suitable for electroforming manufacturing",
+      "Perform thickness analysis and volume verification checks",
+      "Apply mold-flow concepts and production engineering principles",
+      "Generate technical specification sheets and production documentation",
+      "Convert raw design concepts into manufactured products",
+      "Maximize accuracy and design quality using CAD",
+      "Develop commercial jewellery suitable for mass production",
+    ],
+    modules: [
+      {
+        number: "01",
+        title: "Command-Line Modelling Mastery",
+        duration: "2 Weeks (25 hrs)",
+        summary:
+          "Advanced Rhino command structure, keyboard aliases, history recording, and parametric speed workflows.",
+        topics: [
+          "Advanced Rhino command structure and customized macro shortcuts",
+          "Productivity shortcuts for rapid production modeling",
+          "History recording and smart non-destructive workflows",
+          "Advanced modeling strategies for complex luxury adornments",
+          "Parametric workflow principles and coordinate alignment",
+        ],
+      },
+      {
+        number: "02",
+        title: "Advanced Surfacing Techniques",
+        duration: "3 Weeks (30 hrs)",
+        summary:
+          "Organic jewellery surface development, Sub-D surface creation, and ergonomic wearer comfort.",
+        topics: [
+          "Surface creation methods utilizing Rhinoceros 8 Sub-D tools",
+          "Organic jewellery surface development for double-curved forms",
+          "Surface continuity analysis (G1 tangency and G2 curvature zebra stripes)",
+          "jewellery ergonomics, shank finger comfort fit, and weight distribution considerations",
+        ],
+      },
+      {
+        number: "03",
+        title: "Mesh Modelling & Advanced Geometry",
+        duration: "2 Weeks (25 hrs)",
+        summary:
+          "Mesh topology, mesh repair workflows, NURBS-to-mesh conversion, and lightweight optimization.",
+        topics: [
+          "Mesh structures, quad topology, and polygon density management",
+          "Mesh repair workflows: Closing non-manifold naked edges and self-intersections",
+          "Polygon modeling for textured jewellery surfaces and organic motifs",
+          "Precision NURBS to Mesh conversion techniques without facet distortion",
+          "Lightweight mesh optimization for mass production and casting",
+        ],
+      },
+      {
+        number: "04",
+        title: "Diamond Studding & Stone Setting Design (Grasshopper Gold)",
+        duration: "3 Weeks (35 hrs)",
+        summary:
+          "Parametric stone distribution, Pave, channel, prong, and micro-setting tolerances.",
+        topics: [
+          "Diamond placement principles and optical brilliance calculations",
+          "French cut, fishtail, and bright-cut Pave settings on compound curves",
+          "Precision channel settings with pre-cut seats and bearing depth offsets",
+          "Multi-claw prong settings, shared-prong arrays, and bezel tolerances",
+          "Micro setting techniques and micro-prong stress resistance",
+          "Algorithmic stone layout optimization and stone-to-metal weight ratios",
+        ],
+      },
+      {
+        number: "05",
+        title: "Assemblies & Product Development",
+        duration: "2 Weeks (25 hrs)",
+        summary:
+          "Functional product assemblies, precision hinges, safety box locks, and multi-part jewellery validation.",
+        topics: [
+          "Assembly design methodology and tolerance stacking clearances",
+          "Hinge development for articulated bangles and tennis bracelets",
+          "Integrated box lock mechanisms, push tongues, and figure-eight safeties",
+          "Chain link design and flexible interlink pivot connections",
+          "Functional multi-part product assemblies with mechanical collision checks",
+        ],
+      },
+      {
+        number: "06",
+        title: "AI Tools for Jewellery CAD Design",
+        duration: "2 Weeks (25 hrs)",
+        summary:
+          "Modern generative workflows, concept generation, image-to-model design, and workflow automation.",
+        topics: [
+          "AI-assisted jewellery design concepts and prompt engineering for bench jewellers",
+          "Rapid visual concept generation workflows for bespoke clients",
+          "Image-to-model development pipelines: 2D sketches to 3D NURBS foundations",
+          "AI design validation tools and automated symmetry inspection",
+          "Workflow automation techniques and studio productivity enhancement methods",
+        ],
+      },
+      {
+        number: "07",
+        title: "Manufacturing-Ready CAD Models & Electroforming Rules",
+        duration: "3 Weeks (30 hrs)",
+        summary:
+          "Watertight models, electroforming core design, thickness analysis, and volume verification.",
+        topics: [
+          "Model validation techniques: Eliminating non-manifold and duplicate geometry",
+          "Watertight model preparation for DLP/SLA 3D resin printing",
+          "Electroforming design considerations: Mandrel design, wax cores, and acid drain holes",
+          "Thickness analysis (0.18mm–0.35mm gold deposition calibration)",
+          "Volume verification, surface area calculations, and gold weight prediction",
+          "Manufacturing constraint analysis and raw gold lightweighting calculations",
+        ],
+      },
+      {
+        number: "08",
+        title: "Mold Development & Production Engineering",
+        duration: "2 Weeks (25 hrs)",
+        summary:
+          "Mold-flow fundamentals, parting lines, undercut identification, and production risk prevention.",
+        topics: [
+          "Mold-flow fundamentals for wax injection and vacuum investment casting",
+          "Hole positioning methods and chemical acid purge vents",
+          "Mold parting line analysis and draft angle enforcement (minimum 3°)",
+          "Undercut identification, slide mold cores, and rubber mold release planning",
+          "Collision detection and production risk prevention techniques",
+        ],
+      },
+      {
+        number: "09",
+        title: "Technical Documentation & Industry Capstone Project",
+        duration: "3 Weeks (30 hrs)",
+        summary:
+          "Comprehensive manufacturing documentation, specification sheets, and final production capstone.",
+        topics: [
+          "Manufacturing documentation standards and ISO drawing conventions",
+          "Specification sheet preparation: Metal weights, diamond count tables, and color specs",
+          "Production CAD drawing creation with section views and detail callouts",
+          "Tolerance management, assembly instructions, and quality control requirements",
+          "Final Industry Capstone: Designing and validating a complete commercial hollow luxury jewellery suite",
+        ],
+      },
+    ],
+    careerOutcomes: [
+      "Senior CAD Designer",
+      "Production Development Manager",
+      "Handmade Jewellery Artisans",
+      "Production Manager",
+      "Senior CAD Manager",
+    ],
+    package: [
+      "Five-Month Comprehensive Program: Structured online training curriculum for professional mastery",
+      "Two-Hundred-Fifty Training Hours: Extensive professional training modules covering advanced industrial design",
+      "Daily Technical Sessions: Guided daily training reinforcing real-world technical design speed",
+      "Weekly Review Assessments: Dedicated weekly review and live doubt-clearing session modules",
+      "Practical Industry Projects: Hands-on industry-oriented assignments replicating real-world manufacturing scenarios",
+      "Advanced Rhinoceros Modeling: Master sophisticated jewellery modeling techniques using precision software",
+      "Mesh Surface Engineering: Advanced mesh modeling and specialized surface engineering workflows",
+      "Stone Setting Design: Design diamond-studded jewellery using industry-standard setting techniques",
+      "Assembly Product Development: Create complex multi-component jewellery assemblies, hinges, and locks",
+      "AI-Assisted jewellery Workflows: Optimize jewellery design speed utilizing modern generative workflows",
+      "Electroforming Design Principles: Learn specialized product design rules for industrial electroforming manufacturing",
+      "Production Engineering Development: Master mold development considerations and precision production engineering",
+      "Industrial Manufacturing Documentation: Generate technical specification sheets and comprehensive manufacturing documents",
+      "Weekly Progress Evaluation: Phase-end weekly testing validating individual design progress levels",
+      "Industry Capstone Project: Comprehensive final project simulating real-world jewellery development scenarios",
+      "Remote Desktop Support: Live troubleshooting assistance via secure remote desktop software integration",
+      "Software Installation Assistance: Complete installation and setup of the latest design applications",
+      "Online Reference Repository: Downloadable digital assets and reference guides for offline learning",
+      "Verified Completion Certificate: Industry-recognized credential validating advanced technical jewellery expertise",
+      "Software Licensing: Provision of fully activated educational licenses for all training tools, valid exclusively through the duration of your course timeline.",
+    ],
+    batchSchedule:
+      "Daily Guided Technical Sessions • Weekday & Weekend Cohorts • Dedicated Workstation",
   },
 };

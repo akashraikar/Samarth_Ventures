@@ -4,10 +4,13 @@ export type NavPage =
   | "course-intermediate"
   | "course-reverse-engineering"
   | "course-digital-artisan"
+  | "course-electroforming-cad"
   | "our-story"
   | "why-choose-us"
   | "electroforming"
-  | "get-in-touch";
+  | "get-in-touch"
+  | "privacy-policy"
+  | "terms-of-academic-enrollment";
 
 export interface CourseModule {
   number: string;

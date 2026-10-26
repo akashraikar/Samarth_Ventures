@@ -28,7 +28,7 @@ interface ElectroformingFlowModelProps {
 export const ElectroformingFlowModel: React.FC<
   ElectroformingFlowModelProps
 > = ({ onOpenEnquireModal }) => {
-  // Interactive 5-Step Jewelry Manufacturing Process State
+  // Interactive 5-Step jewellery Manufacturing Process State
   const [activeMfgStep, setActiveMfgStep] = useState<number>(1);
   const [selectedMandrelMaterial, setSelectedMandrelMaterial] = useState<
     "fusible" | "zinc" | "wax"
@@ -45,18 +45,15 @@ export const ElectroformingFlowModel: React.FC<
   const [strippingAcidType, setStrippingAcidType] = useState<
     "fusible" | "zinc"
   >("fusible");
-  const [heatTreatmentView, setHeatTreatmentView] = useState<
-    "after" | "before"
-  >("after");
   const [solderingMethod, setSolderingMethod] = useState<
     "manual" | "automatic"
   >("manual");
 
-  // === START OF NEW INTERACTIVE JEWELRY MANUFACTURING SECTION ===
+  // === START OF NEW INTERACTIVE jewellery MANUFACTURING SECTION ===
   return (
     <section
       className="py-20 bg-slate-900 text-white border-y border-slate-800 relative overflow-hidden"
-      id="jewelry-manufacturing-process"
+      id="jewellery-manufacturing-process"
     >
       {/* Subtle background ambient gradients */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -73,9 +70,9 @@ export const ElectroformingFlowModel: React.FC<
             Jewellery Manufacturing: The 5-Step Electroforming Model
           </h2>
           <p className="text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto">
-            From sacrificial mandrel core fabrication to 500°C crystal lattice
-            thermal stabilization, explore the exact industrial protocol
-            governing hollow gold jewelry creation.
+            From sacrificial mandrel core fabrication to 500°C thermal shell
+            stabilization, explore the exact industrial protocol governing
+            hollow gold jewellery creation.
           </p>
         </div>
 
@@ -215,18 +212,20 @@ export const ElectroformingFlowModel: React.FC<
                   </h3>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  In hollow electroforming jewelry fabrication, each individual
-                  jewelry piece demands its own sacrificial core mandrel. Unlike
-                  hollow stamped tubing or lost-wax casting, the mandrel
-                  provides the exact geometry onto which atomized gold
-                  crystallizes, dictating internal geometry, dimensional
-                  tolerance, and structural wall fidelity.
+                  In hollow electroforming jewellery fabrication, every single
+                  piece requires its own sacrificial inner core, known as a
+                  mandrel. Unlike using hollow stamped tubes or lost-wax
+                  casting, this core provides the exact shape onto which
+                  atomized gold attaches. Because of this, the mandrel directly
+                  controls the jewellery's internal structure, precise
+                  dimensional measurements, and the overall strength and
+                  uniformity of the outer metal walls.
                 </p>
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="/src/assets/images/mandrel_manufacturing.jpg"
-                  alt="Precision jewelry mandrel casting and silicone mold fabrication workshop"
+                  src="assets/images/mandrel_manufacturing.jpg"
+                  alt="Precision jewellery mandrel casting and silicone mold fabrication workshop"
                   className="w-full h-40 object-cover"
                   loading="lazy"
                 />
@@ -258,21 +257,21 @@ export const ElectroformingFlowModel: React.FC<
                   },
                   {
                     title: "Good Electrical Conductivity",
-                    desc: "Must ensure uniform cathode current density across deep crevices to prevent thin spots or burning.",
+                    desc: "Must ensure uniform cathode current density across deep grooves to prevent thin spots or burning.",
                     icon: Zap,
                     badge: "Low Resistance",
                   },
                   {
                     title: "Easy to Mold",
-                    desc: "Fluid flow characteristics in silicone or caoutchouc molds under centrifugal force or vacuum pressure.",
+                    desc: "Fluid flow characteristics in silicone or rubber molds under centrifugal force or vacuum pressure.",
                     icon: Boxes,
                     badge: "High Yield",
                   },
                   {
                     title: "Easily Removable",
-                    desc: "Low melting point or acid-susceptible core that evacuates cleanly without etching the karat gold shell.",
+                    desc: "Low melting point or acid-reactive core that evacuates cleanly without etching the karat gold shell.",
                     icon: Flame,
-                    badge: "Clean Evacuation",
+                    badge: "Clean Removal",
                   },
                 ].map((spec, i) => {
                   const SpecIcon = spec.icon;
@@ -407,7 +406,7 @@ export const ElectroformingFlowModel: React.FC<
                             Primary Industry Standard
                           </span>
                           <h5 className="text-lg font-bold text-white">
-                            Fusible Alloy (Sn-Bi Eutectic)
+                            Fusible Alloy
                           </h5>
                         </div>
                         <div className="flex items-center gap-3 font-mono text-xs">
@@ -435,11 +434,6 @@ export const ElectroformingFlowModel: React.FC<
                               <strong>Low melting point (138°C):</strong> Melts
                               safely below gold annealing temperatures,
                               preventing warpage during core evacuation.
-                            </li>
-                            <li>
-                              <strong>Zero shrinkage:</strong> Bismuth expands
-                              slightly upon solidifying, counteracting tin
-                              contraction for crisp mold detail.
                             </li>
                             <li>
                               <strong>Centrifugal silicone casting:</strong>{" "}
@@ -481,7 +475,7 @@ export const ElectroformingFlowModel: React.FC<
                           This is the most used mandrel material globally
                           (accounting for over{" "}
                           <strong>
-                            90% of industrial hollow jewelry production
+                            90% of industrial hollow jewellery production
                           </strong>
                           ). Specially suited for{" "}
                           <strong>18K gold and large sculptural designs</strong>{" "}
@@ -671,8 +665,8 @@ export const ElectroformingFlowModel: React.FC<
                           </span>
                           Used primarily in specialized artisanal or highly
                           intricate micro-filigree applications where injection
-                          into flexible caoutchouc rubber molds is required and
-                          the 80–100µm structural copper layer is chemically
+                          into flexible rubber molds is required and the
+                          80–100µm structural copper layer is chemically
                           dissolved at later stages.
                         </div>
                       </div>
@@ -732,14 +726,12 @@ export const ElectroformingFlowModel: React.FC<
                             Molding Method
                           </td>
                           <td className="py-3 px-4 bg-amber-500/5 border-x border-slate-800">
-                            Centrifugation, Silicon mold
+                            Centrifugal, Silicon mold
                           </td>
                           <td className="py-3 px-4 border-r border-slate-800">
-                            Centrifugation, Silicon mold
+                            Centrifugal, Silicon mold
                           </td>
-                          <td className="py-3 px-4">
-                            Injection, Caoutchouc mold
-                          </td>
+                          <td className="py-3 px-4">Injection, rubber mold</td>
                         </tr>
                         <tr className="hover:bg-slate-900/30">
                           <td className="py-3 px-4 font-semibold text-white">
@@ -749,7 +741,7 @@ export const ElectroformingFlowModel: React.FC<
                             138°C
                           </td>
                           <td className="py-3 px-4 font-mono font-bold text-sky-300 border-r border-slate-800">
-                            400°C
+                            480°C
                           </td>
                           <td className="py-3 px-4 font-mono font-bold text-purple-300">
                             65°C
@@ -763,7 +755,7 @@ export const ElectroformingFlowModel: React.FC<
                             Good
                           </td>
                           <td className="py-3 px-4 border-r border-slate-800 text-amber-400 font-semibold">
-                            Middle
+                            Better
                           </td>
                           <td className="py-3 px-4 text-emerald-300 font-semibold">
                             Excellent
@@ -926,16 +918,15 @@ export const ElectroformingFlowModel: React.FC<
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                   A raw cast mandrel carries casting flash and micro-parting
                   lines from the mold halves. If not eradicated with surgical
-                  precision, these microscopic imperfections are amplified
-                  exponentially during atomic gold electrodeposition.
-                  Preparation ensures an optically flawless, perfectly
-                  conductive substrate.
+                  precision, these microscopic imperfections are enlarged
+                  massively during atomic gold electrodeposition. Preparation
+                  ensures an optically flawless, perfectly conductive substrate.
                 </p>
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="/src/assets/images/mandrel_preparation.jpg"
-                  alt="Precision jewelry mandrel manual polishing and surface preparation"
+                  src="assets/images/mandrel_preparation.jpg"
+                  alt="Precision jewellery mandrel manual polishing and surface preparation"
                   className="w-full h-40 object-cover"
                   loading="lazy"
                 />
@@ -1002,9 +993,9 @@ export const ElectroformingFlowModel: React.FC<
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed">
                       Mandatory for intricate, asymmetrical, or deep-relief
-                      jewelry designs (filigree pendants, organic floral forms)
-                      where centrifugal mechanical tumblers could round off
-                      critical design edges.
+                      jewellery designs (filigree pendants, organic floral
+                      forms) where centrifugal mechanical tumblers could round
+                      off critical design edges.
                     </p>
                   </div>
                 </div>
@@ -1063,7 +1054,7 @@ export const ElectroformingFlowModel: React.FC<
                     },
                     {
                       title: "Uniform Current Density & Anti-Shielding",
-                      desc: 'Spacing between mandrels must prevent electrical "shadowing" where one piece blocks the uniform electrostatic field from reaching its neighbor.',
+                      desc: "Spacing between mandrels must prevent low electric density area (LDA) where one piece blocks the uniform electrostatic field from reaching its neighbor.",
                     },
                     {
                       title: "Hydrogen Bubble Escape Vector",
@@ -1104,8 +1095,8 @@ export const ElectroformingFlowModel: React.FC<
                   <ul className="text-xs text-slate-400 space-y-2 list-disc pl-4">
                     <li>
                       <strong>Diffusion Barrier:</strong> Prevents low-melting
-                      tin and bismuth atoms from diffusing into the high-carat
-                      gold crystal lattice.
+                      alloy atoms from diffusing into the high-carat gold
+                      crystal lattice.
                     </li>
                     <li>
                       <strong>Micro-Leveling:</strong> Fills sub-microscopic
@@ -1135,7 +1126,7 @@ export const ElectroformingFlowModel: React.FC<
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-950 p-6 rounded-2xl border border-slate-800 items-center">
               <div className="lg:col-span-8 space-y-3">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/20 text-amber-300 font-mono text-xs font-bold rounded-md border border-amber-500/30">
-                  Phase 03: Primary Metallurgical Synthesis
+                  Phase 03: Primary Metallurgical Process
                 </div>
                 <h3 className="text-2xl font-extrabold text-white">
                   Electroforming: Double Machine Precision Deposition
@@ -1144,22 +1135,22 @@ export const ElectroformingFlowModel: React.FC<
                   This is the central transformation phase. Prepared,
                   copper-jacketed mandrels are submerged into computerized
                   electroforming chambers where gold ions in an engineered
-                  sulphite electrolyte deposit atom-by-atom onto the cathode
+                  chemical electrolyte deposit atom-by-atom onto the cathode
                   cores, growing a seamless, hollow karat gold shell with
                   microscopic structural uniformity.
                 </p>
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="/src/assets/images/electroforming_lab_1791375539313.jpg"
-                  alt="Industrial double machine electroforming tanks for gold jewelry manufacturing"
+                  src="assets/images/electroforming.jpg"
+                  alt="Industrial double machine electroforming tanks for gold jewellery manufacturing"
                   className="w-full h-40 object-cover"
                   loading="lazy"
                 />
                 <div className="p-2.5 text-[11px] text-slate-400 font-mono bg-slate-950/90 border-t border-slate-800 flex justify-between">
-                  <span>Bath: Non-Cyanide Gold Sulphite</span>
+                  <span>Bath: Silver, Copper, Gold</span>
                   <span className="text-amber-400 font-semibold">
-                    18K / 22K / 24K
+                    9K / 14K / 18K / 22K
                   </span>
                 </div>
               </div>
@@ -1259,7 +1250,7 @@ export const ElectroformingFlowModel: React.FC<
                     Gold Karat Range
                   </div>
                   <div className="text-sm font-bold font-mono text-amber-400">
-                    14K, 18K, 22K, 24K
+                    9K, 14K, 18K, 22K, 24K
                   </div>
                 </div>
               </div>
@@ -1283,14 +1274,14 @@ export const ElectroformingFlowModel: React.FC<
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                   Once the target gold thickness is deposited, the piece is
                   still solid and heavy. In this critical phase, the sacrificial
-                  core is evacuated through micro-drilled fluid ports using
-                  thermal remelting and chemical dissolution, leaving a 100%
-                  hollow, seamless gold jewelry shell.
+                  core is evacuated through micro-drilled holes using thermal
+                  remelting and chemical dissolution, leaving a 100% hollow,
+                  seamless gold jewellery shell.
                 </p>
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="/src/assets/images/mandrel_elemination.jpg"
+                  src="assets/images/mandrel_elemination.jpg"
                   alt="Chemical stripping laboratory apparatus and core evacuation process"
                   className="w-full h-40 object-cover"
                   loading="lazy"
@@ -1356,7 +1347,7 @@ export const ElectroformingFlowModel: React.FC<
                   <p className="text-xs text-slate-300 leading-relaxed">
                     Hollow gold shells are weighed and inspected under digital
                     calipers to verify complete core removal and uniform
-                    150µm–200µm wall geometry before entering the 500°C
+                    100µm–250µm wall geometry before entering the 500°C
                     annealing oven.
                   </p>
                 </div>
@@ -1368,7 +1359,7 @@ export const ElectroformingFlowModel: React.FC<
                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                   <div className="flex items-center justify-between border-b border-slate-800 pb-2">
                     <div className="text-xs font-bold text-white uppercase tracking-wider">
-                      Step 4.3: Core Emptying (Fusible / Wax)
+                      Step 4.3: Core Emptying (Fusible Alloy)
                     </div>
                     <div className="flex items-center gap-1.5">
                       <button
@@ -1379,7 +1370,7 @@ export const ElectroformingFlowModel: React.FC<
                             : "bg-slate-800 text-slate-300"
                         }`}
                       >
-                        PEG (Polyethylene Glycol)
+                        PEG
                       </button>
                       <button
                         onClick={() => setEliminationEmptyingMethod("hot_air")}
@@ -1398,20 +1389,35 @@ export const ElectroformingFlowModel: React.FC<
                     <div className="space-y-2 text-xs text-slate-300">
                       <div className="font-bold text-amber-300 flex items-center gap-1">
                         <Droplets className="w-4 h-4 text-amber-400" />
-                        <span>Emptying with PEG (Polyethylene Glycol):</span>
+                        <span>Emptying with PEG:</span>
                       </div>
                       <p className="leading-relaxed">
-                        Pieces are submerged in liquid Polyethylene Glycol
-                        heated to ~150°C. The liquid bath provides 100% uniform
-                        conductive heat transfer without hot spots, gently
-                        melting the 138°C Sn-Bi alloy or 65°C wax. The molten
-                        alloy drops to the bottom of the flask for instant
-                        reuse.
+                        Pieces are submerged in liquid PEG heated to ~150°C. The
+                        liquid bath provides 100% uniform conductive heat
+                        transfer without hot spots, gently melting the 138°C low
+                        melting alloy or 65°C wax. The molten alloy drops to the
+                        bottom of the flask for instant reuse.
                       </p>
                       <span className="inline-block text-[10px] font-mono text-emerald-400 font-semibold">
                         Recommended: Zero smoke, no thermal shock, prevents
                         shell collapse.
                       </span>
+                      <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                        <span className="text-[10px] font-mono text-rose-400 font-semibold">
+                          Warning: Highly combustible unless operated under
+                          specilized machine.
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            onOpenEnquireModal?.("electroforming-consult")
+                          }
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-bold transition-colors cursor-pointer"
+                        >
+                          <span>Enquire for Machine</span>
+                          <ArrowRight className="w-2.5 h-2.5" />
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-2 text-xs text-slate-300">
@@ -1470,10 +1476,10 @@ export const ElectroformingFlowModel: React.FC<
                         <span>Dissolution in Nitric Acid (HNO3):</span>
                       </div>
                       <p className="leading-relaxed">
-                        Residual Sn-Bi core films clinging to the interior walls
-                        are dissolved in 20%–30% Nitric Acid. Bismuth and tin
-                        oxidize into soluble nitrates, leaving the pure noble
-                        gold shell untouched.
+                        Residual alloy core films clinging to the interior walls
+                        are dissolved in 20%–30% Nitric Acid. metal oxidize into
+                        soluble nitrates, leaving the pure noble gold shell
+                        untouched.
                       </p>
                       <span className="inline-block text-[10px] font-mono text-amber-400 font-semibold">
                         Requires copper sandwich protection on 14K pieces.
@@ -1495,8 +1501,8 @@ export const ElectroformingFlowModel: React.FC<
                         .
                       </p>
                       <span className="inline-block text-[10px] font-mono text-emerald-400 font-semibold">
-                        Superior chemical compatibility for 14K watch cases and
-                        links.
+                        Superior chemical compatibility for 9K, 14K, 18K watch
+                        cases and links.
                       </span>
                     </div>
                   )}
@@ -1520,10 +1526,9 @@ export const ElectroformingFlowModel: React.FC<
                   <p className="text-slate-300 leading-relaxed">
                     All acid stripping occurs inside hermetic closed-loop
                     stations equipped with wet caustic scrubbers for acid fume
-                    neutralization. The dissolved bismuth, tin, zinc, and copper
-                    salts are precipitated, filtered, and smelted back into raw
-                    ingot alloy cakes, delivering near 100% material recycling
-                    efficiency.
+                    neutralization. The dissolved metal salts are precipitated,
+                    filtered, and smelted back into raw ingot alloy cakes,
+                    delivering near 100% material recycling efficiency.
                   </p>
                 </div>
               </div>
@@ -1549,13 +1554,13 @@ export const ElectroformingFlowModel: React.FC<
                   and crystalline. Through an engineered thermal annealing
                   recipe, precision hole sealing, hand polishing, and deep
                   ultrasonic decontamination, the hollow shell transforms into
-                  high-end retail jewelry that withstands daily consumer wear.
+                  high-end retail jewellery that withstands daily consumer wear.
                 </p>
               </div>
               <div className="lg:col-span-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md">
                 <img
-                  src="/src/assets/images/finishing.jpg"
-                  alt="Finishing, polishing, and inspection of electroformed hollow gold jewelry"
+                  src="assets/images/finishing.jpg"
+                  alt="Finishing, polishing, and inspection of electroformed hollow gold jewellery"
                   className="w-full h-40 object-cover"
                   loading="lazy"
                 />
@@ -1568,50 +1573,78 @@ export const ElectroformingFlowModel: React.FC<
               </div>
             </div>
 
-            {/* Module 1: Heat Treatment (500°C / 20 min) Interactive Simulator */}
+            {/* Module 1: Heat Treatment (500°C / 20 min) Thermal Metallurgy */}
             <div className="bg-slate-950 p-6 rounded-2xl border border-amber-500/40 space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                    Crystal Lattice Reorganization
-                  </span>
-                  <h4 className="text-lg font-bold text-white">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                      Crystal Lattice Reorganization
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300">
+                      Thermal Metallurgy
+                    </span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-bold text-white mt-1">
                     Heat Treatment: Effect on Gold Shell Metallurgy
                   </h4>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">
-                    Compare State:
+                  <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-md font-mono text-xs font-semibold">
+                    500°C Soak · 20 Minutes
                   </span>
-                  <button
-                    onClick={() => setHeatTreatmentView("before")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      heatTreatmentView === "before"
-                        ? "bg-rose-500 text-white shadow-md"
-                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-                    }`}
-                  >
-                    Before Heat Treatment
-                  </button>
-                  <button
-                    onClick={() => setHeatTreatmentView("after")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      heatTreatmentView === "after"
-                        ? "bg-emerald-500 text-slate-950 shadow-md"
-                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-                    }`}
-                  >
-                    After Heat Treatment (500°C / 20mn)
-                  </button>
                 </div>
               </div>
 
-              {heatTreatmentView === "before" ? (
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-rose-950/20 border border-rose-900/40 p-5 rounded-xl items-center">
-                  <div className="md:col-span-8 space-y-2">
+              {/* Stacked Landscape Blocks: Before & After Heat Treatment */}
+              <div className="space-y-4">
+                {/* Landscape Block 1: Before heat treatment */}
+                <div className="bg-rose-950/20 border border-rose-900/40 p-5 rounded-xl flex flex-col sm:flex-row items-center gap-5 shadow-md">
+                  {/* Small Landscape Image Asset */}
+                  <div className="shrink-0 w-full sm:w-48 md:w-56 overflow-hidden rounded-lg border border-rose-900/50 bg-slate-900 shadow-sm group">
+                    <div className="aspect-[4/3] w-full overflow-hidden bg-slate-950 flex items-center justify-center relative">
+                      <img
+                        src="assets/images/Before_Heat_Treatment.jpg"
+                        alt="Before heat treatment microstructure"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (
+                            target.src.indexOf("Before_Heat_Treatment.jpg") ===
+                            -1
+                          ) {
+                            target.src = "/Before_Heat_Treatment.jpg";
+                          }
+                        }}
+                      />
+                      <div className="absolute top-2 left-2 bg-slate-950/80 backdrop-blur-xs border border-rose-500/40 px-1.5 py-0.5 rounded text-[9px] font-mono text-rose-300">
+                        SEM 20µm
+                      </div>
+                    </div>
+                    <div className="p-1.5 bg-slate-950/90 border-t border-slate-800 text-[10px] font-mono text-rose-300 text-center">
+                      Pre-Annealed Microstructure
+                    </div>
+                  </div>
+
+                  {/* Text Details in Landscape Alignment */}
+                  <div className="flex-1 space-y-2.5 w-full">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-rose-900/30">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 uppercase tracking-wider">
+                          Pre-Annealed State
+                        </span>
+                        <h5 className="text-base font-bold text-white">
+                          Before heat treatment
+                        </h5>
+                      </div>
+                      <span className="text-[11px] font-mono text-rose-400 bg-rose-950/70 border border-rose-800/60 px-2 py-0.5 rounded">
+                        As-Deposited Raw Shell
+                      </span>
+                    </div>
                     <div className="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-wider">
-                      <AlertCircle className="w-4 h-4" />
-                      <span>State: As-Deposited Raw Shell (Unannealed)</span>
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>Lattice Dislocation &amp; Brittleness Profile</span>
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed">
                       Electrodeposited gold crystals grow in strained,
@@ -1621,41 +1654,81 @@ export const ElectroformingFlowModel: React.FC<
                       <strong>brittle and prone to micro-cracking</strong> under
                       slight finger pressure or thermal soldering shock.
                     </p>
-                    <div className="grid grid-cols-2 gap-2 pt-2 text-[11px] font-mono">
-                      <div className="bg-slate-900 p-2 rounded text-slate-300">
-                        Microstructure:{" "}
+                    <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-mono">
+                      <div className="bg-slate-900/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Microstructure:
+                        </span>
                         <span className="text-rose-400 font-bold">
                           Strained Columnar
                         </span>
                       </div>
-                      <div className="bg-slate-900 p-2 rounded text-slate-300">
-                        Ductility:{" "}
+                      <div className="bg-slate-900/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Ductility State:
+                        </span>
                         <span className="text-rose-400 font-bold">
                           Low (Vulnerable)
                         </span>
                       </div>
-                    </div>
-                  </div>
-                  <div className="md:col-span-4 bg-slate-900 p-4 rounded-xl border border-slate-800 text-center space-y-1">
-                    <div className="text-[10px] font-mono text-slate-400 uppercase">
-                      Thermal Recipe Needed
-                    </div>
-                    <div className="text-2xl font-bold font-mono text-amber-400">
-                      500 °C
-                    </div>
-                    <div className="text-xs text-slate-300 font-mono">
-                      Soak Duration: 20 Minutes
+                      <div className="bg-slate-900/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Lattice Stress:
+                        </span>
+                        <span className="text-rose-400 font-bold">
+                          High Internal Tension
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-emerald-950/20 border border-emerald-900/40 p-5 rounded-xl items-center">
-                  <div className="md:col-span-8 space-y-2">
-                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>
-                        State: Fully Homogenized &amp; Stress-Relieved
+                {/* Landscape Block 2: After heat treatment */}
+                <div className="bg-emerald-950/20 border border-emerald-900/40 p-5 rounded-xl flex flex-col sm:flex-row items-center gap-5 shadow-md">
+                  {/* Small Landscape Image Asset */}
+                  <div className="shrink-0 w-full sm:w-48 md:w-56 overflow-hidden rounded-lg border border-emerald-900/50 bg-slate-900 shadow-sm group">
+                    <div className="aspect-[4/3] w-full overflow-hidden bg-slate-950 flex items-center justify-center relative">
+                      <img
+                        src="assets/images/After_Heat_Treatment.jpg"
+                        alt="After heat treatment microstructure"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (
+                            target.src.indexOf("After_Heat_Treatment.jpg") ===
+                            -1
+                          ) {
+                            target.src = "/After_Heat_Treatment.jpg";
+                          }
+                        }}
+                      />
+                      <div className="absolute top-2 left-2 bg-slate-950/80 backdrop-blur-xs border border-emerald-500/40 px-1.5 py-0.5 rounded text-[9px] font-mono text-emerald-300">
+                        500°C · 20mn
+                      </div>
+                    </div>
+                    <div className="p-1.5 bg-slate-950/90 border-t border-slate-800 text-[10px] font-mono text-emerald-300 text-center">
+                      Thermally Annealed State
+                    </div>
+                  </div>
+                  {/* Text Details in Landscape Alignment */}
+                  <div className="flex-1 space-y-2.5 w-full">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-900/30">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 uppercase tracking-wider">
+                          Thermally Annealed
+                        </span>
+                        <h5 className="text-base font-bold text-white">
+                          After heat treatment
+                        </h5>
+                      </div>
+                      <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/70 border border-emerald-800/60 px-2 py-0.5 rounded">
+                        Equiaxed Recrystallized (500°C / 20mn)
                       </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                      <span>Equiaxed Recrystallization &amp; Ductility</span>
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed">
                       Heating to exactly{" "}
@@ -1667,34 +1740,50 @@ export const ElectroformingFlowModel: React.FC<
                       grains, relieving internal stresses and yielding
                       exceptional mechanical ductility and fatigue resilience.
                     </p>
-                    <div className="grid grid-cols-2 gap-2 pt-2 text-[11px] font-mono">
-                      <div className="bg-slate-900 p-2 rounded text-slate-300">
-                        Microstructure:{" "}
+                    <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-mono">
+                      <div className="/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Microstructure:
+                        </span>
                         <span className="text-emerald-400 font-bold">
                           Equiaxed Recrystallized
                         </span>
                       </div>
-                      <div className="bg-slate-900 p-2 rounded text-slate-300">
-                        Resilience:{" "}
+                      <div className="bg-slate-900/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Ductility State:
+                        </span>
                         <span className="text-emerald-400 font-bold">
                           Optimal Elasticity
                         </span>
                       </div>
-                    </div>
-                  </div>
-                  <div className="md:col-span-4 bg-slate-900 p-4 rounded-xl border border-slate-800 text-center space-y-1">
-                    <div className="text-[10px] font-mono text-emerald-400 uppercase font-bold">
-                      Annealing Verified
-                    </div>
-                    <div className="text-2xl font-bold font-mono text-emerald-400">
-                      500 °C / 20mn
-                    </div>
-                    <div className="text-xs text-slate-300 font-mono">
-                      Ready for Soldering &amp; Setting
+                      <div className="bg-slate-900/90 px-2.5 py-1 rounded-md border border-slate-800 flex items-center gap-1.5">
+                        <span className="text-slate-400 text-[10px] uppercase">
+                          Stress Relief:
+                        </span>
+                        <span className="text-emerald-400 font-bold">
+                          100% Homogenized
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
+              {/* Bottom Annealing Summary Bar */}
+              <div className="bg-slate-900/80 p-3.5 rounded-lg border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-slate-400">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>
+                    Thermal Annealing Protocol:{" "}
+                    <strong className="text-amber-400">
+                      500°C Soak for 20 Minutes in Protective Atmosphere
+                    </strong>
+                  </span>
+                </div>
+                <span className="text-emerald-400 font-bold">
+                  Lattice Stabilized &amp; Ready for Soldering
+                </span>
+              </div>
             </div>
 
             {/* Module 2, 3, 4, 5: Soldering, Polishing, Topcoat, Cleaning & Drying */}
@@ -1717,8 +1806,8 @@ export const ElectroformingFlowModel: React.FC<
                   </p>
                 </div>
                 <div className="pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-mono">
-                  Manual micro-torch for bespoke pieces; Automatic
-                  laser/induction for volume chains.
+                  Manual micro-torch for bespoke pieces; Automatic laser welding
+                  for volume chains.
                 </div>
               </div>
 
@@ -1807,7 +1896,8 @@ export const ElectroformingFlowModel: React.FC<
             </h4>
             <p className="text-xs text-slate-400">
               Our metallurgical engineers configure automated turnkey lines for
-              14K, 18K, 22K, and 24K hollow manufacturing.
+              gold 9K, 14K, 18K, 22K, and 24K, silver and copper hollow
+              manufacturing.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
@@ -1823,5 +1913,5 @@ export const ElectroformingFlowModel: React.FC<
       </div>
     </section>
   );
-  // === END OF NEW INTERACTIVE JEWELRY MANUFACTURING SECTION ===
+  // === END OF NEW INTERACTIVE jewellery MANUFACTURING SECTION ===
 };

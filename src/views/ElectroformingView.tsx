@@ -75,7 +75,7 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
             <div className="lg:col-span-5">
               <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-900">
                 <img
-                  src="/src/assets/images/electroforming_lab.jpg"
+                  src="assets/images/electroforming_lab.jpg"
                   alt="Electroforming laboratory baths and gold components at Samarth Ventures"
                   className="w-full h-auto aspect-16/10 object-cover"
                   referrerPolicy="no-referrer"
@@ -132,10 +132,10 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
         </div>
       </section>
 
-      {/* === START OF NEW INTERACTIVE JEWELRY MANUFACTURING SECTION === */}
+      {/* === START OF NEW INTERACTIVE jewellery MANUFACTURING SECTION === */}
       {/* 3. Interactive Electroforming steps flow */}
       <ElectroformingFlowModel onOpenEnquireModal={onOpenEnquireModal} />
-      {/* === END OF NEW INTERACTIVE JEWELRY MANUFACTURING SECTION === */}
+      {/* === END OF NEW INTERACTIVE jewellery MANUFACTURING SECTION === */}
 
       {/* 4. Scientific Parameter Specification Table */}
       <section className="py-16 bg-white border-y border-[#E2E8F0]">
@@ -285,7 +285,7 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
                     Solid Casting Gold Cost
                   </div>
                   <div className="text-xl sm:text-2xl font-bold font-mono text-slate-200">
-                    ₹{solidCost.toLocaleString()}
+                    ₹{solidCost.toLocaleString("en-IN")}
                   </div>
                   <div className="text-[11px] text-slate-500 font-mono">
                     {solidWeightInput} grams
@@ -297,7 +297,7 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
                     Electroformed Gold Cost
                   </div>
                   <div className="text-xl sm:text-2xl font-bold font-mono text-amber-400">
-                    ₹{electroformedCost.toLocaleString()}
+                    ₹{electroformedCost.toLocaleString("en-IN")}
                   </div>
                   <div className="text-[11px] text-amber-300/80 font-mono">
                     {electroformedWeight} grams ({savingsRatio}% lighter)
@@ -309,7 +309,7 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
                     Net Capital Saved / Piece
                   </div>
                   <div className="text-xl sm:text-2xl font-bold font-mono text-emerald-400">
-                    ₹{costSavings.toLocaleString()}
+                    ₹{costSavings.toLocaleString("en-IN")}
                   </div>
                   <div className="text-[11px] text-emerald-500 font-mono">
                     {weightSaved}g raw gold liberated
@@ -345,7 +345,14 @@ export const ElectroformingView: React.FC<ElectroformingViewProps> = ({
             We provide turnkey setup consulting, chemical formula
             standardization, and CAD hollow core team training.
           </p>
-          <div className="flex items-center justify-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <button
+              onClick={() => onNavigate("course-electroforming-cad")}
+              className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg shadow transition-colors cursor-pointer border border-slate-700 flex items-center gap-2"
+            >
+              <span>Explore 5-Month CAD Training Program</span>
+              <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+            </button>
             <button
               onClick={() => onOpenEnquireModal("electroforming-consult")}
               className="px-6 py-3.5 bg-white text-[#0085CB] hover:bg-slate-50 font-bold text-xs rounded-lg shadow transition-colors cursor-pointer"
