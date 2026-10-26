@@ -58,7 +58,8 @@ export async function sendEmail(params: {
   };
 
   try {
-    const response = await fetch("/api/send-email", {
+    // 🌟 THE CHANGED TARGET ROUTE: Point directly to the native PHP script file
+    const response = await fetch("/send-email.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -26,6 +26,12 @@ export const Footer: React.FC<FooterProps> = ({
 }) => {
   const socialLinks = [
     {
+      name: "LinkedIn",
+      href: "https://linkedin.com/in/samarth-ventures",
+      icon: Linkedin,
+      ariaLabel: "Connect with Samarth Ventures on LinkedIn",
+    },
+    {
       name: "Facebook",
       href: "https://facebook.com",
       icon: Facebook,
@@ -36,12 +42,6 @@ export const Footer: React.FC<FooterProps> = ({
       href: "https://x.com",
       icon: SiX,
       ariaLabel: "Follow Samarth Ventures on X (formerly Twitter)",
-    },
-    {
-      name: "LinkedIn",
-      href: "https://linkedin.com/in/samarth-ventures",
-      icon: Linkedin,
-      ariaLabel: "Connect with Samarth Ventures on LinkedIn",
     },
     {
       name: "Instagram",
@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
               {/* Corporate logo image file uploaded by user */}
               <div className="p-2.5 bg-white rounded-xl inline-block shadow-sm">
                 <img
-                  src="/samarth_ventures_logo.png"
+                  src="samarth_ventures_logo.png"
                   alt="Samarth Ventures"
                   className="h-10 w-auto object-contain"
                 />
@@ -163,6 +163,17 @@ export const Footer: React.FC<FooterProps> = ({
                     ›
                   </span>
                   <span>Digital Artisan for Heritage Crafts</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate("course-electroforming-cad")}
+                  className="hover:text-white transition-colors text-left leading-relaxed flex items-center gap-1.5 group cursor-pointer"
+                >
+                  <span className="text-[#0085CB] group-hover:translate-x-0.5 transition-transform">
+                    ›
+                  </span>
+                  <span>Electroforming Hollow Jewellery CAD</span>
                 </button>
               </li>
               <li className="pt-2">
@@ -286,13 +297,19 @@ export const Footer: React.FC<FooterProps> = ({
             Associates.
           </div>
           <div className="flex items-center gap-4">
-            <span className="hover:text-slate-400 cursor-pointer">
+            <button
+              onClick={() => onNavigate("privacy-policy")}
+              className="hover:text-slate-400 cursor-pointer text-left transition-colors"
+            >
               Privacy Policy
-            </span>
+            </button>
             <span>·</span>
-            <span className="hover:text-slate-400 cursor-pointer">
+            <button
+              onClick={() => onNavigate("terms-of-academic-enrollment")}
+              className="hover:text-slate-400 cursor-pointer text-left transition-colors"
+            >
               Terms of Academic Enrollment
-            </span>
+            </button>
           </div>
         </div>
       </div>

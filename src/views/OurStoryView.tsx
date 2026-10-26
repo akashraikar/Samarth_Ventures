@@ -83,7 +83,7 @@ export const OurStoryView: React.FC<OurStoryViewProps> = ({
           <div className="lg:col-span-5 space-y-6">
             <div className="rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-lg bg-slate-900">
               <img
-                src="/src/assets/images/digital_artisan_craft_1791375553414.jpg"
+                src="assets/images/digital_artisan_craft_1791375553414.jpg"
                 alt="Digital Artisan Workshop at Samarth Ventures"
                 className="w-full h-auto aspect-4/3 object-cover"
                 referrerPolicy="no-referrer"

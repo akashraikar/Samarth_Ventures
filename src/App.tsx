@@ -3,54 +3,66 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
-import { NavPage } from './types';
-import { COURSES } from './data/courses';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { EnrollmentModal } from './components/EnrollmentModal';
+import React, { useState, useEffect } from "react";
+import { NavPage } from "./types";
+import { COURSES } from "./data/courses";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { EnrollmentModal } from "./components/EnrollmentModal";
 
-import { HomeView } from './views/HomeView';
-import { CourseDetailView } from './views/CourseDetailView';
-import { OurStoryView } from './views/OurStoryView';
-import { WhyChooseUsView } from './views/WhyChooseUsView';
-import { ElectroformingView } from './views/ElectroformingView';
-import { ContactView } from './views/ContactView';
+import { HomeView } from "./views/HomeView";
+import { CourseDetailView } from "./views/CourseDetailView";
+import { OurStoryView } from "./views/OurStoryView";
+import { WhyChooseUsView } from "./views/WhyChooseUsView";
+import { ElectroformingView } from "./views/ElectroformingView";
+import { ContactView } from "./views/ContactView";
+import { PrivacyPolicyView } from "./views/PrivacyPolicyView";
+import { TermsOfEnrollmentView } from "./views/TermsOfEnrollmentView";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<NavPage>('home');
+  const [currentPage, setCurrentPage] = useState<NavPage>("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalCourseKey, setModalCourseKey] = useState<string>('course-advanced');
+  const [modalCourseKey, setModalCourseKey] =
+    useState<string>("course-advanced");
 
   // Sync with browser hash on load and hashchange
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as NavPage;
-      const validPages: NavPage[] = [
-        'home',
-        'course-advanced',
-        'course-intermediate',
-        'course-reverse-engineering',
-        'course-digital-artisan',
-        'our-story',
-        'why-choose-us',
-        'electroforming',
-        'get-in-touch'
+      const rawHash = window.location.hash.replace("#", "");
+      const validPages: string[] = [
+        "home",
+        "course-advanced",
+        "course-intermediate",
+        "course-reverse-engineering",
+        "course-digital-artisan",
+        "course-electroforming-cad",
+        "our-story",
+        "why-choose-us",
+        "electroforming",
+        "get-in-touch",
+        "privacy-policy",
+        "terms-of-academic-enrollment",
+        "terms-of-enrollment",
       ];
-      if (validPages.includes(hash)) {
-        setCurrentPage(hash);
+      if (validPages.includes(rawHash)) {
+        const resolvedPage = (
+          rawHash === "terms-of-enrollment"
+            ? "terms-of-academic-enrollment"
+            : rawHash
+        ) as NavPage;
+        setCurrentPage(resolvedPage);
       }
     };
 
     handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const navigateTo = (page: NavPage) => {
     setCurrentPage(page);
     window.location.hash = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleOpenModal = (courseKey?: string) => {
@@ -71,76 +83,93 @@ export default function App() {
 
       {/* Main Dynamic View Area */}
       <main className="flex-1">
-        {currentPage === 'home' && (
+        {currentPage === "home" && (
           <HomeView
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'course-advanced' && (
+        {currentPage === "course-advanced" && (
           <CourseDetailView
-            course={COURSES['course-advanced']}
+            course={COURSES["course-advanced"]}
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'course-intermediate' && (
+        {currentPage === "course-intermediate" && (
           <CourseDetailView
-            course={COURSES['course-intermediate']}
+            course={COURSES["course-intermediate"]}
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'course-reverse-engineering' && (
+        {currentPage === "course-reverse-engineering" && (
           <CourseDetailView
-            course={COURSES['course-reverse-engineering']}
+            course={COURSES["course-reverse-engineering"]}
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'course-digital-artisan' && (
+        {currentPage === "course-digital-artisan" && (
           <CourseDetailView
-            course={COURSES['course-digital-artisan']}
+            course={COURSES["course-digital-artisan"]}
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'our-story' && (
+        {currentPage === "course-electroforming-cad" && (
+          <CourseDetailView
+            course={COURSES["course-electroforming-cad"]}
+            onNavigate={navigateTo}
+            onOpenEnquireModal={handleOpenModal}
+          />
+        )}
+
+        {currentPage === "our-story" && (
           <OurStoryView
             onNavigate={navigateTo}
             onOpenEnquireModal={() => handleOpenModal()}
           />
         )}
 
-        {currentPage === 'why-choose-us' && (
+        {currentPage === "why-choose-us" && (
           <WhyChooseUsView
             onNavigate={navigateTo}
             onOpenEnquireModal={() => handleOpenModal()}
           />
         )}
 
-        {currentPage === 'electroforming' && (
+        {currentPage === "electroforming" && (
           <ElectroformingView
             onNavigate={navigateTo}
             onOpenEnquireModal={handleOpenModal}
           />
         )}
 
-        {currentPage === 'get-in-touch' && (
+        {currentPage === "get-in-touch" && (
           <ContactView onNavigate={navigateTo} />
+        )}
+
+        {currentPage === "privacy-policy" && (
+          <PrivacyPolicyView onNavigate={navigateTo} />
+        )}
+
+        {(currentPage === "terms-of-academic-enrollment" ||
+          (currentPage as string) === "terms-of-enrollment") && (
+          <TermsOfEnrollmentView
+            onNavigate={navigateTo}
+            onOpenEnquireModal={handleOpenModal}
+          />
         )}
       </main>
 
       {/* Global Footer with corporate logo, course links & campus location */}
-      <Footer
-        onNavigate={navigateTo}
-        onOpenEnquireModal={handleOpenModal}
-      />
+      <Footer onNavigate={navigateTo} onOpenEnquireModal={handleOpenModal} />
 
       {/* Interactive Global Enrollment & Inquiry Modal */}
       <EnrollmentModal

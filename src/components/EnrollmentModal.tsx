@@ -136,7 +136,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
             <div className="pt-4">
               <button
                 onClick={handleReset}
-                className="w-full py-2.5 bg-[#0085CB] text-white font-semibold text-xs rounded-lg hover:bg-[#0284C7] transition-colors"
+                className="w-full py-2.5 bg-[#0085CB] text-white font-semibold text-xs rounded-lg hover:bg-[#0284C7] transition-colors cursor-pointer"
               >
                 Done
               </button>

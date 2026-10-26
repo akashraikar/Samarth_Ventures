@@ -154,7 +154,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
     },
     {
       layer: 8,
-      thickness: 150,
+      thickness: 100,
       readingCarat: selectedKarat === "18K" ? "750.5‰" : "585.5‰",
       correction: "Completed & Certified",
       inWaterWeight: "99.62 g",
@@ -187,7 +187,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
             <strong className="text-amber-300 font-semibold">
               Precious Gold Alloys
             </strong>
-            , three interdependent physical relationships, and{" "}
+            , two interdependent physical relationships, and{" "}
             <strong className="text-sky-300 font-semibold">
               hydrostatic in-water weighing
             </strong>{" "}
@@ -211,7 +211,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
                 </span>
               </h3>
               <p className="text-xs text-slate-400 mt-1">
-                Electroformed jewelry alloys are electro-synthesized from a
+                Electroformed jewellery alloys are electro-synthesized from a
                 precision gold-copper (Au-Cu) co-deposition matrix.
               </p>
             </div>
@@ -270,7 +270,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
                 <p className="text-xs text-slate-300 leading-relaxed">
                   Provides hallmarking purity, intrinsic store of value,
                   corrosion resistance, and warm yellow reflectance. Deposited
-                  from gold potassium cyanide or non-cyanide sulfite complexes.
+                  from gold potassium cyanide sulfite complexes.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-400 flex justify-between">
@@ -681,73 +681,10 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Formulas Box */}
-            <div className="lg:col-span-5 space-y-4">
-              {/* Formula 1: Efficiency Determination */}
-              <div className="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                <div className="text-xs font-mono text-slate-400 uppercase font-semibold">
-                  Deposit Mass Formula:
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-amber-300 tracking-wide bg-slate-950 px-4 py-3 rounded-lg border border-slate-800 text-center">
-                  E = ( S × e × d ) / Q
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Computes cathodic deposition efficiency (E in mg / A·min)
-                  directly from rack surface area (S), deposit thickness (e),
-                  alloy density (d), and electrical charge quantity (Q).
-                </p>
-              </div>
-
-              {/* Formula 2: Relationship Breakdown */}
-              <div className="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                <div className="text-xs font-mono text-slate-400 uppercase font-semibold">
-                  Cathodic Efficiency Formula:
-                </div>
-                <div className="text-xl sm:text-2xl font-mono font-black text-sky-300 tracking-wide bg-slate-950 px-4 py-3 rounded-lg border border-slate-800 text-center">
-                  E = W / Q
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Efficiency (E in mg / A·min) determines milligrams of gold
-                  alloy deposited per unit quantity of electric charge (Q in
-                  A·min), where deposit mass W = S × e × d.
-                </p>
-              </div>
-
-              {/* Variable Definitions Legend */}
-              <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 text-xs space-y-2">
-                <div className="font-bold text-white flex items-center gap-1.5">
-                  <Info className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Technical Variable Reference:</span>
-                </div>
-                <ul className="grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300">
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-amber-400">E :</span>{" "}
-                    Efficiency (mg / A·min)
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-amber-400">Q :</span>{" "}
-                    Quantity of current (A·min)
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-sky-400">S :</span> Surface
-                    of pieces (dm²)
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-sky-400">e :</span> Deposit
-                    thickness (µm)
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-purple-400">d :</span>{" "}
-                    Deposit density (g/cm³)
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <span className="font-bold text-purple-400">W :</span>{" "}
-                    Deposit mass (mg)
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
+            {/* ////////////////////////////////// */}
+            {/* Formula block goes here - removed for secrecy reason */}
+            {/* ////////////////////////////////// */}
 
             {/* Interactive Calculator Workspace */}
             <div className="lg:col-span-7 bg-slate-900 p-6 rounded-xl border border-slate-800 flex flex-col justify-between space-y-6">
@@ -941,7 +878,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed">
                 If an electroforming machine attempted to deposit the entire
-                150µm gold wall in a single uninterrupted 8-hour cycle, subtle
+                100µm gold wall in a single uninterrupted 8-hour cycle, subtle
                 electrolyte depletion and temperature drift would cause
                 uncontrollable carat deviation, resulting in hallmarking
                 failure.
@@ -949,8 +886,9 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
               <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-mono">
                 <strong className="text-amber-300">Layering Protocol:</strong>{" "}
                 The total shell is sliced into 8 to 10 sequential sub-layers.
-                After each sub-layer, the robotic crane transfers the rack to
-                the hydrostatic water weighing station.
+                After each sub-layer, the rack is transferred to the hydrostatic
+                water weighing station, either automatically via robotic crane
+                or manually.
               </div>
             </div>
 
@@ -966,8 +904,9 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
               </p>
               <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-mono">
                 <strong className="text-sky-300">Feedback Loop:</strong> After
-                each layer, the rack is weighed, then the computer implements
-                updated parameters to fine-tune the final carat.
+                each layer, the rack is weighed, then either the computer
+                implements updated parameters or the updated parameters are
+                manually entered to fine-tune the final carat.
               </div>
             </div>
           </div>
@@ -987,7 +926,7 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
               <div className="flex items-center gap-2">
                 <span className="text-xs text-slate-400">Total Thickness:</span>
                 <span className="text-xs font-mono font-bold text-white px-2.5 py-1 bg-slate-950 rounded-lg border border-slate-800">
-                  {currentTotalThickness} µm / 150 µm
+                  {currentTotalThickness} µm / 100 µm
                 </span>
               </div>
             </div>
@@ -1111,8 +1050,8 @@ export const CaratControl: React.FC<CaratControlSectionProps> = ({
                   Conclusion:
                 </strong>{" "}
                 Thanks to a very accurate underwater weighing system, the
-                machine monitors and regulates the carat of the jewels produced
-                with absolute precision.
+                machine or a manual operator monitors and regulates the carat of
+                the jewels produced with absolute precision.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">

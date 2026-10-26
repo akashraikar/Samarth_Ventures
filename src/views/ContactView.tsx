@@ -42,24 +42,44 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
 
   const faqs = [
     {
-      q: "Do I need prior 3D software or Rhinoceros experience to join?",
-      a: 'No prior CAD experience is needed for our Intermediate course ("Jewellery designing in Rhinoceros - Intermidiate Level"). For our Advanced and Reverse Engineering diplomas, basic 3D familiarity or bench jewellery experience is recommended.',
+      q: "Will I have the opportunity to work on live industry projects?",
+      a: "Yes. Our curriculum is deeply rooted in practical application. Learners engage in hands-on modeling exercises, case-study assignments, and industry-aligned design challenges that accurately simulate real-world workflows, engineering tolerances, and manufacturing specifications.",
     },
     {
-      q: "Is hardware provided, or do I need to bring my own laptop?",
-      a: "Every student in our physical batch is allocated a dedicated workstation loaded with licensed Rhinoceros 8, KeyShot 11 Pro, and 4K calibrated color displays. Students can also bring their own laptops to install educational trial licenses.",
+      q: "What happens if I miss a scheduled class?",
+      a: "If you miss a session, you can seamlessly catch up by accessing our archived session recordings. Additionally, you can coordinate with your assigned instructor during designated support hours to clarify concepts or review course deliverables.",
     },
     {
-      q: "Do students get to test their CAD files on actual 3D printers and casting?",
-      a: "Yes! We house industrial DLP resin 3D printers. Every module includes physical wax/resin slicing and printing so you can hold your designs, verify stone prongs, and inspect sprue architectures before casting.",
+      q: "Will I receive access to recorded sessions?",
+      a: "Yes. Recorded sessions are made available through our learning portal (subject to course terms). This allows students to revisit complex methodologies, review technical demonstrations, and reinforce their learning at their own pace.",
     },
     {
-      q: "What certificate will I receive upon graduation?",
-      a: "Graduates receive the Authorized Rhinoceros 3D jewellery Specialist Diploma from Samarth Ventures, recognized by leading jewellery export processing zones and domestic retail fine jewellery brands.",
+      q: "Does the academy provide professional internship opportunities?",
+      a: "Meritorious students may be shortlisted for live project collaborations, advanced practical assignments, or corporate internship programs, subject to performance metrics and industry partner availability.",
     },
     {
-      q: "How does the 98.4% job placement network work?",
-      a: "We host regular portfolio demo days where recruitment directors from Mumbai, Surat, Jaipur, and export companies review student capstones. We also provide resume mentoring and technical interview simulations.",
+      q: "What type of placement assistance do you offer?",
+      a: "We offer comprehensive career enablement support. This includes targeted portfolio-building workshops, industry-specific interview preparation, resume optimization, and direct access to placement drives through our corporate network.",
+    },
+    {
+      q: "What support structures are available after graduation?",
+      a: "Our commitment to your growth extends beyond the classroom. Alumni receive ongoing portfolio evaluation reviews, strategic career counseling, and priority updates regarding advanced specialized modules or masterclasses.",
+    },
+    {
+      q: "Are modern AI tools and automated workflows integrated into the training?",
+      a: "Yes. Keeping pace with industry evolution, our modules introduce relevant AI-assisted design workflows, generative image tools, intelligent modeling plugins, and digital efficiency methodologies to maximize your creative output.",
+    },
+    {
+      q: "What is the primary medium of instruction for the courses?",
+      a: "Training is dynamically delivered in English to align with international industry standards. However, our bilingual instructors routinely provide supplementary explanations in regional languages to ensure conceptual clarity.",
+    },
+    {
+      q: "How soon can I commence my training after completing enrollment?",
+      a: "Onboarding is structured and efficient. Once your registration is verified, you will be allocated a seat in the immediate next available cohort. Batch commencement dates are regularly updated by the admissions office.",
+    },
+    {
+      q: "Do you offer flexible financial plans, EMIs, or installment options?",
+      a: "Yes. To ensure accessibility, we provide structured installment plans and flexible payment paths. Please connect directly with our admissions counseling team to review the financial options tailored to your selected program.",
     },
   ];
 

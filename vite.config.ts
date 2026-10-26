@@ -6,6 +6,7 @@ import { defineConfig } from "vite";
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
+    base: "https://samarthventures.in/", //For running build folder in xampp server
     resolve: {
       alias: {
         "@": path.resolve(import.meta.dirname, "."),

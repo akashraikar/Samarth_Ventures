@@ -6,6 +6,7 @@
  */
 
 import express, { Request, Response } from "express";
+import cors from "cors"; // 👈 1. IMPORT CORS PACKAGE
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,6 +21,23 @@ const DEFAULT_RESEND_DEV_SENDER = "onboarding@resend.dev";
 async function startServer() {
   const app = express();
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+  // 👈 2. ENABLE CORS FOR YOUR LOCAL XAMPP DOMAIN
+  // Put this right before your JSON parser and routes!
+  app.use(
+    cors({
+      origin: [
+        "http://localhost",
+        "http://127.0.0.1",
+        "http://localhost:8080", // Add your XAMPP port here if it isn't port 80
+        "http://localhost:5173", // Keeps Vite dev environment working smoothly
+        "http://samarthventures.in",
+      ],
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    }),
+  );
 
   // JSON Body Parser
   app.use(express.json());

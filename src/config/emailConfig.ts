@@ -19,13 +19,13 @@ export const EMAIL_CONFIG = {
   // NOTE: If sending to Gmail before verifying a custom domain,
   // Resend's free sandbox requires 'onboarding@resend.dev'.
   // Once you add your custom domain on https://resend.com/domains, set this to your branded address.
-  fromEmail: "aiforakashraikar@gmail.com",
+  fromEmail: "onboarding@resend.dev",
 
   // Resend official development sender (used as fallback for unverified domains during localhost testing)
   devFallbackSender: "onboarding@resend.dev",
 
   // Target Email Placeholder (Where admissions and inquiries are received)
-  toEmail: "aiforakashraikar@gmail.com",
+  toEmail: "samarthventures@outlook.com",
 
   // Email Subjects
   subjects: {

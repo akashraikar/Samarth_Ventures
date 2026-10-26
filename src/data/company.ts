@@ -72,7 +72,7 @@ export const TIMELINE: TimelineEvent[] = [
     year: "2025",
     title: "Establishment of Samarth Ventures CAD Studio",
     description:
-      "Founded our specialized 3D jewelry design studio, delivering precision modeling for electroforming to tier-one manufacturing enterprises.",
+      "Founded our specialized 3D jewellery design studio, delivering precision modeling for electroforming to tier-one manufacturing enterprises.",
   },
   {
     year: "2025",
@@ -96,7 +96,7 @@ export const TIMELINE: TimelineEvent[] = [
     year: "Present",
     title: "Global Network of 500+ Certified Professionals",
     description:
-      "Positioned as the premier training partner for elite jewelry manufacturers, boasting a 98.4% graduate placement rate alongside state-of-the-art electroforming services.",
+      "Positioned as the premier training partner for elite jewellery manufacturers, boasting a 98.4% graduate placement rate alongside state-of-the-art electroforming services.",
   },
 ];
 
@@ -171,12 +171,12 @@ export const ELECTROFORMING_DATA = {
     },
     {
       param: "Wall Thickness Uniformity",
-      value: "150 – 220 µm (Microns)",
+      value: "100 – 220 µm (Microns)",
       note: "Controlled by computerized current density distributors",
     },
     {
-      param: "Gold Fineness Purity",
-      value: "18K (750) / 22K (916) / 24K (999)",
+      param: "Gold Fineness Purity (Approx)",
+      value: "9K(375) / 14K (585) / 18K (750) / 22K (916) / 24K (999)",
       note: "Conforms to Hallmarking & Bureau of Indian Standards",
     },
     {
@@ -208,28 +208,29 @@ export const ELECTROFORMING_DATA = {
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "The Rhinoceros Advanced CAD course at Samarth Ventures completely transformed our design department. We cut our sample turnaround time from 3 weeks to 3 days, and our casting defects dropped to near zero.",
-    author: "Rajesh K. Mehta",
-    role: "Vice President of Design",
-    company: "Siddhi Jewels Export Corp",
-    courseCompleted:
-      "Jewellery CAD Professional in Rhinoceros - Advanced Level",
-  },
-  {
-    quote:
-      "As a traditional fourth-generation goldsmith, I was afraid computers would ruin our handcrafted nakshi legacy. The Digital Artisan course taught me that Rhino 3D is just another chisel—one with infinite precision.",
-    author: "Anand Soni",
-    role: "Master Craftsman & Studio Owner",
-    company: "Soni Heritage Goldsmiths, Jaipur",
+      "The Digital Artisan course completely transformed my workflow by beautifully blending traditional craft principles with cutting-edge 3D tools. It gave me the advanced technical skills and confidence I needed to truly elevate my design career.",
+    author: "Dinesh Naik",
+    role: "Senior CAD Designer",
+    company: "Mehta Gold Pvt. Ltd.",
     courseCompleted:
       "Digital Artisan - Advanced 3D Modelling for Traditional Crafts",
   },
   {
     quote:
-      "The Reverse Engineering program is unmatched in Asia. Being able to laser scan an heirloom 1920s necklace and generate production-ready NURBS models within hours has given our brand a massive competitive edge.",
-    author: "Pooja V. Singhania",
-    role: "Lead CAD Metrologist",
-    company: "Aura Luxury Haute Joaillerie",
-    courseCompleted: "Rhino level 1 & 2 Reverse Engineering & Designing Pro",
+      "This institute provides an exceptional, industry-focused learning environment with top-tier mentorship. The Digital Artisan program completely elevated my technical mastery over high-precision 3D modeling and complex CAM outputs.",
+    author: "Ravi Naik",
+    role: "Senior CAD/CAM Designer",
+    company: "Bhima Gold, Bangalore",
+    courseCompleted:
+      "Digital Artisan - Advanced 3D Modelling for Traditional Crafts",
+  },
+  {
+    quote:
+      "I had an incredible, forward-thinking learning experience here backed by brilliant practical guidance. The Jewellery CAD Professional course gave me comprehensive mastery over advanced Rhinoceros workflows and high-end retail design standards.",
+    author: "Priyanka",
+    role: "Technical Designer",
+    company: "Titan (Tanishq)",
+    courseCompleted:
+      "Jewellery CAD Professional in Rhinoceros - Advanced Level",
   },
 ];
